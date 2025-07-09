@@ -6,10 +6,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { MapPin, DollarSign, Globe, Linkedin, Twitter, Github, ArrowLeft, Play, ImageIcon } from "lucide-react"
+import { MapPin, DollarSign, Globe, Linkedin, Twitter, Github, ArrowLeft, Play, ImageIcon, Instagram, Youtube } from "lucide-react"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/lib/supabase"
+import { FaDiscord } from "react-icons/fa";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"]
 type Workflow = Database["public"]["Tables"]["workflows"]["Row"]
@@ -146,49 +147,45 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
               )}
 
               {/* Social Links */}
-              <div className="space-y-3">
+              <div className="flex gap-4 justify-center mt-4">
                 {profile.website && (
-                  <a
-                    href={profile.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    <Globe className="h-4 w-4 mr-2" />
-                    Website
+                  <a href={profile.website} target="_blank" rel="noopener noreferrer" title="Website">
+                    <Globe className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
                   </a>
                 )}
                 {profile.linkedin && (
-                  <a
-                    href={profile.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    <Linkedin className="h-4 w-4 mr-2" />
-                    LinkedIn
+                  <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <Linkedin className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
                   </a>
                 )}
                 {profile.twitter && (
-                  <a
-                    href={profile.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    <Twitter className="h-4 w-4 mr-2" />
-                    Twitter
+                  <a href={profile.twitter} target="_blank" rel="noopener noreferrer" title="Twitter">
+                    <Twitter className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
                   </a>
                 )}
                 {profile.github && (
-                  <a
-                    href={profile.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    <Github className="h-4 w-4 mr-2" />
-                    GitHub
+                  <a href={profile.github} target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <Github className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
+                  </a>
+                )}
+                {profile.instagram && (
+                  <a href={profile.instagram} target="_blank" rel="noopener noreferrer" title="Instagram">
+                    <Instagram className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
+                  </a>
+                )}
+                {profile.threads && (
+                  <a href={profile.threads} target="_blank" rel="noopener noreferrer" title="Threads">
+                    <svg className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 18.5A8.5 8.5 0 1 1 12 3.5a8.5 8.5 0 0 1 0 17Zm.25-13.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Zm-2.5 2.5a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm5 0a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm-2.5 8.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Z"/></svg>
+                  </a>
+                )}
+                {profile.discord && (
+                  <a href={profile.discord} target="_blank" rel="noopener noreferrer" title="Discord">
+                    <FaDiscord className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
+                  </a>
+                )}
+                {profile.youtube && (
+                  <a href={profile.youtube} target="_blank" rel="noopener noreferrer" title="YouTube">
+                    <Youtube className="h-5 w-5 text-blue-600 hover:text-blue-800 transition-colors" />
                   </a>
                 )}
               </div>
