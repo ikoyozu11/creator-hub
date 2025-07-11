@@ -8,11 +8,11 @@ interface TalentProfilePageProps {
   }
 }
 
-export default function TalentProfilePage({ params }: TalentProfilePageProps) {
+export default async function TalentProfilePage({ params }: TalentProfilePageProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Suspense fallback={<TalentProfileSkeleton />}>
-        <TalentProfile profileId={params.id} />
+        <TalentProfile profileId={await params.id} />
       </Suspense>
     </div>
   )

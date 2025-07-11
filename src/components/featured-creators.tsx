@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Award, Users } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import CreatorCard from "./creator-card";
+import CreatorCard from "@/components/creator-card";
 
 interface Creator {
   id: string;
