@@ -309,3 +309,158 @@ body {
       background-position: 0% 50%;
     }
   }
+
+@layer components {
+  /* Dekorasi Ellipse Angular Gradient */
+  .ellipse-angular {
+    position: absolute;
+    width: 792px;
+    height: 792px;
+    top: 152px;
+    left: 243px;
+    opacity: 0.5;
+    background: conic-gradient(from 180deg at 50% 50%, #622A9A, #03A3DC, #F73E8E, #622A9A);
+    box-shadow: 0 0 120px 60px #622A9A33, 0 0 120px 60px #03A3DC33, 0 0 120px 60px #F73E8E33;
+    filter: blur(180px);
+    z-index: 0;
+    border-radius: 50%;
+  }
+  .hero-bg-custom {
+    background: #1D1D1D;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Button Gradient */
+  .btn-login {
+    background: linear-gradient(90deg, #FF00BB 0%, #146BB7 100%);
+    color: #fff;
+    border-radius: 9999px;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border: none;
+    box-shadow: 0 2px 8px 0 #FF00BB33;
+    transition: background 0.2s;
+  }
+  .btn-login:hover {
+    filter: brightness(1.1);
+  }
+  .btn-jelajah {
+    background: linear-gradient(90deg, #D900FF 0%, #9500FF 100%);
+    color: #fff;
+    border-radius: 9999px;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border: none;
+    box-shadow: 0 2px 8px 0 #9500FF33;
+    transition: background 0.2s;
+  }
+  .btn-jelajah:hover {
+    filter: brightness(1.1);
+  }
+  .btn-creator {
+    background: linear-gradient(90deg, #FBE5FF 0%, #FFFFFF 50%, #FAE0FF 100%);
+    color: #622A9A;
+    border-radius: 9999px;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border: none;
+    box-shadow: 0 2px 8px 0 #FBE5FF33;
+    transition: background 0.2s;
+  }
+  .btn-creator:hover {
+    filter: brightness(1.05);
+  }
+  /* Group Button Header */
+  .header-nav-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-width: 615px;
+    height: 67px;
+    border-radius: 96px;
+    border: 1.6px solid rgba(255,255,255,0.12);
+    background: rgba(20,20,30,0.55);
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    padding: 12.8px 24px;
+    gap: 28px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+  .header-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    min-width: 100px;
+    border-radius: 46.87px;
+    border: none;
+    margin: 0;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 22.5px 28.12px;
+    gap: 11px;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .header-btn:hover {
+    background: rgba(98,42,154,0.08);
+    color: #622A9A;
+  }
+  .header-btn-active {
+    background: linear-gradient(90deg, #FBE5FF 0%, #FFFFFF 50%, #FAE0FF 100%);
+    color: #622A9A;
+    border: 0.94px solid #FFFFFF;
+    font-weight: 700;
+    box-shadow: 0 2px 8px 0 #FBE5FF33;
+  }
+  .header-btn-connect {
+    white-space: nowrap;
+    font-size: 17px;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+    vertical-align: middle;
+    padding-left: 32px;
+    padding-right: 32px;
+    min-width: 170px;
+  }
+  .header-btn-home {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+    vertical-align: middle;
+  }
+  .header-btn-workflow {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+    vertical-align: middle;
+  }
+  .header-btn-creator {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+    vertical-align: middle;
+  }
+  .header-btn:first-child {
+    border-top-left-radius: 46.87px;
+    border-bottom-left-radius: 46.87px;
+  }
+  .header-btn:last-child {
+    border-top-right-radius: 46.87px;
+    border-bottom-right-radius: 46.87px;
+  }
+  .header-gradient {
+    background: linear-gradient(90deg, #2B1259 0%, #622A9A 35%, #7C3C97 70%, #B75AAA 100%);
+  }
+}

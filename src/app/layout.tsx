@@ -30,7 +30,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AuthProvider>
-          <HeaderNav />
+          {/* Komentar/hapus pemanggilan HeaderNav jika ada */}
+          {/* <HeaderNav /> */}
           {children}
           <Toaster />
           <DebugAuth />

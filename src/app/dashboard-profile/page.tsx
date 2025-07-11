@@ -24,57 +24,48 @@ interface Creator {
 }
 
 export default function DashboardPage() {
-  const [creators, setCreators] = useState<Creator[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterExperience, setFilterExperience] = useState<string>("all");
-  const [filterAvailability, setFilterAvailability] = useState<string>("all");
+  // const [creators, setCreators] = useState<Creator[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [filterExperience, setFilterExperience] = useState<string>("all");
+  // const [filterAvailability, setFilterAvailability] = useState<string>("all");
 
-  useEffect(() => {
-    fetchCreators();
-  }, []);
+  // useEffect(() => {
+  //   fetchCreators();
+  // }, []);
 
-  const fetchCreators = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("status", "approved")
-        .order("created_at", { ascending: false });
+  // const fetchCreators = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const { data, error } = await supabase
+  //       .from("profiles")
+  //       .select("*")
+  //       .eq("status", "approved")
+  //       .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error("Error fetching creators:", error);
-        return;
-      }
+  //     if (error) {
+  //       console.error("Error fetching creators:", error);
+  //       return;
+  //     }
 
-      setCreators(data || []);
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setCreators(data || []);
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const filteredCreators = creators.filter((creator) => {
-    const matchesSearch = creator.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         creator.bio?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         creator.skills?.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesExperience = filterExperience === "all" || creator.experience_level === filterExperience;
-    const matchesAvailability = filterAvailability === "all" || creator.availability === filterAvailability;
-
-    return matchesSearch && matchesExperience && matchesAvailability;
-  });
+  const filteredCreators = []; // No filtering applied, always empty for dummy data
 
   const stats = {
-    totalCreators: creators.length,
-    availableCreators: creators.filter(c => c.availability === "available").length,
-    expertCreators: creators.filter(c => c.experience_level === "expert").length,
+    totalCreators: 0, // No data fetched, so 0
+    availableCreators: 0, // No data fetched, so 0
+    expertCreators: 0, // No data fetched, so 0
     averageRating: 4.6 // Dummy data
   };
 
-  if (loading) {
+  if (true) { // Always loading for dummy data
     return (
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -106,6 +97,31 @@ export default function DashboardPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Dashboard Creator</h1>
         <p className="text-gray-600">Temukan dan hubungi creator automation terbaik</p>
+      </div>
+
+      {/* Meet the Creators Section (Dummy) */}
+      <div className="mb-12">
+        <div className="flex flex-row items-center justify-between mb-10">
+          <h2 className="text-5xl font-thin text-white">Meet the Creators</h2>
+          <a href="/directory" className="btn-jelajah flex items-center gap-2 px-8 py-3 rounded-full text-white text-base font-medium bg-gradient-to-r from-fuchsia-500 to-violet-600 hover:from-fuchsia-600 hover:to-violet-700 transition-all">
+            Temukan Creator
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+          {/* Hanya render data dummy, jangan render data asli */}
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex flex-row items-center gap-6">
+              <div className="w-32 h-32 bg-gray-500 rounded-full" />
+              <div>
+                <div className="font-bold text-white text-lg mb-1">John Hopkins</div>
+                <div className="text-gray-300 text-base">Lead Developer,<br/>CEO</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -181,13 +197,13 @@ export default function DashboardPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="Cari creator..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={""} // No search term state, so empty
+                onChange={(e) => {}} // No search term state, so empty
                 className="pl-10"
               />
             </div>
 
-            <Select value={filterExperience} onValueChange={setFilterExperience}>
+            <Select value={"all"} onValueChange={() => {}}>
               <SelectTrigger>
                 <SelectValue placeholder="Level Pengalaman" />
               </SelectTrigger>
@@ -200,7 +216,7 @@ export default function DashboardPage() {
               </SelectContent>
             </Select>
 
-            <Select value={filterAvailability} onValueChange={setFilterAvailability}>
+            <Select value={"all"} onValueChange={() => {}}>
               <SelectTrigger>
                 <SelectValue placeholder="Status Ketersediaan" />
               </SelectTrigger>
@@ -215,9 +231,9 @@ export default function DashboardPage() {
             <Button 
               variant="outline" 
               onClick={() => {
-                setSearchTerm("");
-                setFilterExperience("all");
-                setFilterAvailability("all");
+                // No search term state, so empty
+                // No filter experience state, so "all"
+                // No filter availability state, so "all"
               }}
             >
               Reset Filter
@@ -230,7 +246,7 @@ export default function DashboardPage() {
       <div className="mb-4">
         <div className="flex items-center justify-between">
           <p className="text-gray-600">
-            Menampilkan {filteredCreators.length} dari {creators.length} creator
+            Menampilkan {filteredCreators.length} dari {stats.totalCreators} creator
           </p>
           <Badge variant="secondary">
             {filteredCreators.length} hasil
@@ -250,9 +266,9 @@ export default function DashboardPage() {
             <Button 
               variant="outline"
               onClick={() => {
-                setSearchTerm("");
-                setFilterExperience("all");
-                setFilterAvailability("all");
+                // No search term state, so empty
+                // No filter experience state, so "all"
+                // No filter availability state, so "all"
               }}
             >
               Reset Filter
@@ -263,7 +279,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCreators.map((creator) => (
             <CreatorCard
-              key={creator.id}
+              key={`dummy-${creator.id}`} // Use a dummy ID
               creator={creator}
               variant="default"
               showStats={true}
