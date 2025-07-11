@@ -61,17 +61,17 @@ export function HeaderNav() {
         </Link>
         <nav className="hidden md:flex items-center space-x-6">
           {/* Menu utama */}
-          <Link
+          {/* <Link
             href="/creators"
             className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
           >
             Creator
-          </Link>
+          </Link> */}
           <Link
             href="/directory"
             className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
           >
-            Talent
+            Creator
           </Link>
           <Link
             href="/workflows"
