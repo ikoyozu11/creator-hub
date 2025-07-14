@@ -25,7 +25,7 @@ const AboutSection = () => {
                 }}
               >
                 Platform ini hadir untuk menghubungkan creator
-              </h2>
+        </h2>
               <p
                 style={{
                   fontFamily: 'Inter, Arial, sans-serif',
