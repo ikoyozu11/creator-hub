@@ -106,7 +106,7 @@ export default function DirectoryPage() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Directory Creator</h1>
+        <h1 className="text-4xl font-bold mb-2 text-white">Directory Creator</h1>
         <p className="text-gray-600">Temukan dan hubungi creator automation terbaik dari seluruh Indonesia</p>
       </div>
 

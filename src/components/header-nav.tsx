@@ -52,7 +52,7 @@ export function HeaderNav() {
 
   return (
     <header className="header-gradient sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-start">
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="header-nav-group ml-0">
           <Link
             href="/"
@@ -129,12 +129,12 @@ export function HeaderNav() {
         ) : (
           <Link
             href="/auth"
-            className="ml-4 btn-login flex items-center gap-2"
+            className="btn-login flex items-center gap-2"
           >
+            Join Community
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75h2.25A2.25 2.25 0 0 1 21 6v12a2.25 2.25 0 0 1-2.25 2.25H16.5m-6-4.5 3-3m0 0-3-3m3 3H3" />
             </svg>
-            Login
           </Link>
         )}
       </div>

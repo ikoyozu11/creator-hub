@@ -54,23 +54,7 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen hero-bg-custom text-white overflow-hidden">
       {/* Dekorasi Ellipse Angular Gradient */}
-      <div className="ellipse-angular"></div>
-
-      {/* Group Button & Login */}
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="header-nav-group ml-0">
-          <Link href="/" className={`header-btn header-btn-home${pathname === '/' ? ' header-btn-active' : ''}`}>Home</Link>
-          <Link href="/workflows" className={`header-btn header-btn-workflow${pathname === '/workflows' ? ' header-btn-active' : ''}`}>Workflow</Link>
-          <Link href="/directory" className={`header-btn header-btn-creator${pathname === '/directory' ? ' header-btn-active' : ''}`}>Creator</Link>
-          <Link href="/connect" className={`header-btn header-btn-connect${pathname === '/connect' ? ' header-btn-active' : ''}`}>Connect With Us</Link>
-        </div>
-        <Link href="/auth" className="btn-login flex items-center gap-2">
-          Join Community
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75h2.25A2.25 2.25 0 0 1 21 6v12a2.25 2.25 0 0 1-2.25 2.25H16.5m-6-4.5 3-3m0 0-3-3m3 3H3" />
-          </svg>
-        </Link>
-      </div>
+      <div className="ellipse-angular-hero"></div>
 
       {/* HERO HEADING & SUBHEADING */}
       <div className="container mx-auto px-4 pt-12 md:pt-20 flex flex-col gap-6 md:gap-10">

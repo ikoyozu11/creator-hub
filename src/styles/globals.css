@@ -89,7 +89,8 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    background: #201A2C;
+    @apply text-foreground;
   }
 }
 
@@ -312,21 +313,66 @@ body {
 
 @layer components {
   /* Dekorasi Ellipse Angular Gradient */
-  .ellipse-angular {
+  .ellipse-angular-hero {
     position: absolute;
-    width: 792px;
-    height: 792px;
-    top: 152px;
-    left: 243px;
+    width: 700px;
+    height: 700px;
+    top: 100px;
+    left: 35%;
+    right: auto;
+    transform: translateX(-50%);
+    opacity: 0.4;
+    background: conic-gradient(from 180deg at 50% 50%, #622A9A 0deg, #03A3DC 120deg, #F73E8E 240deg, #622A9A 360deg);
+    box-shadow: 0 0 60px 30px #622A9A33, 0 0 60px 30px #03A3DC33, 0 0 60px 30px #F73E8E33;
+    filter: blur(90px);
+    z-index: 0;
+    border-radius: 50%;
+  }
+  .ellipse-angular-about {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    top: 260px;
+    left: 70%;
+    right: auto;
+    transform: translateX(-50%);
+    opacity: 0.4;
+    background: conic-gradient(from 180deg at 50% 50%, #622A9A 0deg, #03A3DC 120deg, #F73E8E 240deg, #622A9A 360deg);
+    box-shadow: 0 0 60px 30px #622A9A33, 0 0 60px 30px #03A3DC33, 0 0 60px 30px #F73E8E33;
+    filter: blur(90px);
+    z-index: 0;
+    border-radius: 50%;
+  }
+  .ellipse-angular-keybenefit {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: 80px;
+    left: 65%;
+    right: auto;
+    transform: translateX(-50%);
+    opacity: 0.4;
+    background: conic-gradient(from 180deg at 50% 50%, #622A9A 0deg, #03A3DC 120deg, #F73E8E 240deg, #622A9A 360deg);
+    box-shadow: 0 0 60px 30px #622A9A33, 0 0 60px 30px #03A3DC33, 0 0 60px 30px #F73E8E33;
+    filter: blur(90px);
+    z-index: 0;
+    border-radius: 50%;
+  }
+  .ellipse-linear-keybenefit {
+    position: absolute;
+    width: 520px;
+    height: 320px;
+    top: 350px;
+    left: 60%;
+    transform: translateX(-50%);
     opacity: 0.5;
-    background: conic-gradient(from 180deg at 50% 50%, #622A9A, #03A3DC, #F73E8E, #622A9A);
-    box-shadow: 0 0 120px 60px #622A9A33, 0 0 120px 60px #03A3DC33, 0 0 120px 60px #F73E8E33;
-    filter: blur(180px);
+    background: linear-gradient(90deg, #9460CD 0%, #3D1654 100%);
+    filter: blur(80px);
     z-index: 0;
     border-radius: 50%;
   }
   .hero-bg-custom {
-    background: #1D1D1D;
+    background: #201A2C;
     position: relative;
     overflow: hidden;
   }
@@ -461,6 +507,21 @@ body {
     border-bottom-right-radius: 46.87px;
   }
   .header-gradient {
-    background: linear-gradient(90deg, #2B1259 0%, #622A9A 35%, #7C3C97 70%, #B75AAA 100%);
+    background: #201A2C;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .ellipse-blur-dark {
+    position: absolute;
+    width: 480px;
+    height: 320px;
+    top: 260px;
+    left: 60%;
+    transform: translateX(-50%);
+    background: #1D1D1D;
+    opacity: 0.7;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 1;
   }
 }
