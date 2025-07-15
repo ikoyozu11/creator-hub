@@ -91,6 +91,23 @@ body {
   body {
     background: #201A2C;
     @apply text-foreground;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Ensure content doesn't get cut off */
+  #__next {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
   }
 }
 

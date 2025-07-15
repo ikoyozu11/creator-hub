@@ -154,8 +154,8 @@ export default function EditProfilePage() {
   if (!user) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
-        <p className="text-gray-600 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
+        <p className="text-sm sm:text-base text-gray-600 mb-6">
           Silakan login untuk mengedit profil Anda.
         </p>
       </div>
@@ -167,34 +167,34 @@ export default function EditProfilePage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Edit Profil</h1>
-        <Button variant="outline" onClick={() => router.push("/dashboard-profile/profile")}>
+    <div className="container mx-auto px-4 py-4 sm:py-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-4">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Edit Profil</h1>
+        <Button variant="outline" onClick={() => router.push("/dashboard-profile/profile")} className="w-full sm:w-auto">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Kembali ke Profil
         </Button>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <Card>
-          <CardContent className="space-y-4 pt-6">
+          <CardContent className="space-y-4 pt-4 sm:pt-6 p-4 sm:p-6">
             {/* Avatar dan link sosial di sini */}
-            <div className="flex flex-col md:flex-row gap-8 mb-6">
-              <div className="flex flex-col items-center gap-4 w-full md:w-1/3">
+            <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 mb-4 sm:mb-6">
+              <div className="flex flex-col items-center gap-4 w-full lg:w-1/3">
                 <div className="relative flex flex-col items-center">
                   <img
                     src={profileImage || "/placeholder-user.jpg"}
                     alt="Avatar"
-                    className="h-32 w-32 rounded-full object-cover border mx-auto mb-2"
+                    className="h-24 w-24 sm:h-32 sm:w-32 rounded-full object-cover border mx-auto mb-2"
                   />
                   <button
                     type="button"
-                    className="absolute bottom-4 right-1/2 translate-x-1/2 bg-white rounded-full p-1 border shadow hover:bg-gray-100"
+                    className="absolute bottom-2 sm:bottom-4 right-1/2 translate-x-1/2 bg-white rounded-full p-1 border shadow hover:bg-gray-100"
                     onClick={handleAvatarClick}
                     title="Ubah Foto Profil"
                   >
-                    <Pencil className="h-5 w-5 text-gray-600" />
+                    <Pencil className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
                   </button>
                   <input
                     ref={fileInputRef}
@@ -207,191 +207,204 @@ export default function EditProfilePage() {
                 {/* Media sosial: ikon + input */}
                 <div className="flex flex-col gap-3 w-full">
                   <div className="flex items-center gap-2">
-                    <Globe className="h-5 w-5 text-blue-600" />
+                    <Globe className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="website"
                       value={form.website}
                       onChange={handleChange}
                       placeholder="Website"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Linkedin className="h-5 w-5 text-blue-600" />
+                    <Linkedin className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="linkedin"
                       value={form.linkedin}
                       onChange={handleChange}
                       placeholder="LinkedIn"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Twitter className="h-5 w-5 text-blue-600" />
+                    <Twitter className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="twitter"
                       value={form.twitter}
                       onChange={handleChange}
                       placeholder="Twitter"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Github className="h-5 w-5 text-blue-600" />
+                    <Github className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="github"
                       value={form.github}
                       onChange={handleChange}
                       placeholder="GitHub"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Instagram className="h-5 w-5 text-blue-600" />
+                    <Instagram className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="instagram"
-                      value={form.instagram || ""}
+                      value={form.instagram}
                       onChange={handleChange}
                       placeholder="Instagram"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* Threads pakai SVG manual */}
-                    <svg className="h-5 w-5 text-blue-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 18.5A8.5 8.5 0 1 1 12 3.5a8.5 8.5 0 0 1 0 17Zm.25-13.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Zm-2.5 2.5a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm5 0a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm-2.5 8.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Z"/></svg>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 18.5A8.5 8.5 0 1 1 12 3.5a8.5 8.5 0 0 1 0 17Zm.25-13.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Zm-2.5 2.5a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm5 0a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm-2.5 8.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Z"/></svg>
                     <Input
                       name="threads"
-                      value={form.threads || ""}
+                      value={form.threads}
                       onChange={handleChange}
                       placeholder="Threads"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaDiscord className="h-5 w-5 text-blue-600" />
+                    <FaDiscord className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="discord"
-                      value={form.discord || ""}
+                      value={form.discord}
                       onChange={handleChange}
                       placeholder="Discord"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Youtube className="h-5 w-5 text-blue-600" />
+                    <Youtube className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="youtube"
-                      value={form.youtube || ""}
+                      value={form.youtube}
                       onChange={handleChange}
                       placeholder="YouTube"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                   </div>
                 </div>
               </div>
+
+              {/* Form utama */}
               <div className="flex-1 space-y-4">
                 <div>
-                  <label className="font-semibold text-gray-900 mb-1 block">
-                    Nama
-                  </label>
-                  <Input name="name" value={form.name} onChange={handleChange} />
-                </div>
-                <div>
-                  <label className="font-semibold text-gray-900 mb-1 block">
-                    Bio
-                  </label>
-                  <Textarea name="bio" value={form.bio} onChange={handleChange} />
-                </div>
-                <div>
-                  <label className="font-semibold text-gray-900 mb-1 block">
-                    Lokasi
-                  </label>
-                  <div className="flex gap-2">
-                    <select
-                      name="provinsi"
-                      className="w-1/2 border rounded px-2 py-2"
-                      value={provinsi}
-                      onChange={(e) => {
-                        setProvinsi(e.target.value);
-                        setKota("");
-                      }}
-                    >
-                      <option value="">Pilih Provinsi</option>
-                      {PROVINCES.map((p) => (
-                        <option key={p.name} value={p.name}>
-                          {p.name}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      name="kota"
-                      className="w-1/2 border rounded px-2 py-2"
-                      value={kota}
-                      onChange={(e) => setKota(e.target.value)}
-                      disabled={!provinsi}
-                    >
-                      <option value="">Pilih Kota/Kabupaten</option>
-                      {PROVINCES.find((p) => p.name === provinsi)?.cities.map(
-                        (k, idx) => (
-                          <option key={`${provinsi}-${k}-${idx}`} value={k}>
-                            {k}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                </div>
-                {/*
-                <div>
-                  <label className="font-semibold text-gray-900 mb-1 block">
-                    Skills
-                  </label>
-                  <TagInput
-                    value={skills}
-                    onChange={setSkills}
-                    placeholder="Tambah skill..."
+                  <label className="block font-medium mb-1 text-sm sm:text-base">Nama Lengkap</label>
+                  <Input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    className="text-sm sm:text-base"
                   />
                 </div>
-                */}
-                <div className="flex gap-4">
-                  <div className="flex-1">
-                    <label className="font-semibold text-gray-900 mb-1 block">
-                      Level Pengalaman
-                    </label>
+
+                <div>
+                  <label className="block font-medium mb-1 text-sm sm:text-base">Bio</label>
+                  <Textarea
+                    name="bio"
+                    value={form.bio}
+                    onChange={handleChange}
+                    placeholder="Ceritakan tentang diri Anda..."
+                    rows={4}
+                    className="text-sm sm:text-base"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-medium mb-1 text-sm sm:text-base">Level Pengalaman</label>
                     <select
                       name="experience_level"
-                      className="w-full border rounded px-2 py-2"
                       value={form.experience_level}
                       onChange={handleSelect}
+                      className="w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base"
                     >
-                      <option value="">Pilih</option>
+                      <option value="">Pilih Level</option>
                       <option value="beginner">Beginner</option>
                       <option value="intermediate">Intermediate</option>
                       <option value="advanced">Advanced</option>
                       <option value="expert">Expert</option>
                     </select>
                   </div>
-                  <div className="flex-1">
-                    <label className="font-semibold text-gray-900 mb-1 block">
-                      Status (Availability)
-                    </label>
+
+                  <div>
+                    <label className="block font-medium mb-1 text-sm sm:text-base">Status Ketersediaan</label>
                     <select
                       name="availability"
-                      className="w-full border rounded px-2 py-2"
                       value={form.availability}
                       onChange={handleSelect}
+                      className="w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base"
                     >
-                      <option value="">Pilih</option>
-                      <option value="available">Available</option>
-                      <option value="busy">Busy</option>
-                      <option value="unavailable">Unavailable</option>
+                      <option value="">Pilih Status</option>
+                      <option value="available">Tersedia</option>
+                      <option value="busy">Sibuk</option>
+                      <option value="unavailable">Tidak Tersedia</option>
                     </select>
                   </div>
                 </div>
-                <Button type="submit" className="mt-4">
-                  Simpan Perubahan
-                </Button>
+
+                <div>
+                  <label className="block font-medium mb-1 text-sm sm:text-base">Skills</label>
+                  <TagInput
+                    value={skills}
+                    onChange={setSkills}
+                    placeholder="Tambahkan skill (tekan Enter)"
+                    className="text-sm sm:text-base"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-medium mb-1 text-sm sm:text-base">Provinsi</label>
+                    <select
+                      value={provinsi}
+                      onChange={(e) => setProvinsi(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base"
+                    >
+                      <option value="">Pilih Provinsi</option>
+                      {PROVINCES.map((province) => (
+                        <option key={province.name} value={province.name}>
+                          {province.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-medium mb-1 text-sm sm:text-base">Kota/Kabupaten</label>
+                    <select
+                      value={kota}
+                      onChange={(e) => setKota(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base"
+                      disabled={!provinsi}
+                    >
+                      <option value="">Pilih Kota</option>
+                      {provinsi &&
+                        PROVINCES.find((p) => p.name === provinsi)?.cities.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2 pt-4">
+              <Button type="submit" className="w-full sm:w-auto">Simpan Perubahan</Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/dashboard-profile/profile")}
+                className="w-full sm:w-auto"
+              >
+                Batal
+              </Button>
             </div>
           </CardContent>
         </Card>

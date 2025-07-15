@@ -38,8 +38,8 @@ export default function ProfileSubPage() {
   if (!user) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
-        <p className="text-gray-600 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
+        <p className="text-sm sm:text-base text-gray-600 mb-6">
           Silakan login untuk melihat profil Anda.
         </p>
       </div>
@@ -51,10 +51,10 @@ export default function ProfileSubPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Profil Saya</h1>
-        <Button asChild>
+    <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-4">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Profil Saya</h1>
+        <Button asChild className="w-full sm:w-auto">
           <Link href="/dashboard-profile/profile/edit">
             <Pencil className="h-4 w-4 mr-2" />
             Edit Profile
@@ -62,35 +62,35 @@ export default function ProfileSubPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Profile Sidebar */}
-        <div className="lg:col-span-1 flex justify-center">
-          <Card className="sticky top-8 w-full max-w-xs md:max-w-sm mx-auto">
-            <CardHeader className="text-center">
-              <Avatar className="h-32 w-32 mx-auto mb-4">
+        <div className="lg:col-span-1 flex justify-center order-2 lg:order-1">
+          <Card className="sticky top-4 sm:top-8 w-full max-w-xs md:max-w-sm mx-auto">
+            <CardHeader className="text-center p-4 sm:p-6">
+              <Avatar className="h-24 w-24 sm:h-32 sm:w-32 mx-auto mb-4">
                 <AvatarImage src={profileImage || undefined} />
-                <AvatarFallback className="text-2xl">
+                <AvatarFallback className="text-lg sm:text-2xl">
                   {profile?.name
                     ?.split(" ")
                     .map((n: string) => n[0])
                     .join("")}
                 </AvatarFallback>
               </Avatar>
-              <h1 className="text-2xl font-bold text-gray-900">{profile?.name}</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{profile?.name}</h1>
               {profile?.location && (
-                <div className="flex items-center justify-center text-gray-500 mt-2">
+                <div className="flex items-center justify-center text-gray-500 mt-2 text-sm sm:text-base">
                   <MapPin className="h-4 w-4 mr-1" />
                   {profile.location}
                 </div>
               )}
             </CardHeader>
 
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
               {/* Status Badges */}
               <div className="flex flex-wrap gap-2 justify-center">
-                {profile?.experience_level && <Badge variant="secondary">{profile.experience_level}</Badge>}
+                {profile?.experience_level && <Badge variant="secondary" className="text-xs sm:text-sm">{profile.experience_level}</Badge>}
                 {profile?.availability && (
-                  <Badge variant={profile.availability === "available" ? "default" : "outline"}>
+                  <Badge variant={profile.availability === "available" ? "default" : "outline"} className="text-xs sm:text-sm">
                     {profile.availability}
                   </Badge>
                 )}
@@ -101,10 +101,10 @@ export default function ProfileSubPage() {
               {/* Skills */}
               {profile?.skills && profile.skills.length > 0 && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">Skills</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3 text-sm sm:text-base">Skills</h3>
                   <div className="flex flex-wrap gap-2">
                     {profile.skills.map((skill: string) => (
-                      <Badge key={skill} variant="outline">
+                      <Badge key={skill} variant="outline" className="text-xs sm:text-sm">
                         {skill}
                       </Badge>
                     ))}
@@ -113,46 +113,46 @@ export default function ProfileSubPage() {
               )}
 
               {/* Social Links - Horizontal, rapi, besar, dan center */}
-              <div className="flex justify-center mt-8 mb-2">
-                <div className="flex gap-6 flex-wrap justify-center">
+              <div className="flex justify-center mt-6 sm:mt-8 mb-2">
+                <div className="flex gap-4 sm:gap-6 flex-wrap justify-center">
                   {profile?.website && (
                     <a href={profile.website} target="_blank" rel="noopener noreferrer" title="Website">
-                      <Globe className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <Globe className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                   {profile?.linkedin && (
                     <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                      <Linkedin className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                   {profile?.twitter && (
                     <a href={profile.twitter} target="_blank" rel="noopener noreferrer" title="Twitter">
-                      <Twitter className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <Twitter className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                   {profile?.github && (
                     <a href={profile.github} target="_blank" rel="noopener noreferrer" title="GitHub">
-                      <Github className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <Github className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                   {profile?.instagram && (
                     <a href={profile.instagram} target="_blank" rel="noopener noreferrer" title="Instagram">
-                      <Instagram className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <Instagram className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                   {profile?.threads && (
                     <a href={profile.threads} target="_blank" rel="noopener noreferrer" title="Threads">
-                      <svg className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 18.5A8.5 8.5 0 1 1 12 3.5a8.5 8.5 0 0 1 0 17Zm.25-13.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Zm-2.5 2.5a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm5 0a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm-2.5 8.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Z"/></svg>
+                      <svg className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 18.5A8.5 8.5 0 1 1 12 3.5a8.5 8.5 0 0 1 0 17Zm.25-13.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Zm-2.5 2.5a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm5 0a.75.75 0 0 1 1.5 0v6.5a.75.75 0 0 1-1.5 0v-6.5Zm-2.5 8.25a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75Z"/></svg>
                     </a>
                   )}
                   {profile?.discord && (
                     <a href={profile.discord} target="_blank" rel="noopener noreferrer" title="Discord">
-                      <FaDiscord className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <FaDiscord className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                   {profile?.youtube && (
                     <a href={profile.youtube} target="_blank" rel="noopener noreferrer" title="YouTube">
-                      <Youtube className="h-6 w-6 text-blue-500 hover:text-blue-700 transition-colors" />
+                      <Youtube className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 hover:text-blue-700 transition-colors" />
                     </a>
                   )}
                 </div>
@@ -162,14 +162,14 @@ export default function ProfileSubPage() {
         </div>
 
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 order-1 lg:order-2 space-y-6 sm:space-y-8">
           {/* About Section */}
           <Card>
-            <CardHeader>
-              <h2 className="text-xl font-semibold text-gray-900">About</h2>
+            <CardHeader className="p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">About</h2>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{profile?.bio || "No bio available."}</p>
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-wrap">{profile?.bio || "No bio available."}</p>
             </CardContent>
           </Card>
         </div>

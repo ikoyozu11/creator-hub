@@ -102,8 +102,8 @@ export default function WorkflowsSubPage() {
   if (!user) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
-        <p className="text-gray-600 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
+        <p className="text-sm sm:text-base text-gray-600 mb-6">
           Silakan login untuk mengelola workflow Anda.
         </p>
       </div>
@@ -112,11 +112,11 @@ export default function WorkflowsSubPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">Workflow Saya</h2>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-4">
+        <h2 className="text-lg sm:text-xl font-bold">Workflow Saya</h2>
         <Button
           onClick={() => setShowAddWorkflow(true)}
-          className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white"
+          className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" /> Tambah Workflow
         </Button>
@@ -125,20 +125,21 @@ export default function WorkflowsSubPage() {
       {showAddWorkflow && (
         <form
           onSubmit={handleAddWorkflow}
-          className="mb-8 bg-gray-50 p-6 rounded-xl border"
+          className="mb-6 sm:mb-8 bg-gray-50 p-4 sm:p-6 rounded-xl border"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium mb-1">Judul</label>
+              <label className="block font-medium mb-1 text-sm sm:text-base">Judul</label>
               <Input
                 name="title"
                 value={workflowForm.title}
                 onChange={handleWorkflowInput}
                 required
+                className="text-sm sm:text-base"
               />
             </div>
             <div>
-              <label className="block font-medium mb-1">
+              <label className="block font-medium mb-1 text-sm sm:text-base">
                 Tags (pisahkan dengan koma)
               </label>
               <Input
@@ -146,44 +147,49 @@ export default function WorkflowsSubPage() {
                 value={workflowForm.tags}
                 onChange={handleWorkflowInput}
                 placeholder="misal: email, automation, api"
+                className="text-sm sm:text-base"
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block font-medium mb-1">Deskripsi</label>
+              <label className="block font-medium mb-1 text-sm sm:text-base">Deskripsi</label>
               <Textarea
                 name="description"
                 value={workflowForm.description}
                 onChange={handleWorkflowInput}
                 required
+                className="text-sm sm:text-base"
               />
             </div>
             <div>
-              <label className="block font-medium mb-1">Screenshot URL</label>
+              <label className="block font-medium mb-1 text-sm sm:text-base">Screenshot URL</label>
               <Input
                 name="screenshot_url"
                 value={workflowForm.screenshot_url}
                 onChange={handleWorkflowInput}
+                className="text-sm sm:text-base"
               />
             </div>
             <div>
-              <label className="block font-medium mb-1">Video URL</label>
+              <label className="block font-medium mb-1 text-sm sm:text-base">Video URL</label>
               <Input
                 name="video_url"
                 value={workflowForm.video_url}
                 onChange={handleWorkflowInput}
+                className="text-sm sm:text-base"
               />
             </div>
             <div>
-              <label className="block font-medium mb-1">Complexity</label>
+              <label className="block font-medium mb-1 text-sm sm:text-base">Complexity</label>
               <Input
                 name="complexity"
                 value={workflowForm.complexity}
                 onChange={handleWorkflowInput}
                 placeholder="simple/medium/complex"
+                className="text-sm sm:text-base"
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block font-medium mb-1">
+              <label className="block font-medium mb-1 text-sm sm:text-base">
                 JSON n8n Workflow
               </label>
               <Textarea
@@ -192,15 +198,17 @@ export default function WorkflowsSubPage() {
                 onChange={handleWorkflowInput}
                 placeholder="Paste JSON workflow dari n8n di sini"
                 rows={6}
+                className="text-sm sm:text-base"
               />
             </div>
           </div>
-          <div className="flex gap-2 mt-4">
-            <Button type="submit">Simpan Workflow</Button>
+          <div className="flex flex-col sm:flex-row gap-2 mt-4">
+            <Button type="submit" className="w-full sm:w-auto">Simpan Workflow</Button>
             <Button
               type="button"
               variant="outline"
               onClick={() => setShowAddWorkflow(false)}
+              className="w-full sm:w-auto"
             >
               Batal
             </Button>
@@ -208,16 +216,16 @@ export default function WorkflowsSubPage() {
         </form>
       )}
       {/* List workflow user */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {myWorkflows.map((w) => (
           <Card key={w.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader className="pb-4">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                  <Workflow className="w-6 h-6 text-white" />
+            <CardHeader className="pb-4 p-4 sm:p-6">
+              <div className="flex items-start space-x-3 sm:space-x-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Workflow className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg text-gray-900 truncate">
+                  <h3 className="font-semibold text-base sm:text-lg text-gray-900 truncate">
                     {w.title}
                   </h3>
                   <div className="flex items-center space-x-2 mt-2">
@@ -231,8 +239,8 @@ export default function WorkflowsSubPage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+            <CardContent className="pt-0 p-4 sm:p-6">
+              <p className="text-gray-600 text-xs sm:text-sm mb-4 line-clamp-3">
                 {w.description}
               </p>
               <div className="flex flex-wrap gap-1 mb-2">
@@ -249,7 +257,7 @@ export default function WorkflowsSubPage() {
                 Created: {w.created_at?.slice(0, 10)}
               </div>
               <div className="flex gap-2 mt-4">
-                <Button asChild size="sm" variant="outline">
+                <Button asChild size="sm" variant="outline" className="w-full sm:w-auto">
                   <Link href={`/dashboard-profile/workflows/${w.id}`}>
                     View
                   </Link>
@@ -259,7 +267,7 @@ export default function WorkflowsSubPage() {
           </Card>
         ))}
         {myWorkflows.length === 0 && (
-          <div className="text-gray-500 text-center col-span-full py-8">
+          <div className="text-gray-500 text-center col-span-full py-8 text-sm sm:text-base">
             Belum ada workflow.
           </div>
         )}

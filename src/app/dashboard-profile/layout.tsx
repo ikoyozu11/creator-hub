@@ -12,26 +12,26 @@ export default function DashboardProfileLayout({
   const router = useRouter();
   const pathname = usePathname();
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl">
       <Button
         variant="outline"
-        className="mb-6 flex items-center gap-2"
+        className="mb-4 sm:mb-6 flex items-center gap-2 text-sm sm:text-base"
         onClick={() => router.push("/")}
       >
         <ArrowLeft className="h-4 w-4" /> Back to Dashboard
       </Button>
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8">
         {/* Sidebar navigasi */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-8">
-            <CardHeader className="text-center">
-              <div className="flex flex-col gap-2">
+        <div className="lg:col-span-1 order-2 lg:order-1">
+          <Card className="sticky top-4 sm:top-8">
+            <CardHeader className="text-center p-4 sm:p-6">
+              <div className="flex flex-col gap-2 sm:gap-3">
                 <Button
                   variant={
                     pathname.endsWith("/profile") ? "default" : "outline"
                   }
                   onClick={() => router.push("/dashboard-profile/profile")}
-                  className="mb-2"
+                  className="mb-2 text-sm sm:text-base"
                 >
                   Profil
                 </Button>
@@ -40,6 +40,7 @@ export default function DashboardProfileLayout({
                     pathname.endsWith("/workflows") ? "default" : "outline"
                   }
                   onClick={() => router.push("/dashboard-profile/workflows")}
+                  className="text-sm sm:text-base"
                 >
                   Workflow Saya
                 </Button>
@@ -48,7 +49,7 @@ export default function DashboardProfileLayout({
           </Card>
         </div>
         {/* Main content slot */}
-        <div className="lg:col-span-3 space-y-8">{children}</div>
+        <div className="lg:col-span-3 order-1 lg:order-2 space-y-4 sm:space-y-8">{children}</div>
       </div>
     </div>
   );

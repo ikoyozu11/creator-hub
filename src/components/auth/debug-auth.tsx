@@ -11,7 +11,7 @@ export function DebugAuth() {
   }
 
   return (
-    <Card className="fixed bottom-4 right-4 w-80 max-w-sm z-50 bg-yellow-50 border-yellow-200">
+    <Card className="fixed bottom-4 right-4 w-80 max-w-sm z-50 bg-yellow-50 border-yellow-200 shadow-lg">
       <CardHeader className="pb-2">
         <CardTitle className="text-sm font-medium text-yellow-800">
           Auth Debug Info

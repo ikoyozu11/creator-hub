@@ -120,81 +120,87 @@ export default function WorkflowDetailUserPage() {
   }
   if (!workflow) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center text-gray-500">
+      <div className="container mx-auto px-4 py-8 text-center text-gray-500 text-sm sm:text-base">
         Workflow tidak ditemukan.
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
+    <div className="container mx-auto px-4 py-4 sm:py-8 max-w-3xl">
       <Card>
-        <CardHeader className="flex items-center justify-between">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-              <Workflow className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Workflow className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
               {workflow.title}
             </h1>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6">
           {isOwner ? (
             <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="block font-medium mb-1">Judul</label>
+                <label className="block font-medium mb-1 text-sm sm:text-base">Judul</label>
                 <Input
                   name="title"
                   value={editForm.title}
                   onChange={handleChange}
                   required
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block font-medium mb-1">Deskripsi</label>
+                <label className="block font-medium mb-1 text-sm sm:text-base">Deskripsi</label>
                 <Textarea
                   name="description"
                   value={editForm.description}
                   onChange={handleChange}
                   required
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block font-medium mb-1">Tags</label>
+                <label className="block font-medium mb-1 text-sm sm:text-base">Tags</label>
                 <TagInput
                   value={editForm.tags}
                   onChange={handleTags}
                   placeholder="Tambah tag..."
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block font-medium mb-1">Screenshot URL</label>
+                <label className="block font-medium mb-1 text-sm sm:text-base">Screenshot URL</label>
                 <Input
                   name="screenshot_url"
                   value={editForm.screenshot_url}
                   onChange={handleChange}
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block font-medium mb-1">Video URL</label>
+                <label className="block font-medium mb-1 text-sm sm:text-base">Video URL</label>
                 <Input
                   name="video_url"
                   value={editForm.video_url}
                   onChange={handleChange}
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block font-medium mb-1">Complexity</label>
+                <label className="block font-medium mb-1 text-sm sm:text-base">Complexity</label>
                 <Input
                   name="complexity"
                   value={editForm.complexity}
                   onChange={handleChange}
                   placeholder="simple/medium/complex"
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block font-medium mb-1">
+                <label className="block font-medium mb-1 text-sm sm:text-base">
                   JSON n8n Workflow
                 </label>
                 <Textarea
@@ -203,6 +209,7 @@ export default function WorkflowDetailUserPage() {
                   onChange={handleChange}
                   placeholder="Paste JSON workflow dari n8n di sini"
                   rows={6}
+                  className="text-sm sm:text-base"
                 />
               </div>
               {/* Live preview n8n demo */}
@@ -218,14 +225,15 @@ export default function WorkflowDetailUserPage() {
                   />
                 </div>
               )}
-              <div className="flex gap-2 mt-4">
-                <Button type="submit" disabled={saving}>
+              <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                <Button type="submit" disabled={saving} className="w-full sm:w-auto">
                   {saving ? "Menyimpan..." : "Simpan Perubahan"}
                 </Button>
                 <Button
                   type="button"
                   variant="destructive"
                   onClick={handleDelete}
+                  className="w-full sm:w-auto"
                 >
                   <Trash className="w-4 h-4 mr-1" /> Hapus
                 </Button>
@@ -233,6 +241,7 @@ export default function WorkflowDetailUserPage() {
                   type="button"
                   variant="outline"
                   onClick={() => router.push("/dashboard-profile/workflows")}
+                  className="w-full sm:w-auto"
                 >
                   Kembali
                 </Button>
@@ -248,8 +257,8 @@ export default function WorkflowDetailUserPage() {
                   {workflow.status}
                 </span>
               </div>
-              <div className="mb-4 text-gray-600">{workflow.description}</div>
-              <div className="flex flex-wrap gap-2 mb-4">
+              <p className="text-sm sm:text-base text-gray-600 mb-4">{workflow.description}</p>
+              <div className="flex flex-wrap gap-1 mb-4">
                 {(workflow.tags || []).map((tag: string) => (
                   <span
                     key={tag}
@@ -262,19 +271,13 @@ export default function WorkflowDetailUserPage() {
               <div className="text-xs text-gray-400 mb-4">
                 Created: {workflow.created_at?.slice(0, 10)}
               </div>
-              {/* Preview n8n workflow jika ada json_n8n */}
-              {workflow.json_n8n && (
-                <div className="mt-4 border rounded bg-gray-50 p-2 overflow-x-auto">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: `<n8n-demo workflow='${workflow.json_n8n.replace(
-                        /'/g,
-                        "&#39;"
-                      )}' frame="true"></n8n-demo>`,
-                    }}
-                  />
-                </div>
-              )}
+              <Button
+                variant="outline"
+                onClick={() => router.push("/dashboard-profile/workflows")}
+                className="w-full sm:w-auto"
+              >
+                Kembali
+              </Button>
             </>
           )}
         </CardContent>

@@ -23,55 +23,60 @@ const FeaturedWorkflows = () => {
   }, []);
 
   return (
-    <section className="py-16">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-start justify-start mb-12">
-          <div className="flex flex-row items-center justify-between w-full gap-6">
+        <div className="flex flex-col items-start justify-start mb-8 sm:mb-10 md:mb-12">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-6">
             <h2
+              className="font-sans font-light text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl leading-[1.2] tracking-tight text-white text-left break-words"
               style={{
                 fontFamily: 'Albert Sans',
                 fontWeight: 300,
                 fontStyle: 'normal',
-                fontSize: 100,
-                lineHeight: '120%',
                 letterSpacing: 0,
                 color: '#FFFFFF',
-                textAlign: 'left',
                 margin: 0,
                 padding: 0,
                 flex: 1,
                 minWidth: 0,
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                whiteSpace: 'normal',
+                overflow: 'visible',
+                textOverflow: 'clip',
               }}
             >
               Explore Workflow
             </h2>
             <Link
               href="/workflows"
-              className="btn-jelajah flex items-center gap-3"
-              style={{ height: 60 }}
+              className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+              style={{ height: 'auto', minHeight: '60px' }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
               Jelajahi Workflow
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {workflows.map((workflow) => (
             <div
               key={workflow.id}
-              className="bg-gray-800 rounded-xl shadow-lg p-8 border border-gray-700
-                         hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out"
+              className="bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 border border-gray-700
+                         hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
+                         min-h-[200px] sm:min-h-[250px] lg:min-h-[300px]"
             >
-              <div className="flex items-center mb-4">
-                <svg className="h-8 w-8 text-blue-600 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 17V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2z" /></svg>
-                <h3 className="text-2xl font-bold text-white">{workflow.title}</h3>
+              <div className="flex items-start mb-3 sm:mb-4 gap-3 sm:gap-4">
+                <svg className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 17V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2z" />
+                </svg>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white break-words leading-tight">
+                  {workflow.title}
+                </h3>
               </div>
-              <p className="text-gray-300 leading-relaxed">{workflow.description}</p>
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed break-words">
+                {workflow.description}
+              </p>
             </div>
           ))}
         </div>
