@@ -14,7 +14,7 @@ const ConnectPage = () => {
             <div className="container mx-auto px-4 flex justify-center">
               <div className="max-w-4xl mx-auto text-center relative z-10">
                 <h2
-                  className="font-sans font-thin text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.1] tracking-tight text-white mb-6 sm:mb-8 md:mb-10 break-words"
+                  className="font-sans font-thin heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.1] tracking-tight text-white mb-6 sm:mb-8 md:mb-10 break-words"
                   style={{
                     fontFamily: 'Albert Sans, Arial, sans-serif',
                     fontWeight: 250,

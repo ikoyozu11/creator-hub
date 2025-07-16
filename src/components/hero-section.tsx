@@ -57,18 +57,18 @@ const HeroSection = () => {
       <div className="ellipse-angular-hero"></div>
 
       {/* HERO HEADING & SUBHEADING */}
-      <div className="container mx-auto px-4 pt-8 sm:pt-12 md:pt-16 lg:pt-20 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+      <div className="container mx-auto container-mobile pt-8 sm:pt-12 md:pt-16 lg:pt-20 flex flex-col space-mobile sm:space-mobile-lg md:gap-8 lg:gap-10">
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 w-full">
           {/* Kiri: Heading, Community, dan Deskripsi */}
           <div className="flex flex-col items-start flex-1 min-w-0">
-            <h1 className="font-sans font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left break-words">
+            <h1 className="font-sans font-semibold heading-mobile-2xl sm:heading-mobile-xl md:heading-mobile-lg lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left break-words">
               N8N Indonesia
             </h1>
-            <div className="font-sans font-thin text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] tracking-tight text-white/80 mb-2 text-left break-words">
+            <div className="font-sans font-thin heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] tracking-tight text-white/80 mb-2 text-left break-words">
               Community
             </div>
             <div 
-              className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-white mt-2 mb-0 text-left max-w-full"
+              className="body-text-mobile sm:body-text-mobile-lg md:text-lg lg:text-xl leading-relaxed text-white mt-2 mb-0 text-left max-w-full"
               style={{
                 fontFamily: 'Inter, Arial, sans-serif',
                 fontWeight: 400,
@@ -103,10 +103,10 @@ const HeroSection = () => {
       </div>
 
       {/* INSIGHT & BUTTONS */}
-      <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 flex flex-col items-center">
+      <div className="container mx-auto container-mobile py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 flex flex-col items-center">
         <div className="w-full max-w-4xl mx-auto">
           <h2 
-            className="font-sans font-thin text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.2] tracking-tight text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 break-words"
+            className="font-sans font-thin heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl leading-[1.2] tracking-tight text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 break-words"
             style={{
               fontFamily: 'Albert Sans, Arial, sans-serif',
               fontWeight: 250,
@@ -118,14 +118,14 @@ const HeroSection = () => {
             Dapatkan insight, workflow siap pakai, dan dukungan dari komunitas yang aktif dan solutif. Workflow Hebat Dimulai dari Sini.
           </h2>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 w-full max-w-md sm:max-w-none justify-center">
-          <a className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base whitespace-nowrap" href="/workflows">
+        <div className="flex flex-col sm:flex-row space-mobile sm:space-mobile-lg md:gap-6 w-full max-w-md sm:max-w-none justify-center">
+          <a className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap" href="/workflows">
             Jelajahi Workflow
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
-          <a className="btn-creator flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base whitespace-nowrap" href="/directory">
+          <a className="btn-creator flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap" href="/directory">
             Temukan Creator
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />

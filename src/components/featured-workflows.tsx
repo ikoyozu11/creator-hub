@@ -28,7 +28,7 @@ const FeaturedWorkflows = () => {
         <div className="flex flex-col items-start justify-start mb-8 sm:mb-10 md:mb-12">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-6">
             <h2
-              className="font-sans font-light text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl leading-[1.2] tracking-tight text-white text-left break-words"
+              className="font-sans font-light heading-mobile-2xl sm:heading-mobile-xl md:heading-mobile-lg lg:text-7xl xl:text-8xl 2xl:text-9xl leading-[1.2] tracking-tight text-white text-left break-words"
               style={{
                 fontFamily: 'Albert Sans',
                 fontWeight: 300,
@@ -48,7 +48,7 @@ const FeaturedWorkflows = () => {
             </h2>
             <Link
               href="/workflows"
-              className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+              className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap flex-shrink-0"
               style={{ height: 'auto', minHeight: '60px' }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
@@ -58,7 +58,7 @@ const FeaturedWorkflows = () => {
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {workflows.map((workflow) => (
             <div
               key={workflow.id}
@@ -70,11 +70,11 @@ const FeaturedWorkflows = () => {
                 <svg className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 17V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2z" />
                 </svg>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white break-words leading-tight">
+                <h3 className="text-responsive-lg sm:text-xl lg:text-2xl font-bold text-white break-words leading-tight">
                   {workflow.title}
                 </h3>
               </div>
-              <p className="text-sm sm:text-base text-gray-300 leading-relaxed break-words">
+              <p className="body-text-mobile sm:body-text-mobile-lg text-gray-300 leading-relaxed break-words">
                 {workflow.description}
               </p>
             </div>

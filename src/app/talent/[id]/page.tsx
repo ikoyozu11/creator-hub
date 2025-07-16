@@ -12,7 +12,7 @@ export default async function TalentProfilePage({ params }: TalentProfilePagePro
   const { id } = await params
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: '#201A2C' }}>
       <Suspense fallback={<TalentProfileSkeleton />}>
         <TalentProfile profileId={id} />
       </Suspense>

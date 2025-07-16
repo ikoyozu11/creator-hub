@@ -111,24 +111,26 @@ export default function CreatorDetailPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="animate-pulse">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
-            <div className="flex-1">
-              <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+      <div className="min-h-screen" style={{ background: '#201A2C' }}>
+        <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-20 max-w-4xl">
+          <div className="animate-pulse">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 bg-gray-700 rounded-full"></div>
+              <div className="flex-1">
+                <div className="h-6 bg-gray-700 rounded w-1/3 mb-2"></div>
+                <div className="h-4 bg-gray-700 rounded w-1/4"></div>
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <div className="h-4 bg-gray-200 rounded w-full mb-4"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            </div>
-            <div>
-              <div className="h-32 bg-gray-200 rounded mb-4"></div>
-              <div className="h-20 bg-gray-200 rounded"></div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <div className="h-4 bg-gray-700 rounded w-full mb-4"></div>
+                <div className="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
+                <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+              </div>
+              <div>
+                <div className="h-32 bg-gray-700 rounded mb-4"></div>
+                <div className="h-20 bg-gray-700 rounded"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -138,16 +140,33 @@ export default function CreatorDetailPage() {
 
   if (!creator) {
     return (
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="text-center">
-          <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold mb-2">Creator tidak ditemukan</h1>
-          <p className="text-gray-600 mb-4">
-            Creator yang Anda cari tidak ditemukan atau belum disetujui
-          </p>
-          <Button onClick={() => router.push("/directory")}>
-            Kembali ke Directory
-          </Button>
+      <div className="min-h-screen" style={{ background: '#201A2C' }}>
+        <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-20 max-w-4xl">
+          <div className="text-center">
+            <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h1 
+              className="text-2xl font-bold mb-2 text-white"
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
+            >
+              Creator tidak ditemukan
+            </h1>
+            <p 
+              className="text-white/80 mb-4"
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
+            >
+              Creator yang Anda cari tidak ditemukan atau belum disetujui
+            </p>
+            <Button 
+              onClick={() => router.push("/directory")}
+              className="text-white border-white/20 hover:bg-white/10"
+            >
+              Kembali ke Directory
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -171,16 +190,17 @@ export default function CreatorDetailPage() {
   ].filter(link => link.url);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Back Button */}
-      <Button
-        variant="outline"
-        className="mb-6 flex items-center gap-2"
-        onClick={() => router.back()}
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Kembali
-      </Button>
+    <div className="min-h-screen" style={{ background: '#201A2C' }}>
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-20 max-w-4xl">
+        {/* Back Button */}
+        <Button
+          variant="outline"
+          className="mb-6 flex items-center gap-2 text-white border-white/20 hover:bg-white/10"
+          onClick={() => router.back()}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Kembali
+        </Button>
 
       {/* Header */}
       <div className="flex items-start gap-6 mb-8">
@@ -193,31 +213,61 @@ export default function CreatorDetailPage() {
         
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold">{creator.name}</h1>
+            <h1 
+              className="text-3xl font-bold text-white"
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
+            >
+              {creator.name}
+            </h1>
             <Badge className={`${getExperienceColor(creator.experience_level)}`}>
               {creator.experience_level || "intermediate"}
             </Badge>
             <div className={`w-3 h-3 rounded-full ${getAvailabilityColor(creator.availability)}`}></div>
-            <span className="text-sm text-gray-600">
+            <span 
+              className="text-sm text-white/80"
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
+            >
               {getAvailabilityText(creator.availability)}
             </span>
           </div>
           
           {creator.location && (
-            <div className="flex items-center gap-1 text-gray-600 mb-2">
+            <div className="flex items-center gap-1 text-white/80 mb-2">
               <MapPin className="w-4 h-4" />
-              <span>{creator.location}</span>
+              <span 
+                style={{
+                  fontFamily: 'Albert Sans, Arial, sans-serif',
+                }}
+              >
+                {creator.location}
+              </span>
             </div>
           )}
           
           {creator.hourly_rate && (
-            <div className="text-lg font-semibold text-green-600 mb-2">
+            <div 
+              className="text-lg font-semibold text-green-400 mb-2"
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
+            >
               ${creator.hourly_rate}/jam
             </div>
           )}
           
           {creator.bio && (
-            <p className="text-gray-600 leading-relaxed">{creator.bio}</p>
+            <p 
+              className="text-white/80 leading-relaxed"
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
+            >
+              {creator.bio}
+            </p>
           )}
         </div>
       </div>
@@ -227,14 +277,21 @@ export default function CreatorDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Skills */}
           {creator.skills && creator.skills.length > 0 && (
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700">
               <CardHeader>
-                <CardTitle>Keahlian</CardTitle>
+                <CardTitle 
+                  className="text-white"
+                  style={{
+                    fontFamily: 'Albert Sans, Arial, sans-serif',
+                  }}
+                >
+                  Keahlian
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {creator.skills.map((skill, index) => (
-                    <Badge key={index} variant="secondary">
+                    <Badge key={index} variant="secondary" className="bg-gray-700 text-white">
                       {skill}
                     </Badge>
                   ))}
@@ -385,6 +442,7 @@ export default function CreatorDetailPage() {
             </CardContent>
           </Card>
         </div>
+      </div>
       </div>
     </div>
   );

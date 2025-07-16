@@ -121,7 +121,11 @@ export function HeaderNav() {
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 sm:w-64 p-0">
+              <DropdownMenuContent 
+                align="end" 
+                className="w-56 sm:w-64 p-0 border-white/20"
+                style={{ backgroundColor: '#201A2C' }}
+              >
                 <div className="flex flex-col items-center p-3 sm:p-4 pb-2">
                   <Avatar className="h-12 w-12 sm:h-16 sm:w-16 mb-2">
                     <AvatarImage
@@ -135,20 +139,20 @@ export function HeaderNav() {
                       {getInitials(profile?.name || user.email)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="font-semibold text-sm sm:text-lg text-center w-full truncate">
+                  <div className="font-semibold text-sm sm:text-lg text-center w-full truncate text-white">
                     {profile?.name || user.email}
                   </div>
-                  <div className="text-xs text-gray-500 text-center w-full truncate">
+                  <div className="text-xs text-gray-300 text-center w-full truncate">
                     {user.email}
                   </div>
                 </div>
-                <div className="border-t my-2" />
+                <div className="border-t border-white/20 my-2" />
                 <DropdownMenuItem
                   onClick={() => {
                     router.push("/dashboard-profile/profile");
                     closeMobileMenu();
                   }}
-                  className="text-sm sm:text-base"
+                  className="text-sm sm:text-base text-white hover:bg-white/10"
                 >
                   Dashboard Profile
                 </DropdownMenuItem>
@@ -157,7 +161,7 @@ export function HeaderNav() {
                     handleSignOut();
                     closeMobileMenu();
                   }}
-                  className="text-red-600 text-sm sm:text-base"
+                  className="text-red-400 text-sm sm:text-base hover:bg-white/10"
                 >
                   Sign Out
                 </DropdownMenuItem>
@@ -183,7 +187,7 @@ export function HeaderNav() {
           <div className="container mx-auto px-4 py-4 space-y-2">
             <Link
               href="/"
-              className={`block w-full text-left px-4 py-3 rounded-lg text-sm sm:text-base transition-colors ${
+              className={`block w-full text-left px-4 py-3 rounded-lg button-text-mobile sm:button-text-mobile-lg transition-colors ${
                 pathname === '/' 
                   ? 'bg-white/20 text-white' 
                   : 'text-white/80 hover:bg-white/10 hover:text-white'
@@ -194,7 +198,7 @@ export function HeaderNav() {
             </Link>
             <Link
               href="/workflows"
-              className={`block w-full text-left px-4 py-3 rounded-lg text-sm sm:text-base transition-colors ${
+              className={`block w-full text-left px-4 py-3 rounded-lg button-text-mobile sm:button-text-mobile-lg transition-colors ${
                 pathname === '/workflows' 
                   ? 'bg-white/20 text-white' 
                   : 'text-white/80 hover:bg-white/10 hover:text-white'
@@ -205,7 +209,7 @@ export function HeaderNav() {
             </Link>
             <Link
               href="/directory"
-              className={`block w-full text-left px-4 py-3 rounded-lg text-sm sm:text-base transition-colors ${
+              className={`block w-full text-left px-4 py-3 rounded-lg button-text-mobile sm:button-text-mobile-lg transition-colors ${
                 pathname === '/directory' 
                   ? 'bg-white/20 text-white' 
                   : 'text-white/80 hover:bg-white/10 hover:text-white'
@@ -216,7 +220,7 @@ export function HeaderNav() {
             </Link>
             <Link
               href="/connect"
-              className={`block w-full text-left px-4 py-3 rounded-lg text-sm sm:text-base transition-colors ${
+              className={`block w-full text-left px-4 py-3 rounded-lg button-text-mobile sm:button-text-mobile-lg transition-colors ${
                 pathname === '/connect' 
                   ? 'bg-white/20 text-white' 
                   : 'text-white/80 hover:bg-white/10 hover:text-white'

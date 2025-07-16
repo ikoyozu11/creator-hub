@@ -9,23 +9,23 @@ const MainFooter = () => {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-0">
           {/* Kiri: Judul & Deskripsi */}
           <div className="flex-1 min-w-[260px]">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-2">N8N Indonesia<br /><span className="font-light">Community</span></h2>
-            <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-md mt-4">
+            <h2 className="heading-mobile-xl sm:heading-mobile-lg md:text-5xl font-semibold leading-tight mb-2">N8N Indonesia<br /><span className="font-light">Community</span></h2>
+            <p className="body-text-mobile sm:body-text-mobile-lg md:text-lg text-white/80 max-w-md mt-4">
               Komunitas automation terbesar di Indonesia. Bergabunglah dengan ribuan developer yang membangun workflow powerful.
             </p>
           </div>
           {/* Kanan: Menu */}
           <div className="flex flex-row gap-12 sm:gap-16 md:gap-24 mt-6 md:mt-0">
             <div>
-              <h4 className="font-semibold mb-3 text-sm sm:text-base">Explore</h4>
-              <ul className="space-y-2 text-white/80 text-sm sm:text-base">
+              <h4 className="font-semibold mb-3 button-text-mobile sm:button-text-mobile-lg">Explore</h4>
+              <ul className="space-y-2 text-white/80 body-text-mobile sm:body-text-mobile-lg">
                 <li><a href="/workflows" className="hover:underline">Workflow</a></li>
                 <li><a href="/directory" className="hover:underline">Creator</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-sm sm:text-base">About Us</h4>
-              <ul className="space-y-2 text-white/80 text-sm sm:text-base">
+              <h4 className="font-semibold mb-3 button-text-mobile sm:button-text-mobile-lg">About Us</h4>
+              <ul className="space-y-2 text-white/80 body-text-mobile sm:body-text-mobile-lg">
                 <li><a href="#" className="hover:underline">Terms of Use</a></li>
                 <li><a href="#" className="hover:underline">Service Policy</a></li>
               </ul>
@@ -36,7 +36,7 @@ const MainFooter = () => {
         <div className="w-full border-t border-white/20 my-6 sm:my-8"></div>
         {/* Bawah: copyright & ikon sosial */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs sm:text-sm text-white/60 text-center md:text-left">
+          <p className="text-responsive-xs sm:text-sm text-white/60 text-center md:text-left">
             &copy; 2025 N8N Indonesia Creator Hub. Made with by the community.
           </p>
           <div className="flex items-center gap-4 sm:gap-6 mt-2 md:mt-0">

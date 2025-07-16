@@ -13,7 +13,7 @@ const AboutSection = () => {
           <div className="container mx-auto px-4 flex justify-center">
             <div className="max-w-4xl mx-auto text-center relative z-10">
               <h2
-                className="font-sans font-thin text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.1] tracking-tight text-white mb-6 sm:mb-8 md:mb-10 break-words"
+                className="font-sans font-thin heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.1] tracking-tight text-white mb-6 sm:mb-8 md:mb-10 break-words"
                 style={{
                   fontFamily: 'Albert Sans, Arial, sans-serif',
                   fontWeight: 250,
@@ -25,7 +25,7 @@ const AboutSection = () => {
                 Platform ini hadir untuk menghubungkan creator
               </h2>
               <p
-                className="font-sans font-light text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-white break-words"
+                className="font-sans font-light body-text-mobile sm:body-text-mobile-lg md:text-lg lg:text-xl leading-relaxed text-white break-words"
                 style={{
                   fontFamily: 'Inter, Arial, sans-serif',
                   fontWeight: 300,
@@ -40,7 +40,7 @@ const AboutSection = () => {
                 Di sini, Anda bisa menemukan kreator berbakat, menjelajahi berbagai workflow, hingga membangun proses kerja yang lebih terarah dan efisien.
               </p>
               <div className="mt-8 sm:mt-10 flex justify-center">
-                <a href="/connect" className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg whitespace-nowrap">
+                <a href="/connect" className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg lg:text-lg whitespace-nowrap">
                   Connect With Us
                 </a>
               </div>
@@ -78,8 +78,8 @@ const AboutSection = () => {
           </svg>
           <div className="flex flex-col items-start w-full text-left">
             <div className="mb-8 sm:mb-10 md:mb-12 z-10 w-full">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin text-white/80 mb-3 sm:mb-4 break-words" style={{fontFamily: 'Albert Sans, Arial, sans-serif'}}>Key Benefits</h3>
-              <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl break-words">
+              <h3 className="heading-mobile sm:heading-mobile-lg md:text-4xl lg:text-5xl font-thin text-white/80 mb-3 sm:mb-4 break-words" style={{fontFamily: 'Albert Sans, Arial, sans-serif'}}>Key Benefits</h3>
+              <p className="body-text-mobile sm:body-text-mobile-lg md:text-lg text-white/80 max-w-2xl break-words">
                 Kami menghadirkan platform yang memudahkan Anda untuk menemukan kreator, menjelajahi workflow, dan membangun proses kerja yang lebih efektif.
               </p>
             </div>
@@ -90,8 +90,8 @@ const AboutSection = () => {
                   <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="sm:w-5 sm:h-5"><circle cx="10" cy="10" r="10" fill="#C084FC"/><path d="M6 10.5L9 13.5L14 8.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-base sm:text-lg md:text-xl text-white/90 font-normal mb-1 break-words">Share Your Workflow</div>
-                  <div className="font-bold text-white text-sm sm:text-base md:text-lg leading-snug break-words">Bagikan workflow Anda untuk membantu kreator lain menemukan cara kerja yang lebih efisien dan terarah.</div>
+                  <div className="text-responsive-base sm:text-lg md:text-xl text-white/90 font-normal mb-1 break-words">Share Your Workflow</div>
+                  <div className="font-bold text-white body-text-mobile sm:body-text-mobile-lg md:text-lg leading-snug break-words">Bagikan workflow Anda untuk membantu kreator lain menemukan cara kerja yang lebih efisien dan terarah.</div>
                 </div>
               </div>
               {/* Item 2 */}
@@ -110,8 +110,8 @@ const AboutSection = () => {
                   <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="sm:w-5 sm:h-5"><circle cx="10" cy="10" r="10" fill="#C084FC"/><path d="M6 10.5L9 13.5L14 8.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-base sm:text-lg md:text-xl text-white/90 font-normal mb-1 break-words">Connect & Collaborate</div>
-                  <div className="font-bold text-white text-sm sm:text-base md:text-lg leading-snug break-words">Bangun koneksi dan kolaborasi dengan kreator lain untuk mengembangkan proyek yang lebih maksimal.</div>
+                  <div className="text-responsive-base sm:text-lg md:text-xl text-white/90 font-normal mb-1 break-words">Connect & Collaborate</div>
+                  <div className="font-bold text-white body-text-mobile sm:body-text-mobile-lg md:text-lg leading-snug break-words">Bangun koneksi dan kolaborasi dengan kreator lain untuk mengembangkan proyek yang lebih maksimal.</div>
                 </div>
               </div>
             </div>
@@ -121,7 +121,7 @@ const AboutSection = () => {
       {/* Call to Action Section */}
       <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 mt-12 sm:mt-16 md:mt-20 lg:mt-24 px-4 md:px-8 lg:px-12 py-12 sm:py-16" style={{background: 'transparent'}}>
         <div className="w-full lg:w-auto flex-1 flex flex-col items-center lg:items-start justify-center text-center lg:text-left">
-          <div className="font-sans font-extralight text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed text-[#CFC6E2] break-words"
+          <div className="font-sans font-extralight text-responsive-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed text-[#CFC6E2] break-words"
             style={{
               fontFamily: 'Albert Sans, Arial, sans-serif',
               fontWeight: 200,
@@ -132,22 +132,22 @@ const AboutSection = () => {
             Ayo, mulai perjalanan Anda hari ini!
           </div>
         </div>
-        <a
-          href="/auth"
-          className="rounded-full px-6 sm:px-8 lg:px-10 py-3 sm:py-4 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 sm:gap-3 mt-6 lg:mt-0 lg:ml-8 whitespace-nowrap flex-shrink-0"
-          style={{
-            background: 'linear-gradient(90deg, #D900FF 0%, #9500FF 100%)',
-            color: '#fff',
-            boxShadow: '0 2px 8px 0 #9500FF33',
-            minWidth: '180px',
-            transition: 'filter 0.2s',
-          }}
-        >
-          Join Community
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75h2.25A2.25 2.25 0 0 1 21 6v12a2.25 2.25 0 0 1-2.25 2.25H16.5m-6-4.5 3-3m0 0-3-3m3 3H3" />
-          </svg>
-        </a>
+                  <a
+            href="/auth"
+            className="rounded-full px-6 sm:px-8 lg:px-10 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg font-semibold flex items-center justify-center gap-2 sm:gap-3 mt-6 lg:mt-0 lg:ml-8 whitespace-nowrap flex-shrink-0"
+            style={{
+              background: 'linear-gradient(90deg, #D900FF 0%, #9500FF 100%)',
+              color: '#fff',
+              boxShadow: '0 2px 8px 0 #9500FF33',
+              minWidth: '180px',
+              transition: 'filter 0.2s',
+            }}
+          >
+            Join Community
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75h2.25A2.25 2.25 0 0 1 21 6v12a2.25 2.25 0 0 1-2.25 2.25H16.5m-6-4.5 3-3m0 0-3-3m3 3H3" />
+            </svg>
+          </a>
       </div>
     </section>
   );

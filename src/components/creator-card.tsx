@@ -28,20 +28,20 @@ interface CreatorCardProps {
 export default function CreatorCard({ creator, variant = "default", showStats = false }: CreatorCardProps) {
   const getExperienceColor = (level: string | null) => {
     switch (level) {
-      case "expert": return "bg-purple-100 text-purple-800";
-      case "advanced": return "bg-blue-100 text-blue-800";
-      case "intermediate": return "bg-green-100 text-green-800";
-      case "beginner": return "bg-yellow-100 text-yellow-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "expert": return "bg-purple-500/20 text-purple-400";
+      case "advanced": return "bg-blue-500/20 text-blue-400";
+      case "intermediate": return "bg-green-500/20 text-green-400";
+      case "beginner": return "bg-yellow-500/20 text-yellow-400";
+      default: return "bg-gray-500/20 text-gray-400";
     }
   };
 
   const getAvailabilityColor = (status: string | null) => {
     switch (status) {
-      case "available": return "bg-green-100 text-green-800";
-      case "busy": return "bg-yellow-100 text-yellow-800";
-      case "unavailable": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "available": return "bg-green-500/20 text-green-400";
+      case "busy": return "bg-yellow-500/20 text-yellow-400";
+      case "unavailable": return "bg-red-500/20 text-red-400";
+      default: return "bg-gray-500/20 text-gray-400";
     }
   };
 
@@ -63,27 +63,27 @@ export default function CreatorCard({ creator, variant = "default", showStats = 
     if (variant === "featured") {
       return "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300";
     }
-    return "bg-white hover:shadow-lg transition-shadow duration-200";
+    return "bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-200";
   };
 
   const getTextStyle = () => {
     if (variant === "featured") {
       return "text-white";
     }
-    return "text-gray-900";
+    return "text-white";
   };
 
   const getSubTextStyle = () => {
     if (variant === "featured") {
       return "text-gray-300";
     }
-    return "text-gray-600";
+    return "text-white/80";
   };
 
   return (
     <Card className={`h-full transition-all duration-200 ${variant !== "compact" ? "hover:shadow-xl hover:scale-[1.03]" : ""} ${getCardStyle()}`}>
-      <CardHeader className="pb-3">
-        <div className="flex items-start gap-3">
+      <CardContent className="p-4">
+        <div className="flex items-center gap-3">
           <Avatar className="w-12 h-12">
             <AvatarImage src={creator.profile_image || undefined} alt={creator.name} />
             <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
@@ -92,88 +92,15 @@ export default function CreatorCard({ creator, variant = "default", showStats = 
           </Avatar>
           
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between">
-              <div className="flex-1 min-w-0">
-                <h3 className={`font-semibold text-lg truncate ${getTextStyle()}`}>{creator.name}</h3>
-                {creator.location && (
-                  <div className={`flex items-center gap-1 text-sm mt-1 ${getSubTextStyle()}`}>
-                    <MapPin className="w-3 h-3" />
-                    <span className="truncate">{creator.location}</span>
-                  </div>
-                )}
-              </div>
-              
-              <div className="flex flex-col items-end gap-1">
-                <Badge className={getExperienceColor(creator.experience_level)}>
-                  {creator.experience_level || "Intermediate"}
-                </Badge>
-                <Badge variant="outline" className={getAvailabilityColor(creator.availability)}>
-                  {getAvailabilityText(creator.availability)}
-                </Badge>
-              </div>
-            </div>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent className="pt-0">
-        {creator.bio && (
-          <p className={`text-sm mb-3 line-clamp-2 ${getSubTextStyle()}`}>
-            {creator.bio}
-          </p>
-        )}
-
-        {creator.skills && creator.skills.length > 0 && (
-          <div className="mb-3">
-            <div className="flex flex-wrap gap-1">
-              {creator.skills.slice(0, 3).map((skill, index) => (
-                <Badge key={index} variant="secondary" className="text-xs">
-                  {skill}
-                </Badge>
-              ))}
-              {creator.skills.length > 3 && (
-                <Badge variant="outline" className="text-xs">
-                  +{creator.skills.length - 3} lagi
-                </Badge>
-              )}
-            </div>
-          </div>
-        )}
-
-        {showStats && (
-          <div className={`grid grid-cols-3 gap-2 mb-3 text-xs ${getSubTextStyle()}`}>
-            <div className="flex items-center gap-1">
-              <Star className="w-3 h-3 text-yellow-500 fill-current" />
-              <span>4.8</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Users className="w-3 h-3 text-blue-500" />
-              <span>1.2k</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Clock className="w-3 h-3 text-green-500" />
-              <span>24h</span>
-            </div>
-          </div>
-        )}
-
-        <div className="flex items-center justify-between">
-          {creator.hourly_rate && (
-            <div className="flex items-center gap-1 text-sm font-medium">
-              <DollarSign className="w-4 h-4 text-green-600" />
-              <span className={getTextStyle()}>Rp {creator.hourly_rate.toLocaleString()}/jam</span>
-            </div>
-          )}
-          
-          <Link href={`/talent/${creator.id}`}>
-            <Button 
-              size="sm" 
-              variant={variant === "featured" ? "secondary" : "outline"}
-              className={variant === "featured" ? "bg-white/20 text-white border-white/30 hover:bg-white/30" : ""}
+            <h3 
+              className={`font-semibold text-lg truncate ${getTextStyle()}`}
+              style={{
+                fontFamily: 'Albert Sans, Arial, sans-serif',
+              }}
             >
-              Lihat Profil
-            </Button>
-          </Link>
+              {creator.name}
+            </h3>
+          </div>
         </div>
       </CardContent>
     </Card>

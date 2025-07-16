@@ -10,6 +10,119 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Responsive text sizing untuk mobile */
+  .text-responsive-xs {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+  
+  .text-responsive-sm {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .text-responsive-base {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+  }
+  
+  .text-responsive-lg {
+    font-size: clamp(1.125rem, 3.5vw, 1.25rem);
+  }
+  
+  .text-responsive-xl {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+  
+  .text-responsive-2xl {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+  
+  .text-responsive-3xl {
+    font-size: clamp(1.875rem, 6vw, 2.5rem);
+  }
+  
+  .text-responsive-4xl {
+    font-size: clamp(2.25rem, 7vw, 3rem);
+  }
+  
+  .text-responsive-5xl {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+  }
+  
+  .text-responsive-6xl {
+    font-size: clamp(3rem, 9vw, 4rem);
+  }
+  
+  .text-responsive-7xl {
+    font-size: clamp(3.5rem, 10vw, 4.5rem);
+  }
+  
+  .text-responsive-8xl {
+    font-size: clamp(4rem, 11vw, 5rem);
+  }
+  
+  /* Mobile-first responsive headings */
+  .heading-mobile {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  
+  .heading-mobile-lg {
+    font-size: clamp(2rem, 7vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  
+  .heading-mobile-xl {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  
+  .heading-mobile-2xl {
+    font-size: clamp(3rem, 9vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  
+  /* Responsive body text */
+  .body-text-mobile {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    line-height: 1.6;
+  }
+  
+  .body-text-mobile-lg {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+    line-height: 1.6;
+  }
+  
+  /* Responsive button text */
+  .button-text-mobile {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+  
+  .button-text-mobile-lg {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  /* Responsive container padding */
+  .container-mobile {
+    padding-left: clamp(1rem, 4vw, 2rem);
+    padding-right: clamp(1rem, 4vw, 2rem);
+  }
+  
+  /* Responsive spacing */
+  .space-mobile {
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
+  
+  .space-mobile-lg {
+    gap: clamp(1rem, 3vw, 1.5rem);
+  }
+  
+  .space-mobile-xl {
+    gap: clamp(1.5rem, 4vw, 2rem);
+  }
 }
 
 @layer base {
@@ -93,6 +206,8 @@ body {
     @apply text-foreground;
     min-height: 100vh;
     overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   html {
@@ -108,6 +223,64 @@ body {
   
   main {
     flex: 1;
+  }
+  
+  /* Prevent text overflow on mobile */
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Mobile-specific text adjustments */
+  @media (max-width: 768px) {
+    h1, h2, h3 {
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em !important;
+    }
+    
+    p, span, div {
+      line-height: 1.5 !important;
+    }
+    
+    .container {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+    
+    /* Better grid layout for mobile */
+    .grid {
+      gap: 1rem !important;
+    }
+    
+    /* Improve card layouts */
+    .bg-gray-800 {
+      padding: 1rem !important;
+    }
+    
+    /* Better spacing for mobile */
+    .gap-4 {
+      gap: 0.75rem !important;
+    }
+    
+    .gap-6 {
+      gap: 1rem !important;
+    }
+    
+    .gap-8 {
+      gap: 1.5rem !important;
+    }
+  }
+  
+  /* Tablet adjustments */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .grid {
+      gap: 1.5rem !important;
+    }
+    
+    .bg-gray-800 {
+      padding: 1.5rem !important;
+    }
   }
 }
 
