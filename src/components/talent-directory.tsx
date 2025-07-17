@@ -144,21 +144,21 @@ export function TalentDirectory() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg text-gray-900 truncate">{profile.name}</h3>
+                  <h3 className="font-semibold text-responsive-lg sm:text-lg text-gray-900 truncate">{profile.name}</h3>
                   {profile.location && (
-                    <div className="flex items-center text-gray-500 text-sm mt-1">
+                    <div className="flex items-center text-gray-500 text-responsive-sm sm:text-sm mt-1">
                       <MapPin className="h-3 w-3 mr-1" />
                       {profile.location}
                     </div>
                   )}
                   <div className="flex items-center space-x-2 mt-2">
                     {profile.experience_level && (
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="text-responsive-xs sm:text-xs">
                         {profile.experience_level}
                       </Badge>
                     )}
                     {profile.availability && (
-                      <Badge variant={profile.availability === "available" ? "default" : "outline"} className="text-xs">
+                      <Badge variant={profile.availability === "available" ? "default" : "outline"} className="text-responsive-xs sm:text-xs">
                         {profile.availability}
                       </Badge>
                     )}
@@ -168,18 +168,18 @@ export function TalentDirectory() {
             </CardHeader>
 
             <CardContent className="pt-0">
-              <p className="text-gray-600 text-sm mb-4 line-clamp-3">{profile.bio}</p>
+              <p className="text-gray-600 text-responsive-sm sm:text-sm mb-4 line-clamp-3">{profile.bio}</p>
 
               {profile.skills && profile.skills.length > 0 && (
                 <div className="mb-4">
                   <div className="flex flex-wrap gap-1">
                     {profile.skills.slice(0, 3).map((skill) => (
-                      <Badge key={skill} variant="outline" className="text-xs">
+                      <Badge key={skill} variant="outline" className="text-responsive-xs sm:text-xs">
                         {skill}
                       </Badge>
                     ))}
                     {profile.skills.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
+                      <Badge variant="outline" className="text-responsive-xs sm:text-xs">
                         +{profile.skills.length - 3} more
                       </Badge>
                     )}
@@ -189,7 +189,7 @@ export function TalentDirectory() {
 
               <div className="flex items-center justify-between">
                 {profile.hourly_rate && (
-                  <div className="flex items-center text-gray-600 text-sm">
+                  <div className="flex items-center text-gray-600 text-responsive-sm sm:text-sm">
                     <DollarSign className="h-3 w-3 mr-1" />${profile.hourly_rate}/hr
                   </div>
                 )}

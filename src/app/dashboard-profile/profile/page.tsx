@@ -53,7 +53,7 @@ export default function ProfileSubPage() {
   return (
     <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl" style={{ backgroundColor: '#201A2C', minHeight: '100vh' }}>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-4">
-        <h1 className="text-xl sm:text-2xl font-bold text-white">Profil Saya</h1>
+        <h1 className="heading-mobile sm:heading-mobile-lg md:text-xl sm:text-2xl font-bold text-white">Profil Saya</h1>
         <Button asChild className="w-full sm:w-auto">
           <Link href="/dashboard-profile/profile/edit">
             <Pencil className="h-4 w-4 mr-2" />
@@ -64,7 +64,7 @@ export default function ProfileSubPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Profile Sidebar */}
-        <div className="lg:col-span-1 flex justify-center order-2 lg:order-1">
+        <div className="lg:col-span-1 flex justify-center order-1 lg:order-1">
           <Card className="sticky top-4 sm:top-8 w-full max-w-xs md:max-w-sm mx-auto bg-white/10 backdrop-blur-sm border border-white/20">
             <CardHeader className="text-center p-4 sm:p-6">
               <Avatar className="h-24 w-24 sm:h-32 sm:w-32 mx-auto mb-4">
@@ -76,7 +76,7 @@ export default function ProfileSubPage() {
                     .join("")}
                 </AvatarFallback>
               </Avatar>
-              <h1 className="text-xl sm:text-2xl font-bold text-white">{profile?.name}</h1>
+              <h1 className="heading-mobile sm:heading-mobile-lg md:text-xl sm:text-2xl font-bold text-white">{profile?.name}</h1>
               {profile?.location && (
                 <div className="flex items-center justify-center text-gray-300 mt-2 text-sm sm:text-base">
                   <MapPin className="h-4 w-4 mr-1" />
@@ -88,9 +88,9 @@ export default function ProfileSubPage() {
             <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
               {/* Status Badges */}
               <div className="flex flex-wrap gap-2 justify-center">
-                {profile?.experience_level && <Badge variant="secondary" className="text-xs sm:text-sm bg-white/20 text-white border-white/30">{profile.experience_level}</Badge>}
+                {profile?.experience_level && <Badge variant="secondary" className="text-responsive-xs sm:text-xs md:text-sm bg-white/20 text-white border-white/30">{profile.experience_level}</Badge>}
                 {profile?.availability && (
-                  <Badge variant={profile.availability === "available" ? "default" : "outline"} className="text-xs sm:text-sm bg-white/20 text-white border-white/30">
+                  <Badge variant={profile.availability === "available" ? "default" : "outline"} className="text-responsive-xs sm:text-xs md:text-sm bg-white/20 text-white border-white/30">
                     {profile.availability}
                   </Badge>
                 )}
@@ -104,7 +104,7 @@ export default function ProfileSubPage() {
                   <h3 className="font-semibold text-white mb-3 text-sm sm:text-base">Skills</h3>
                   <div className="flex flex-wrap gap-2">
                     {profile.skills.map((skill: string) => (
-                      <Badge key={skill} variant="outline" className="text-xs sm:text-sm bg-transparent border-white/30 text-white">
+                      <Badge key={skill} variant="outline" className="text-responsive-xs sm:text-xs md:text-sm bg-transparent border-white/30 text-white">
                         {skill}
                       </Badge>
                     ))}
@@ -162,14 +162,14 @@ export default function ProfileSubPage() {
         </div>
 
         {/* Main Content */}
-        <div className="lg:col-span-2 order-1 lg:order-2 space-y-6 sm:space-y-8">
+        <div className="lg:col-span-2 order-2 lg:order-2 space-y-6 sm:space-y-8">
           {/* About Section */}
           <Card className="bg-white/10 backdrop-blur-sm border border-white/20">
             <CardHeader className="p-4 sm:p-6">
-              <h2 className="text-lg sm:text-xl font-semibold text-white">About</h2>
+              <h2 className="heading-mobile sm:heading-mobile-lg md:text-lg sm:text-xl font-semibold text-white">About</h2>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-sm sm:text-base text-gray-300 leading-relaxed whitespace-pre-wrap">{profile?.bio || "No bio available."}</p>
+              <p className="body-text-mobile sm:body-text-mobile-lg md:text-sm sm:text-base text-gray-300 leading-relaxed whitespace-pre-wrap">{profile?.bio || "No bio available."}</p>
             </CardContent>
           </Card>
         </div>

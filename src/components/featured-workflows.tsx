@@ -26,9 +26,9 @@ const FeaturedWorkflows = () => {
     <section className="py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-start justify-start mb-8 sm:mb-10 md:mb-12">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between w-full gap-4 sm:gap-6">
             <h2
-              className="font-sans font-light heading-mobile-2xl sm:heading-mobile-xl md:heading-mobile-lg lg:text-7xl xl:text-8xl 2xl:text-9xl leading-[1.2] tracking-tight text-white text-left break-words"
+              className="font-sans font-light heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-7xl xl:text-8xl 2xl:text-9xl leading-[10.2] tracking-tight text-white text-left break-words"
               style={{
                 fontFamily: 'Albert Sans',
                 fontWeight: 300,
@@ -48,13 +48,13 @@ const FeaturedWorkflows = () => {
             </h2>
             <Link
               href="/workflows"
-              className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap flex-shrink-0"
-              style={{ height: 'auto', minHeight: '60px' }}
+              className="btn-jelajah w-auto flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap flex-shrink-0"
+              style={{ height: 'auto', minHeight: '44px' }}
             >
+              Jelajahi Workflow
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-              Jelajahi Workflow
             </Link>
           </div>
         </div>
@@ -74,7 +74,7 @@ const FeaturedWorkflows = () => {
                   {workflow.title}
                 </h3>
               </div>
-              <p className="body-text-mobile sm:body-text-mobile-lg text-gray-300 leading-relaxed break-words">
+              <p className="body-text-mobile sm:body-text-mobile-lg text-gray-300 leading-relaxed break-words line-clamp-3">
                 {workflow.description}
               </p>
             </div>

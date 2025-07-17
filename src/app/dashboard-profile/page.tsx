@@ -95,15 +95,15 @@ export default function DashboardPage() {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Dashboard Creator</h1>
-        <p className="text-gray-600">Temukan dan hubungi creator automation terbaik</p>
+        <h1 className="heading-mobile sm:heading-mobile-lg md:text-2xl sm:text-3xl font-bold mb-2">Dashboard Creator</h1>
+        <p className="body-text-mobile sm:body-text-mobile-lg md:text-base text-gray-600">Temukan dan hubungi creator automation terbaik</p>
       </div>
 
       {/* Meet the Creators Section (Dummy) */}
       <div className="mb-12">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-10 gap-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin text-white">Meet the Creators</h2>
-          <a href="/directory" className="btn-jelajah flex items-center gap-2 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-full text-white text-sm sm:text-base font-medium bg-gradient-to-r from-fuchsia-500 to-violet-600 hover:from-fuchsia-600 hover:to-violet-700 transition-all whitespace-nowrap">
+          <h2 className="heading-mobile-xl sm:heading-mobile-lg md:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin text-white">Meet the Creators</h2>
+          <a href="/directory" className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full text-white button-text-mobile sm:button-text-mobile-lg font-medium bg-gradient-to-r from-fuchsia-500 to-violet-600 hover:from-fuchsia-600 hover:to-violet-700 transition-all whitespace-nowrap flex-shrink-0" style={{ height: 'auto', minHeight: '60px' }}>
             Temukan Creator
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -116,8 +116,8 @@ export default function DashboardPage() {
             <div key={i} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-center sm:text-left">
               <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gray-500 rounded-full flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="font-bold text-white text-base sm:text-lg mb-1">John Hopkins</div>
-                <div className="text-gray-300 text-sm sm:text-base">Lead Developer,<br/>CEO</div>
+                <div className="font-bold text-white text-responsive-base sm:text-base md:text-lg mb-1">John Hopkins</div>
+                <div className="text-gray-300 text-responsive-sm sm:text-sm md:text-base">Lead Developer,<br/>CEO</div>
               </div>
             </div>
           ))}
@@ -133,8 +133,8 @@ export default function DashboardPage() {
                 <Users className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-xs sm:text-sm text-gray-600">Total Creator</p>
-                <p className="text-xl sm:text-2xl font-bold">{stats.totalCreators}</p>
+                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Total Creator</p>
+                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.totalCreators}</p>
               </div>
             </div>
           </CardContent>
@@ -147,8 +147,8 @@ export default function DashboardPage() {
                 <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-xs sm:text-sm text-gray-600">Tersedia</p>
-                <p className="text-xl sm:text-2xl font-bold">{stats.availableCreators}</p>
+                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Tersedia</p>
+                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.availableCreators}</p>
               </div>
             </div>
           </CardContent>
@@ -161,8 +161,8 @@ export default function DashboardPage() {
                 <Star className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-xs sm:text-sm text-gray-600">Expert Level</p>
-                <p className="text-xl sm:text-2xl font-bold">{stats.expertCreators}</p>
+                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Expert Level</p>
+                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.expertCreators}</p>
               </div>
             </div>
           </CardContent>
@@ -175,8 +175,8 @@ export default function DashboardPage() {
                 <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 fill-current" />
               </div>
               <div>
-                <p className="text-xs sm:text-sm text-gray-600">Rating Rata-rata</p>
-                <p className="text-xl sm:text-2xl font-bold">{stats.averageRating}</p>
+                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Rating Rata-rata</p>
+                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.averageRating}</p>
               </div>
             </div>
           </CardContent>
@@ -186,7 +186,7 @@ export default function DashboardPage() {
       {/* Filters */}
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardTitle className="flex items-center gap-2 text-responsive-base sm:text-base md:text-lg">
             <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
             Filter & Pencarian
           </CardTitle>
@@ -246,7 +246,7 @@ export default function DashboardPage() {
       {/* Results */}
       <div className="mb-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-responsive-sm sm:text-sm md:text-base text-gray-600">
             Menampilkan {filteredCreators.length} dari {stats.totalCreators} creator
           </p>
           <Badge variant="secondary">
@@ -260,8 +260,8 @@ export default function DashboardPage() {
         <Card>
           <CardContent className="p-6 sm:p-8 text-center">
             <Users className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-base sm:text-lg font-semibold mb-2">Tidak ada creator ditemukan</h3>
-            <p className="text-sm sm:text-base text-gray-600 mb-4">
+            <h3 className="text-responsive-base sm:text-base md:text-lg font-semibold mb-2">Tidak ada creator ditemukan</h3>
+            <p className="text-responsive-sm sm:text-sm md:text-base text-gray-600 mb-4">
               Coba ubah filter atau kata kunci pencarian Anda
             </p>
             <Button 

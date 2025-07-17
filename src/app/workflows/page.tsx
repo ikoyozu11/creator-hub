@@ -194,17 +194,17 @@ export default function WorkflowsPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2 group-hover:text-purple-700 transition-colors">
+                  <h3 className="text-responsive-lg sm:text-lg md:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2 group-hover:text-purple-700 transition-colors">
                     {workflow.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-3 leading-relaxed">
+                  <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-3 leading-relaxed">
                     {workflow.description}
                   </p>
 
                   {/* Stats */}
-                  <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 bg-gray-50 rounded-lg p-2 sm:p-3">
+                  <div className="flex items-center justify-between text-responsive-xs sm:text-xs md:text-sm text-gray-500 mb-3 sm:mb-4 bg-gray-50 rounded-lg p-2 sm:p-3">
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <span className="font-medium">
@@ -224,7 +224,7 @@ export default function WorkflowsPage() {
                     {(workflow.tags || []).slice(0, 2).map((tag: string) => (
                       <span
                         key={tag}
-                        className="px-2 sm:px-3 py-1 text-xs bg-white border border-gray-200 text-gray-700 rounded-full hover:border-purple-300 hover:text-purple-700 transition-colors"
+                        className="px-2 sm:px-3 py-1 text-responsive-xs sm:text-xs bg-white border border-gray-200 text-gray-700 rounded-full hover:border-purple-300 hover:text-purple-700 transition-colors"
                       >
                         {tag}
                       </span>

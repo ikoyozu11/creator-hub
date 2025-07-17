@@ -214,7 +214,7 @@ export default function CreatorDetailPage() {
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <h1 
-              className="text-3xl font-bold text-white"
+              className="heading-mobile-xl sm:heading-mobile-lg md:text-3xl font-bold text-white"
               style={{
                 fontFamily: 'Albert Sans, Arial, sans-serif',
               }}
@@ -226,7 +226,7 @@ export default function CreatorDetailPage() {
             </Badge>
             <div className={`w-3 h-3 rounded-full ${getAvailabilityColor(creator.availability)}`}></div>
             <span 
-              className="text-sm text-white/80"
+              className="body-text-mobile sm:body-text-mobile-lg md:text-sm text-white/80"
               style={{
                 fontFamily: 'Albert Sans, Arial, sans-serif',
               }}
@@ -242,6 +242,7 @@ export default function CreatorDetailPage() {
                 style={{
                   fontFamily: 'Albert Sans, Arial, sans-serif',
                 }}
+                className="body-text-mobile sm:body-text-mobile-lg md:text-base"
               >
                 {creator.location}
               </span>
@@ -250,7 +251,7 @@ export default function CreatorDetailPage() {
           
           {creator.hourly_rate && (
             <div 
-              className="text-lg font-semibold text-green-400 mb-2"
+              className="text-responsive-lg sm:text-lg md:text-lg font-semibold text-green-400 mb-2"
               style={{
                 fontFamily: 'Albert Sans, Arial, sans-serif',
               }}
@@ -261,7 +262,7 @@ export default function CreatorDetailPage() {
           
           {creator.bio && (
             <p 
-              className="text-white/80 leading-relaxed"
+              className="body-text-mobile sm:body-text-mobile-lg md:text-base text-white/80 leading-relaxed"
               style={{
                 fontFamily: 'Albert Sans, Arial, sans-serif',
               }}

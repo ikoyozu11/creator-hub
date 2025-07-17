@@ -61,14 +61,14 @@ const HeroSection = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 w-full">
           {/* Kiri: Heading, Community, dan Deskripsi */}
           <div className="flex flex-col items-start flex-1 min-w-0">
-            <h1 className="font-sans font-semibold heading-mobile-2xl sm:heading-mobile-xl md:heading-mobile-lg lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left break-words">
+            <h1 className="font-sans font-semibold heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left break-words">
               N8N Indonesia
             </h1>
-            <div className="font-sans font-thin heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] tracking-tight text-white/80 mb-2 text-left break-words">
+            <div className="font-sans font-thin heading-mobile sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] tracking-tight text-white/80 mb-2 text-left break-words">
               Community
             </div>
             <div 
-              className="body-text-mobile sm:body-text-mobile-lg md:text-lg lg:text-xl leading-relaxed text-white mt-2 mb-0 text-left max-w-full"
+              className="text-responsive-sm sm:body-text-mobile-lg md:text-lg lg:text-xl leading-relaxed text-white mt-2 mb-0 text-left max-w-full"
               style={{
                 fontFamily: 'Inter, Arial, sans-serif',
                 fontWeight: 400,
@@ -106,7 +106,7 @@ const HeroSection = () => {
       <div className="container mx-auto container-mobile py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 flex flex-col items-center">
         <div className="w-full max-w-4xl mx-auto">
           <h2 
-            className="font-sans font-thin heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl leading-[1.2] tracking-tight text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 break-words"
+            className="font-sans font-thin heading-mobile sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl leading-[1.2] tracking-tight text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 break-words"
             style={{
               fontFamily: 'Albert Sans, Arial, sans-serif',
               fontWeight: 250,

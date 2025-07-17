@@ -101,7 +101,7 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
 
           {/* Profile Info - Left Side */}
           <div className="flex-1 min-w-0">
-            <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
+            <h1 className="heading-mobile-xl sm:heading-mobile-lg md:text-3xl lg:text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
               {profile.name}
             </h1>
           </div>
@@ -110,7 +110,7 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
           <div className="flex-1 min-w-0">
             {/* Bio lengkap, hanya jika ada */}
             {profile.bio && (
-              <div className="text-white/80 leading-relaxed mb-6" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
+              <div className="body-text-mobile sm:body-text-mobile-lg md:text-base text-white/80 leading-relaxed mb-6" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
                 {profile.bio}
               </div>
             )}
@@ -167,7 +167,7 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
       {/* Workflow Portfolio Grid */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
+          <h2 className="heading-mobile sm:heading-mobile-lg md:text-2xl font-bold text-white" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
             {/* Judul section, tidak ada fallback */}
             {workflows.length > 0 && "Workflow Portfolio"}
           </h2>
@@ -197,13 +197,13 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
                 )}
 
                 {/* Title */}
-                <h3 className="text-white font-semibold text-sm mb-2 line-clamp-2" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
+                <h3 className="text-white font-semibold text-responsive-sm sm:text-sm mb-2 line-clamp-2" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
                   {workflow.title}
                 </h3>
 
                 {/* Description */}
                 {workflow.description && (
-                  <p className="text-gray-300 text-xs mb-3 line-clamp-2">
+                  <p className="text-gray-300 text-responsive-xs sm:text-xs mb-3 line-clamp-2">
                     {workflow.description}
                   </p>
                 )}
@@ -229,7 +229,7 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
                   <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold">
                     {profile.name && profile.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                   </div>
-                  <span className="text-gray-300 text-xs" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
+                  <span className="text-gray-300 text-responsive-xs sm:text-xs" style={{ fontFamily: 'Albert Sans, Arial, sans-serif' }}>
                     {profile.name}
                   </span>
                 </div>

@@ -11,6 +11,35 @@ body {
     text-wrap: balance;
   }
   
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  .line-clamp-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+  
   /* Responsive text sizing untuk mobile */
   .text-responsive-xs {
     font-size: clamp(0.75rem, 2vw, 0.875rem);
@@ -588,10 +617,20 @@ body {
     padding: 0.75rem 2rem;
     border: none;
     box-shadow: 0 2px 8px 0 #9500FF33;
-    transition: background 0.2s;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    min-height: 44px;
   }
   .btn-jelajah:hover {
     filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px 0 #9500FF44;
+  }
+  .btn-jelajah:active {
+    transform: translateY(0);
   }
   .btn-creator {
     background: linear-gradient(90deg, #FBE5FF 0%, #FFFFFF 50%, #FAE0FF 100%);
