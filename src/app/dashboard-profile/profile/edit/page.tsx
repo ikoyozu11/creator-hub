@@ -4,13 +4,14 @@ import { useAuth } from "@/lib/auth-context";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Pencil, Globe, Linkedin, Twitter, Github, Instagram, Youtube, ArrowLeft } from "lucide-react";
+import { Pencil, Globe, Twitter, Github, Instagram, Youtube, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TagInput } from "@/components/ui/tag-input";
 import { PROVINCES } from "@/data/indonesia-regions";
 import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { FaLinkedin } from "react-icons/fa";
 
 const defaultProfileForm = {
   name: "",
@@ -217,7 +218,7 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Linkedin className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
+                    <FaLinkedin className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                     <Input
                       name="linkedin"
                       value={form.linkedin}

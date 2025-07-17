@@ -6,11 +6,12 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { MapPin, DollarSign, Globe, Linkedin, Twitter, Github, ArrowLeft, Play, ImageIcon, Instagram, Youtube } from "lucide-react"
+import { MapPin, DollarSign, Globe, Twitter, Github, ArrowLeft, Play, ImageIcon, Instagram, Youtube } from "lucide-react"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/lib/supabase"
 import { FaDiscord } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa"
 import MainFooter from "./main-footer";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"]
@@ -124,7 +125,7 @@ export function TalentProfile({ profileId }: TalentProfileProps) {
               )}
               {profile.linkedin && (
                 <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn" className="text-gray-400 hover:text-white transition-colors">
-                  <Linkedin className="w-5 h-5" />
+                  <FaLinkedin className="w-5 h-5" />
                 </a>
               )}
               {profile.twitter && (

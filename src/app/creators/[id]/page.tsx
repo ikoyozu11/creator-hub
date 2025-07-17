@@ -16,13 +16,13 @@ import {
   Mail, 
   MessageCircle,
   Globe,
-  Linkedin,
+  ArrowLeft,
   Twitter,
   Github,
   Instagram,
-  Youtube,
-  ArrowLeft
+  Youtube
 } from "lucide-react";
+import { FaLinkedin, FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 interface Creator {
@@ -182,7 +182,7 @@ export default function CreatorDetailPage() {
 
   const socialLinks = [
     { name: "Website", url: creator.website, icon: Globe },
-    { name: "LinkedIn", url: creator.linkedin, icon: Linkedin },
+    { name: "LinkedIn", url: creator.linkedin, icon: FaLinkedin },
     { name: "Twitter", url: creator.twitter, icon: Twitter },
     { name: "GitHub", url: creator.github, icon: Github },
     { name: "Instagram", url: creator.instagram, icon: Instagram },
@@ -388,7 +388,7 @@ export default function CreatorDetailPage() {
                 Kirim Email
               </Button>
               <Button variant="outline" className="w-full" size="lg">
-                <MessageCircle className="w-4 h-4 mr-2" />
+                <FaDiscord className="w-4 h-4 mr-2" />
                 Kirim Pesan
               </Button>
               <Button variant="outline" className="w-full" size="lg">

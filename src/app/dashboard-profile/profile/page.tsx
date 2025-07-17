@@ -4,12 +4,13 @@ import { useAuth } from "@/lib/auth-context";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Pencil, Globe, Linkedin, Twitter, Github, Instagram, Youtube, MapPin } from "lucide-react";
+import { Pencil, Globe, Twitter, Github, Instagram, Youtube, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { FaDiscord } from "react-icons/fa";
 import Link from "next/link";
+import { FaLinkedin } from "react-icons/fa";
 
 export default function ProfileSubPage() {
   const { user } = useAuth();
@@ -122,7 +123,7 @@ export default function ProfileSubPage() {
                   )}
                   {profile?.linkedin && (
                     <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                      <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-gray-300 hover:text-white transition-colors" />
+                      <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-gray-300 hover:text-white transition-colors" />
                     </a>
                   )}
                   {profile?.twitter && (

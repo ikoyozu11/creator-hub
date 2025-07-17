@@ -11,9 +11,12 @@ import {
   ArrowRight,
   Workflow,
   Zap,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import MainFooter from "@/components/main-footer";
+import { Button } from "@/components/ui/button";
 
 const categories = [
   "All",
@@ -33,6 +36,8 @@ export default function WorkflowsPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const workflowsPerPage = 8;
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -61,6 +66,22 @@ export default function WorkflowsPage() {
       categoryFilter === "All" || w.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredWorkflows.length / workflowsPerPage);
+  const startIndex = (currentPage - 1) * workflowsPerPage;
+  const endIndex = startIndex + workflowsPerPage;
+  const currentWorkflows = filteredWorkflows.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, categoryFilter]);
 
   return (
     <>
@@ -164,7 +185,7 @@ export default function WorkflowsPage() {
               No workflows found.
             </div>
           ) : (
-            filteredWorkflows.map((workflow) => (
+            currentWorkflows.map((workflow) => (
               <div
                 key={workflow.id}
                 className="group bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-xl sm:hover:shadow-2xl hover:border-purple-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 sm:hover:-translate-y-2 relative overflow-hidden"
@@ -255,17 +276,52 @@ export default function WorkflowsPage() {
           )}
         </div>
 
-        {/* Load More Button */}
-        <div className="text-center mt-12 sm:mt-16">
-          <button className="group px-8 sm:px-12 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl sm:rounded-2xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl sm:hover:shadow-2xl transform hover:scale-105 font-semibold text-sm sm:text-base md:text-lg">
-            <span className="flex items-center gap-2 sm:gap-3">
-              Load More Workflows
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </button>
-          <p className="text-gray-500 text-xs sm:text-sm mt-3 sm:mt-4">
-            Showing {filteredWorkflows.length} of {workflows.length} workflows
-          </p>
+        {/* Pagination */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12 sm:mt-16">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="p-2 sm:p-3 rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Button>
+            
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? "default" : "outline"}
+                  onClick={() => handlePageChange(page)}
+                  className={`w-8 h-8 sm:w-10 sm:h-10 p-0 rounded-full text-sm sm:text-base font-medium ${
+                    currentPage === page 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0" 
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {page}
+                </Button>
+              ))}
+            </div>
+            
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="p-2 sm:p-3 rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Button>
+          </div>
+          
+          {/* Info */}
+          <div className="text-center sm:text-left">
+            <p className="text-gray-500 text-xs sm:text-sm">
+              Showing {startIndex + 1}-{Math.min(endIndex, filteredWorkflows.length)} of {filteredWorkflows.length} workflows
+            </p>
+          </div>
         </div>
       </div>
 

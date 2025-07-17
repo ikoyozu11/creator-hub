@@ -1,5 +1,6 @@
 import React from "react";
-import { MessageCircle, Instagram, Github } from "lucide-react";
+import { Instagram, Github } from "lucide-react";
+import { FaDiscord } from "react-icons/fa";
 
 const MainFooter = () => {
   return (
@@ -40,8 +41,8 @@ const MainFooter = () => {
             &copy; 2025 N8N Indonesia Creator Hub. Made with by the community.
           </p>
           <div className="flex items-center gap-4 sm:gap-6 mt-2 md:mt-0">
-            <a href="https://n8nid.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#9460CD] transition-colors">
-              <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+            <a href="#" className="text-white/80 hover:text-white transition-colors">
+              <FaDiscord className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a href="https://instagram.com/programmer30an" target="_blank" rel="noopener noreferrer" className="hover:text-[#9460CD] transition-colors">
               <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />

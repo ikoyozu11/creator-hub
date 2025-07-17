@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
-import { Workflow } from 'lucide-react';
+import { Workflow, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
 const FeaturedWorkflows = () => {
   const [workflows, setWorkflows] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const workflowsPerPage = 4;
 
   useEffect(() => {
     const fetchWorkflows = async () => {
@@ -16,11 +18,21 @@ const FeaturedWorkflows = () => {
         .select('id, title, description')
         .eq('status', 'approved')
         .order('created_at', { ascending: false })
-        .limit(4);
+        .limit(12); // Fetch more for pagination
       setWorkflows(data || []);
     };
     fetchWorkflows();
   }, []);
+
+  // Pagination logic
+  const totalPages = Math.ceil(workflows.length / workflowsPerPage);
+  const startIndex = (currentPage - 1) * workflowsPerPage;
+  const endIndex = startIndex + workflowsPerPage;
+  const currentWorkflows = workflows.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <section className="py-8 sm:py-12 md:py-16 lg:py-20">
@@ -59,7 +71,7 @@ const FeaturedWorkflows = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {workflows.map((workflow) => (
+          {currentWorkflows.map((workflow) => (
             <div
               key={workflow.id}
               className="bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 border border-gray-700
@@ -79,6 +91,25 @@ const FeaturedWorkflows = () => {
               </p>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          <Button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mr-2"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+          <span className="mx-2 text-white">
+            Halaman {currentPage} dari {totalPages}
+          </span>
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="ml-2"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
         </div>
       </div>
     </section>
