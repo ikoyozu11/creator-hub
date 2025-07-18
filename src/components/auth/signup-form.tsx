@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,8 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const formSchema = z
   .object({
@@ -37,7 +38,6 @@ const formSchema = z
 
 export function SignUpForm() {
   const { signUp } = useAuth();
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -86,8 +86,7 @@ export function SignUpForm() {
       setIsLoading(true);
       await signUp(values.email, values.password);
       
-      toast({
-        title: "Akun Berhasil Dibuat! 🎉",
+      toast.success("Akun Berhasil Dibuat! ðŸŽ‰", {
         description: "Silakan cek email Anda untuk verifikasi akun.",
       });
       
@@ -97,9 +96,7 @@ export function SignUpForm() {
       
       const errorMessage = getErrorMessage(error);
       
-      toast({
-        variant: "destructive",
-        title: "Gagal Membuat Akun ❌",
+      toast.error("Gagal Membuat Akun âŒ", {
         description: errorMessage,
       });
 
@@ -140,27 +137,14 @@ export function SignUpForm() {
               <FormItem>
                 <FormLabel className="text-white font-medium">Email</FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <Input 
-                      placeholder="Masukkan email Anda" 
-                      {...field} 
-                      className={`bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50 transition-all duration-200 ${
-                        form.formState.errors.email 
-                          ? "border-red-400 focus:border-red-400" 
-                          : watchedValues.email && !form.formState.errors.email
-                          ? "border-green-400 focus:border-green-400"
-                          : ""
-                      }`}
-                    />
-                    {watchedValues.email && !form.formState.errors.email && (
-                      <CheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-400" />
-                    )}
-                    {form.formState.errors.email && (
-                      <AlertCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-red-400" />
-                    )}
-                  </div>
+<Input
+                    placeholder="Enter your email"
+                    {...field}
+                    className="bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50"
+                  />
                 </FormControl>
-                <FormMessage className="text-red-400 text-sm" />
+                <FormMessage className="text-red-400" />
+
               </FormItem>
             )}
           />
@@ -169,26 +153,25 @@ export function SignUpForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white font-medium">Password</FormLabel>
+<FormLabel className="text-white font-medium">
+                  Password
+                </FormLabel>
+
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Masukkan password Anda"
                       {...field}
-                      className={`bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50 transition-all duration-200 ${
-                        form.formState.errors.password 
-                          ? "border-red-400 focus:border-red-400" 
-                          : watchedValues.password && !form.formState.errors.password
-                          ? "border-green-400 focus:border-green-400"
-                          : ""
-                      }`}
+className="bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50"
+
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-10 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-300"
+className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-300"
+
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
@@ -205,45 +188,8 @@ export function SignUpForm() {
                     )}
                   </div>
                 </FormControl>
-                <FormMessage className="text-red-400 text-sm" />
-                
-                {/* Password strength indicator */}
-                {watchedValues.password && (
-                  <div className="mt-2 space-y-1">
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className={`w-2 h-2 rounded-full ${
-                        watchedValues.password.length >= 6 ? 'bg-green-400' : 'bg-gray-400'
-                      }`}></div>
-                      <span className={watchedValues.password.length >= 6 ? 'text-green-400' : 'text-gray-400'}>
-                        Minimal 6 karakter
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className={`w-2 h-2 rounded-full ${
-                        /[a-z]/.test(watchedValues.password) ? 'bg-green-400' : 'bg-gray-400'
-                      }`}></div>
-                      <span className={/[a-z]/.test(watchedValues.password) ? 'text-green-400' : 'text-gray-400'}>
-                        Huruf kecil
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className={`w-2 h-2 rounded-full ${
-                        /[A-Z]/.test(watchedValues.password) ? 'bg-green-400' : 'bg-gray-400'
-                      }`}></div>
-                      <span className={/[A-Z]/.test(watchedValues.password) ? 'text-green-400' : 'text-gray-400'}>
-                        Huruf besar
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className={`w-2 h-2 rounded-full ${
-                        /\d/.test(watchedValues.password) ? 'bg-green-400' : 'bg-gray-400'
-                      }`}></div>
-                      <span className={/\d/.test(watchedValues.password) ? 'text-green-400' : 'text-gray-400'}>
-                        Angka
-                      </span>
-                    </div>
-                  </div>
-                )}
+<FormMessage className="text-red-400" />
+
               </FormItem>
             )}
           />
@@ -252,26 +198,25 @@ export function SignUpForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white font-medium">Konfirmasi Password</FormLabel>
+<FormLabel className="text-white font-medium">
+                  Confirm Password
+                </FormLabel>
+
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Konfirmasi password Anda"
                       {...field}
-                      className={`bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50 transition-all duration-200 ${
-                        form.formState.errors.confirmPassword 
-                          ? "border-red-400 focus:border-red-400" 
-                          : watchedValues.confirmPassword && !form.formState.errors.confirmPassword
-                          ? "border-green-400 focus:border-green-400"
-                          : ""
-                      }`}
+className="bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50"
+
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-10 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-300"
+className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-300"
+
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
@@ -290,43 +235,44 @@ export function SignUpForm() {
                     )}
                   </div>
                 </FormControl>
-                <FormMessage className="text-red-400 text-sm" />
+<FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
-          <Button 
-            type="submit" 
-            className={`w-full text-white border-0 transition-all duration-200 ${
-              isFormValid 
-                ? "opacity-100" 
-                : "opacity-70 cursor-not-allowed"
-            }`}
-            style={{ background: 'linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)' }}
-            disabled={isLoading || !isFormValid}
+          <Button
+            type="submit"
+            className="w-full text-white border-0"
+            style={{
+              background:
+                "linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)",
+            }}
+            disabled={isLoading}
           >
-            {isLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                Membuat akun...
-              </div>
-            ) : (
-              "Buat Akun"
-            )}
+            {isLoading ? "Creating account..." : "Create account"}
+
           </Button>
         </form>
       </Form>
 
       {/* Popup Modal */}
       {showVerifyDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md mx-4">
-            <h3 className="text-lg font-semibold mb-4">Verifikasi Email</h3>
-            <p className="text-gray-600 mb-4">
-              Kami telah mengirimkan link verifikasi ke email Anda. Silakan cek email dan klik link tersebut untuk mengaktifkan akun Anda.
+<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-6 rounded-lg shadow-lg max-w-md w-full text-center">
+            <h2 className="text-xl font-semibold mb-2 text-white">
+              Verifikasi Email
+            </h2>
+            <p className="text-sm text-gray-300 mb-4">
+              Kami telah mengirimkan email verifikasi ke alamat email kamu.
+              Silakan cek inbox atau folder spam untuk mengaktifkan akunmu.
             </p>
             <Button
               onClick={() => setShowVerifyDialog(false)}
-              className="w-full"
+              className="text-white border-0"
+              style={{
+                background:
+                  "linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)",
+              }}
+
             >
               OK
             </Button>
@@ -336,3 +282,4 @@ export function SignUpForm() {
     </>
   );
 }
+

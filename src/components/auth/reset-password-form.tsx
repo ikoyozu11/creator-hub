@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { AlertCircle, CheckCircle, Mail, RefreshCw } from "lucide-react";
 
 const formSchema = z.object({
@@ -25,7 +25,6 @@ const formSchema = z.object({
 });
 
 export function ResetPasswordForm() {
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
@@ -82,10 +81,7 @@ export function ResetPasswordForm() {
       setEmailSent(true);
       setSubmittedEmail(values.email);
 
-      toast({
-        title: "Email Terkirim! 📧",
-        description: "Silakan cek email Anda untuk link reset password.",
-      });
+      toast.success("Email Terkirim! 📧 Silakan cek email Anda untuk link reset password.");
 
       // Clear form after successful submission
       form.reset();
@@ -94,11 +90,7 @@ export function ResetPasswordForm() {
       
       const errorMessage = getErrorMessage(error);
       
-      toast({
-        variant: "destructive",
-        title: "Gagal Mengirim Email ❌",
-        description: errorMessage,
-      });
+      toast.error(`Gagal Mengirim Email ❌ ${errorMessage}`);
 
       // Show specific field errors
       if (error.message?.toLowerCase().includes("user not found")) {
@@ -175,7 +167,7 @@ export function ResetPasswordForm() {
           {/* Additional Info */}
           <div className="mt-4 p-3 bg-blue-500/20 border border-blue-500/30 rounded-lg">
             <p className="text-blue-200 text-xs">
-              💡 Link reset password akan kadaluarsa dalam 24 jam. Jika tidak menerima email dalam 5 menit, coba kirim ulang.
+              🔒 Link reset password akan kadaluarsa dalam 24 jam. Jika tidak menerima email dalam 5 menit, coba kirim ulang.
             </p>
           </div>
         </div>
@@ -213,58 +205,30 @@ export function ResetPasswordForm() {
             <FormItem>
               <FormLabel className="text-white font-medium">Email</FormLabel>
               <FormControl>
-                <div className="relative">
-                  <Input 
-                    placeholder="Masukkan email Anda" 
-                    {...field} 
-                    className={`bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50 transition-all duration-200 ${
-                      form.formState.errors.email 
-                        ? "border-red-400 focus:border-red-400" 
-                        : watchedValues.email && !form.formState.errors.email
-                        ? "border-green-400 focus:border-green-400"
-                        : ""
-                    }`}
-                  />
-                  {watchedValues.email && !form.formState.errors.email && (
-                    <CheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-400" />
-                  )}
-                  {form.formState.errors.email && (
-                    <AlertCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-red-400" />
-                  )}
-                </div>
+<Input
+                  placeholder="Enter your email"
+                  {...field}
+                  className="bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50"
+                />
               </FormControl>
-              <FormMessage className="text-red-400 text-sm" />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
-        
-        {/* Info box */}
-        <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-3">
-          <p className="text-blue-200 text-sm">
-            💡 Kami akan mengirimkan link reset password ke email Anda. Pastikan email yang dimasukkan sudah terdaftar.
-          </p>
-        </div>
-        
-        <Button 
-          type="submit" 
-          className={`w-full text-white border-0 transition-all duration-200 ${
-            isFormValid 
-              ? "opacity-100" 
-              : "opacity-70 cursor-not-allowed"
-          }`}
-          style={{ background: 'linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)' }}
-          disabled={isLoading || !isFormValid}
+        <Button
+          type="submit"
+          className="w-full text-white border-0"
+          style={{
+            background:
+              "linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)",
+          }}
+          disabled={isLoading}
         >
-          {isLoading ? (
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Mengirim email...
-            </div>
-          ) : (
-            "Reset Password"
-          )}
+          {isLoading ? "Sending..." : "Reset Password"}
+
         </Button>
       </form>
     </Form>
   );
 }
+

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+﻿import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
@@ -77,7 +77,7 @@ export function DirectoryLoading() {
             <CardContent className="pt-0">
               <Skeleton className="h-4 w-full mb-2" />
               <Skeleton className="h-4 w-3/4 mb-3" />
-              
+
               <div className="mb-3">
                 <div className="flex flex-wrap gap-1">
                   <Skeleton className="h-5 w-16" />
@@ -102,4 +102,6 @@ export function DirectoryLoading() {
       </div>
     </div>
   );
-} 
+}
+
+

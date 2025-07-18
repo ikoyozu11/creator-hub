@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 
@@ -30,7 +29,6 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const { signIn } = useAuth();
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -87,14 +85,7 @@ export function LoginForm() {
 
       await signIn(values.email, values.password);
 
-      console.log("Login successful, showing toast...");
-      toast({
-        title: "Login Berhasil! 🎉",
-        description: "Selamat datang kembali!",
-      });
-
-      // Check what cookies are set after login
-      console.log("Cookies after login:", document.cookie);
+console.log("Login successful!");
 
       console.log("=== LOGIN PROCESS END ===");
 
@@ -105,32 +96,8 @@ export function LoginForm() {
       }, 500);
     } catch (error: any) {
       console.error("Login error:", error);
-      
-      const errorMessage = getErrorMessage(error);
-      
-      toast({
-        variant: "destructive",
-        title: "Login Gagal ❌",
-        description: errorMessage,
-      });
+// Error sudah dihandle di auth-context dengan sonner toast
 
-      // Clear password field on error
-      form.setValue("password", "");
-      
-      // Show specific field errors
-      if (error.message?.toLowerCase().includes("invalid login credentials")) {
-        form.setError("password", {
-          type: "manual",
-          message: "Password salah. Silakan coba lagi."
-        });
-      }
-      
-      if (error.message?.toLowerCase().includes("user not found")) {
-        form.setError("email", {
-          type: "manual", 
-          message: "Email tidak terdaftar."
-        });
-      }
     } finally {
       setIsLoading(false);
     }
@@ -149,27 +116,14 @@ export function LoginForm() {
             <FormItem>
               <FormLabel className="text-white font-medium">Email</FormLabel>
               <FormControl>
-                <div className="relative">
-                  <Input 
-                    placeholder="Masukkan email Anda" 
-                    {...field} 
-                    className={`bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50 transition-all duration-200 ${
-                      form.formState.errors.email 
-                        ? "border-red-400 focus:border-red-400" 
-                        : watchedValues.email && !form.formState.errors.email
-                        ? "border-green-400 focus:border-green-400"
-                        : ""
-                    }`}
-                  />
-                  {watchedValues.email && !form.formState.errors.email && (
-                    <CheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-400" />
-                  )}
-                  {form.formState.errors.email && (
-                    <AlertCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-red-400" />
-                  )}
-                </div>
+<Input
+                  placeholder="Enter your email"
+                  {...field}
+                  className="bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50"
+                />
               </FormControl>
-              <FormMessage className="text-red-400 text-sm" />
+              <FormMessage className="text-red-400" />
+
             </FormItem>
           )}
         />
@@ -185,19 +139,15 @@ export function LoginForm() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Masukkan password Anda"
                     {...field}
-                    className={`bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50 transition-all duration-200 ${
-                      form.formState.errors.password 
-                        ? "border-red-400 focus:border-red-400" 
-                        : watchedValues.password && !form.formState.errors.password
-                        ? "border-green-400 focus:border-green-400"
-                        : ""
-                    }`}
+className="bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:bg-white/30 focus:border-white/50"
+
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-10 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-300"
+className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-300"
+
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -214,40 +164,24 @@ export function LoginForm() {
                   )}
                 </div>
               </FormControl>
-              <FormMessage className="text-red-400 text-sm" />
+<FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
-        
-        {/* Login attempts warning */}
-        {loginAttempts >= 3 && (
-          <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-3">
-            <p className="text-yellow-200 text-sm">
-              ⚠️ Sudah {loginAttempts} kali percobaan login. Pastikan email dan password Anda benar.
-            </p>
-          </div>
-        )}
-        
-        <Button 
-          type="submit" 
-          className={`w-full text-white border-0 transition-all duration-200 ${
-            isFormValid 
-              ? "opacity-100" 
-              : "opacity-70 cursor-not-allowed"
-          }`}
-          style={{ background: 'linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)' }}
-          disabled={isLoading || !isFormValid}
+        <Button
+          type="submit"
+          className="w-full text-white border-0"
+          style={{
+            background:
+              "linear-gradient(85.56deg, #D900FF 2.74%, #9500FF 91.78%)",
+          }}
+          disabled={isLoading}
         >
-          {isLoading ? (
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Sedang login...
-            </div>
-          ) : (
-            "Login"
-          )}
+          {isLoading ? "Signing in..." : "Sign in"}
+
         </Button>
       </form>
     </Form>
   );
 }
+

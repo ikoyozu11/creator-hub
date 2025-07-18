@@ -1,4 +1,5 @@
-'use client';
+﻿"use client";
+
 
 import React from "react";
 import { ArrowRight, Zap, Users, ExternalLink } from "lucide-react";
@@ -16,6 +17,7 @@ import {
 import { useRouter, usePathname } from "next/navigation";
 import FeaturedWorkflows from "@/components/featured-workflows";
 
+
 function getInitials(nameOrEmail: string) {
   if (!nameOrEmail) return "?";
   const parts = nameOrEmail.split(" ");
@@ -27,6 +29,10 @@ const HeroSection = () => {
   const { user, isAdmin, signOut } = useAuth();
   const [isUserAdmin, setIsUserAdmin] = useState<boolean>(false);
   const [profile, setProfile] = useState<any>(null);
+const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   const router = useRouter();
   const pathname = usePathname();
 
@@ -51,93 +57,150 @@ const HeroSection = () => {
     router.push("/");
   };
 
+const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Update posisi cursor secara langsung untuk responsivitas maksimal
+    setMousePosition({ x, y });
+  };
+
+  const handleMouseEnter = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIsHovering(true);
+      setIsTransitioning(false);
+    }, 50);
+  };
+
+  const handleMouseLeave = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIsHovering(false);
+      setIsTransitioning(false);
+    }, 50);
+  };
+
   return (
-    <section className="relative min-h-screen hero-bg-custom text-white overflow-hidden">
-      {/* Dekorasi Ellipse Angular Gradient */}
-      <div className="ellipse-angular-hero"></div>
-
-      {/* HERO HEADING & SUBHEADING */}
-      <div className="container mx-auto container-mobile pt-8 sm:pt-12 md:pt-16 lg:pt-20 flex flex-col space-mobile sm:space-mobile-lg md:gap-8 lg:gap-10">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 w-full">
-          {/* Kiri: Heading, Community, dan Deskripsi */}
-          <div className="flex flex-col items-start flex-1 min-w-0">
-            <h1 className="font-sans font-semibold heading-mobile-xl sm:heading-mobile-lg md:heading-mobile lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left break-words">
-              N8N Indonesia
-            </h1>
-            <div className="font-sans font-thin heading-mobile sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] tracking-tight text-white/80 mb-2 text-left break-words">
-              Community
+    <section className="relative min-h-screen text-white overflow-visible content-above-gradient">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* HERO HEADING & SUBHEADING */}
+        <div className="w-full pt-8 sm:pt-12 md:pt-20 flex flex-col gap-4 sm:gap-6 md:gap-10">
+          <div className="flex flex-col lg:flex-row lg:items-center w-full gap-6 lg:gap-8">
+            {/* Kiri: Heading, Community, dan Deskripsi */}
+            <div className="flex flex-col items-start flex-1 min-w-0">
+              <h1 className="font-sans font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left">
+                N8N Indonesia
+              </h1>
+              <div className="font-sans font-thin text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] tracking-tight text-white/80 mb-2 text-left">
+                Community
+              </div>
+              <div
+                className="text-sm sm:text-base md:text-lg lg:text-xl text-white mt-2 mb-0 text-left leading-relaxed"
+                style={{
+                  fontFamily: "Inter, Arial, sans-serif",
+                  fontWeight: 400,
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Temukan dan bagikan workflow automation yang powerful.
+              </div>
             </div>
-            <div 
-              className="text-responsive-sm sm:body-text-mobile-lg md:text-lg lg:text-xl leading-relaxed text-white mt-2 mb-0 text-left max-w-full"
-              style={{
-                fontFamily: 'Inter, Arial, sans-serif',
-                fontWeight: 400,
-                fontStyle: 'thin',
-                letterSpacing: '-0.01em',
-              }}
-            >
-              Temukan dan bagikan workflow automation yang powerful.
+            
+            {/* Tengah: Garis Penghubung - Desktop Only */}
+            <div className="hidden lg:flex items-center justify-center px-8">
+              <div className="h-0.5 w-32 bg-white/40" />
+            </div>
+            
+            {/* Kanan: Deskripsi - Desktop Only */}
+            <div className="hidden lg:flex flex-1 min-w-0">
+              <div
+                className="font-sans font-normal text-white/80 text-left leading-relaxed"
+                style={{
+                  fontFamily: "Albert Sans, Arial, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "clamp(1.25rem, 2vw, 1.75rem)",
+                  letterSpacing: "-0.01em",
+                  maxWidth: "100%",
+                  whiteSpace: "normal",
+                }}
+              >
+                Bergabunglah dengan komunitas N8N Indonesia dan tingkatkan
+                produktivitas Anda.
+              </div>
             </div>
           </div>
-          {/* Kanan: Garis & Deskripsi */}
-          <div className="hidden lg:flex flex-row items-center flex-1 min-w-0 ml-8">
-            <div className="h-0.5 w-16 sm:w-24 md:w-32 bg-white/40 mr-4 sm:mr-6 flex-shrink-0" />
-            <div className="font-sans font-normal text-white/80 text-left break-words"
+        </div>
+        
+        {/* INSIGHT & BUTTONS */}
+        <div className="w-full py-12 sm:py-16 md:py-20 lg:py-32 flex flex-col items-center">
+          <div className="w-full max-w-4xl mx-auto">
+            <div
+              className="relative rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6 md:p-8 cursor-pointer overflow-hidden"
               style={{
-                fontFamily: 'Albert Sans, Arial, sans-serif',
-                fontWeight: 400,
-                fontStyle: 'normal',
-                fontSize: 'clamp(16px, 2vw, 28px)',
-                lineHeight: '107%',
-                letterSpacing: '-0.01em',
-                color: '#FFFFFF',
-                maxWidth: '100%',
-                whiteSpace: 'normal',
-                textAlign: 'left',
+                background: "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(10px)",
               }}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              Bergabunglah dengan komunitas N8N Indonesia dan tingkatkan produktivitas Anda.
+              {/* Gradient overlay yang mengikuti cursor */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.4) 0%, rgba(168, 85, 247, 0.3) 30%, rgba(236, 72, 153, 0.2) 60%, transparent 100%)`,
+                  opacity: isHovering ? 1 : 0,
+                  transition: "opacity 0.2s ease-in-out",
+                }}
+              />
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <h2
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-white mb-4 sm:mb-6 md:mb-8"
+                  style={{
+                    fontFamily: "Albert Sans, Arial, sans-serif",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  <span className="text-white/80 font-light">
+                    Dapatkan insight, workflow siap pakai, dan dukungan dari
+                    komunitas yang aktif dan solutif.
+                  </span>
+                  <br />
+                  <span className="font-semibold text-white">
+                    Mulai sekarang!
+                  </span>
+                </h2>
+                
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <Link
+                    href="/directory"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg sm:rounded-xl transition-all duration-200 text-sm sm:text-base"
+                  >
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Temukan Creator
+                  </Link>
+                  
+                  <Link
+                    href="/workflows"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg sm:rounded-xl transition-all duration-200 text-sm sm:text-base border border-white/20"
+                  >
+                    <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Lihat Workflow
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* INSIGHT & BUTTONS */}
-      <div className="container mx-auto container-mobile py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 flex flex-col items-center">
-        <div className="w-full max-w-4xl mx-auto">
-          <h2 
-            className="font-sans font-thin heading-mobile sm:heading-mobile-lg md:heading-mobile lg:text-5xl xl:text-6xl leading-[1.2] tracking-tight text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 break-words"
-            style={{
-              fontFamily: 'Albert Sans, Arial, sans-serif',
-              fontWeight: 250,
-              fontStyle: 'thin',
-              letterSpacing: '-0.02em',
-              color: '#FFFBFB',
-            }}
-          >
-            Dapatkan insight, workflow siap pakai, dan dukungan dari komunitas yang aktif dan solutif. Workflow Hebat Dimulai dari Sini.
-          </h2>
-        </div>
-        <div className="flex flex-col sm:flex-row space-mobile sm:space-mobile-lg md:gap-6 w-full max-w-md sm:max-w-none justify-center">
-          <a className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap" href="/workflows">
-            Jelajahi Workflow
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
-          <a className="btn-creator flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 button-text-mobile sm:button-text-mobile-lg whitespace-nowrap" href="/directory">
-            Temukan Creator
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div className="mt-12 sm:mt-16 md:mt-20 lg:mt-24">
-        <FeaturedWorkflows />
       </div>
     </section>
   );
 };
 
 export default HeroSection;
+

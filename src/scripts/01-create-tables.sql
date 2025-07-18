@@ -1,4 +1,4 @@
--- Enable RLS
+﻿-- Enable RLS
 ALTER DATABASE postgres SET "app.jwt_secret" TO 'your-jwt-secret';
 
 -- Create users table (extends Supabase auth.users)
@@ -15,6 +15,7 @@ CREATE TABLE public.profiles (
   user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   bio TEXT,
+  about_markdown TEXT, -- Markdown content for detailed about section
   location TEXT,
   website TEXT,
   linkedin TEXT,
@@ -124,3 +125,4 @@ CREATE POLICY "Admins can view admin users" ON public.admin_users
       WHERE user_id = auth.uid()
     )
   );
+

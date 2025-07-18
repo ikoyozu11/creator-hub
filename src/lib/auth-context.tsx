@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { toast } from "sonner";
 
 type AuthContextType = {
   user: User | null;
@@ -46,24 +47,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, [supabase]);
 
+  useEffect(() => {
+    if (user && session) {
+      console.log("[Auth Debug] User:", user);
+      console.log("[Auth Debug] Session:", session);
+    }
+  }, [user, session]);
+
   const signIn = async (email: string, password: string) => {
     console.log("SignIn called with email:", email);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      console.error("SignIn error:", error);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        console.error("SignIn error:", error);
+
+        // Handle specific error types with user-friendly messages
+        if (error.message.includes("Invalid login credentials")) {
+          toast.error(
+            "Email dan password yang Anda masukkan salah. Silahkan masukkan akun yang benar."
+          );
+        } else if (error.message.includes("Email not confirmed")) {
+          toast.error(
+            "Email belum dikonfirmasi. Silahkan cek email Anda dan klik link konfirmasi."
+          );
+        } else if (error.message.includes("Too many requests")) {
+          toast.error(
+            "Terlalu banyak percobaan login. Silahkan tunggu beberapa menit lagi."
+          );
+        } else {
+          toast.error("Terjadi kesalahan saat login. Silahkan coba lagi.");
+        }
+
+        throw error;
+      }
+
+      console.log("SignIn successful, data:", {
+        hasSession: !!data.session,
+        hasUser: !!data.user,
+      });
+
+      // Success toast
+      toast.success("Login berhasil! Selamat datang kembali.");
+
+      // Let the middleware handle the redirect after session is established
+      return;
+    } catch (error) {
+      // Error sudah dihandle di atas, re-throw untuk form handling
       throw error;
     }
-
-    console.log("SignIn successful, data:", {
-      hasSession: !!data.session,
-      hasUser: !!data.user,
-    });
-
-    // Let the middleware handle the redirect after session is established
-    return;
   };
 
   const signUp = async (email: string, password: string) => {
@@ -71,12 +106,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
     setSession(data.session);
     setUser(data.session?.user ?? null);
-    // Insert ke tabel profiles dengan status approved
+    // Insert ke tabel profiles dengan status approved (user aktif), BUKAN creator
     if (data.user) {
       await supabase.from("profiles").insert({
         user_id: data.user.id,
         name: email,
-        status: "approved",
+        status: "approved", // hanya menandakan user aktif/email verified
+        // JANGAN set flag creator apapun di sini
       });
     }
   };
@@ -113,3 +149,4 @@ export function useAuth() {
   }
   return context;
 }
+

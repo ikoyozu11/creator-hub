@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 
@@ -87,7 +87,7 @@ export default function ResetPasswordPage() {
       setPasswordChanged(true);
 
       toast({
-        title: "Password Berhasil Diubah! 🔐",
+        title: "Password Berhasil Diubah! ðŸ”",
         description: "Password Anda telah berhasil diubah. Silakan login dengan password baru.",
       });
     } catch (error: any) {
@@ -97,7 +97,7 @@ export default function ResetPasswordPage() {
       
       toast({
         variant: "destructive",
-        title: "Gagal Mengubah Password ❌",
+        title: "Gagal Mengubah Password âŒ",
         description: errorMessage,
       });
 
@@ -139,7 +139,7 @@ export default function ResetPasswordPage() {
               </div>
             </div>
             <h3 className="text-lg font-semibold text-green-400 mb-2">
-              Password Berhasil Diubah! 🔐
+              Password Berhasil Diubah! ðŸ”
             </h3>
             <p className="text-green-200 text-sm mb-4">
               Password Anda telah berhasil diubah dan tersimpan dengan aman.
@@ -167,7 +167,7 @@ export default function ResetPasswordPage() {
             {/* Security Tips */}
             <div className="mt-4 p-3 bg-blue-500/20 border border-blue-500/30 rounded-lg">
               <p className="text-blue-200 text-xs">
-              🔒 Tips keamanan: Jangan bagikan password Anda kepada siapapun dan gunakan password yang berbeda untuk setiap akun.
+              ðŸ”’ Tips keamanan: Jangan bagikan password Anda kepada siapapun dan gunakan password yang berbeda untuk setiap akun.
               </p>
             </div>
           </div>
@@ -332,7 +332,7 @@ export default function ResetPasswordPage() {
             {/* Info box */}
             <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-3">
               <p className="text-blue-200 text-sm">
-                🔐 Pastikan password baru Anda kuat dan mudah diingat. Password akan langsung aktif setelah berhasil diubah.
+                ðŸ” Pastikan password baru Anda kuat dan mudah diingat. Password akan langsung aktif setelah berhasil diubah.
               </p>
             </div>
             
@@ -361,3 +361,4 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+

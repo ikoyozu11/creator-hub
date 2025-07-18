@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -15,21 +15,16 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
-import MainFooter from "@/components/main-footer";
-import { Button } from "@/components/ui/button";
+import { workflowCategories } from "@/data/category-workflows";
+import GradientCircle from "@/components/GradientCircle";
 
-const categories = [
-  "All",
-  "E-commerce",
-  "Communication",
-  "Data Management",
-  "Analytics",
-  "Finance",
-  "Marketing",
-  "Operations",
-  "HR",
-  "Content",
-];
+
+type WorkflowWithProfileName = {
+  profile_id: string;
+  [key: string]: any;
+  profile_name?: string;
+  profile_image?: string | null;
+};
 
 export default function WorkflowsPage() {
   const [workflows, setWorkflows] = useState<any[]>([]);
@@ -37,21 +32,66 @@ export default function WorkflowsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const workflowsPerPage = 8;
+const workflowsPerPage = 12;
+
   const supabase = createClientComponentClient();
 
   useEffect(() => {
-    fetchWorkflows();
-  }, []);
+    fetchWorkflows(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
-  const fetchWorkflows = async () => {
+  const fetchWorkflows = async (page = 1) => {
     setLoading(true);
-    const { data, error } = await supabase
+    const from = (page - 1) * workflowsPerPage;
+    const to = from + workflowsPerPage - 1;
+    // Fetch workflows for current page
+    const { data, error, count } = await supabase
       .from("workflows")
-      .select("*")
+      .select("*, category")
       .eq("status", "approved")
-      .order("created_at", { ascending: false });
-    if (!error) setWorkflows(data || []);
+      .order("created_at", { ascending: false })
+      .range(from, to);
+    // Ambil semua profile_id unik
+    const profileIds = [...new Set((data || []).map((w) => w.profile_id))];
+    let profilesMap: Record<string, { name: string; profile_image: string }> =
+      {};
+    if (profileIds.length > 0) {
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, name, profile_image")
+        .in("id", profileIds);
+      profilesMap = (profiles || []).reduce(
+        (
+          acc: Record<string, { name: string; profile_image: string }>,
+          p: { id: string; name: string; profile_image: string }
+        ) => {
+          acc[p.id] = { name: p.name, profile_image: p.profile_image };
+          return acc;
+        },
+        {}
+      );
+    }
+    // Mapping nama profile ke workflow
+    const workflowsArr: any[] = data || [];
+    const workflowsWithName: WorkflowWithProfileName[] = workflowsArr.map(
+      (w: { profile_id: string }) => {
+        const id = String(w.profile_id);
+        const profileData = profilesMap[id];
+        return {
+          ...w,
+          profile_name: profileData?.name || "-",
+          profile_image: profileData?.profile_image || null,
+        };
+      }
+    );
+    if (!error) {
+      setWorkflows(workflowsWithName || []);
+      // Fetch total count for pagination
+      if (typeof count === "number") {
+        // setTotalPages(Math.ceil(count / workflowsPerPage)); // This line is removed
+      }
+    }
     setLoading(false);
   };
 
@@ -67,268 +107,277 @@ export default function WorkflowsPage() {
     return matchesSearch && matchesCategory;
   });
 
-  // Pagination logic
-  const totalPages = Math.ceil(filteredWorkflows.length / workflowsPerPage);
-  const startIndex = (currentPage - 1) * workflowsPerPage;
-  const endIndex = startIndex + workflowsPerPage;
-  const currentWorkflows = filteredWorkflows.slice(startIndex, endIndex);
+// Hitung total halaman dari filteredWorkflows
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredWorkflows.length / workflowsPerPage)
+  );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // Ambil data sesuai halaman aktif
+  const paginatedWorkflows = filteredWorkflows.slice(
+    (currentPage - 1) * workflowsPerPage,
+    currentPage * workflowsPerPage
+  );
 
-  // Reset to first page when filters change
+  // Reset currentPage jika filter/search mengurangi jumlah halaman
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, categoryFilter]);
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPages]);
+
+  // Pagination component
+  const Pagination = () => (
+    <div className="flex justify-center items-center gap-1 md:gap-2 mt-8 md:mt-12">
+      <button
+        className="px-3 md:px-4 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-sm md:text-base"
+        onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+        disabled={currentPage === 1}
+      >
+        Prev
+      </button>
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+        <button
+          key={page}
+          className={`px-3 md:px-4 py-2 rounded-xl font-semibold transition-all duration-200 shadow text-sm md:text-base
+            ${
+              page === currentPage
+                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white scale-105"
+                : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white border border-white/20"
+            }
+          `}
+          onClick={() => setCurrentPage(page)}
+        >
+          {page}
+        </button>
+      ))}
+      <button
+        className="px-3 md:px-4 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-sm md:text-base"
+        onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </button>
+    </div>
+  );
 
   return (
-    <>
-      {/* Hero Section with Gradient Background */}
-      <div className="relative" style={{ background: '#201A2C', color: '#fff', overflow: 'hidden' }}>
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          ></div>
-        </div>
+    <div className="text-white content-above-gradient relative">
+      {/* Gradient circle langsung di halaman */}
+      <GradientCircle
+        type="hero"
+        style={{
+          top: "20vh",
+          left: "25vw",
+          transform: "translateX(-50%)",
+          zIndex: -1,
+        }}
+      />
 
-        <div className="relative z-10 container mx-auto px-4 py-12 sm:py-16 md:py-20">
-          <div className="text-center mb-6 sm:mb-8">
-            <div className="flex justify-center mb-4 sm:mb-6">
-              <div className="p-3 sm:p-4 bg-white/10 rounded-xl sm:rounded-2xl backdrop-blur-sm">
-                <Workflow className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
-              </div>
+      <div className="w-full px-4 md:px-8 lg:px-16 relative z-10">
+        {/* HERO HEADING & SUBHEADING */}
+        <div className="w-full pt-8 md:pt-16 flex flex-col gap-6 md:gap-10">
+          <div className="flex flex-col md:flex-row md:items-center w-full">
+            {/* Kiri: Heading */}
+            <div className="flex flex-col items-start flex-1 min-w-0">
+              <h1 className="font-sans font-semibold text-[2.5rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left">
+                Explore
+              </h1>
+              <h2 className="font-sans font-thin text-[2.2rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-white mb-0 text-left">
+                Workflows
+              </h2>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-              Semua Workflow
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-purple-100 max-w-3xl mx-auto leading-relaxed px-2">
-              Temukan dan gunakan workflow automation yang telah dibuat oleh
-              komunitas N8N Indonesia
-            </p>
-            <div className="flex justify-center items-center gap-6 sm:gap-8 mt-6 sm:mt-8 text-purple-200">
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-xs sm:text-sm font-medium">
-                  {workflows.length} Workflows
-                </span>
+
+            {/* Garis Penyambung */}
+            <div className="hidden md:flex items-center flex-1 min-w-0 mx-8">
+              <div className="h-0.5 flex-1 bg-white/40" />
+            </div>
+
+            {/* Kanan: Deskripsi dan Search */}
+            <div className="hidden md:flex flex-col items-start flex-1 min-w-0">
+              <div
+                style={{
+                  fontFamily: "Inter, Arial, sans-serif",
+                  fontWeight: 400,
+                  fontStyle: "normal",
+                  fontSize: "18px",
+                  lineHeight: "150%",
+                  letterSpacing: "-0.01em",
+                  color: "#FFFFFF",
+                  marginBottom: "24px",
+                  textAlign: "left",
+                }}
+              >
+                Temukan workflow automation yang powerful dan siap pakai.
+                Tingkatkan produktivitas dengan solusi yang sudah teruji.
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-xs sm:text-sm font-medium">- Contributors</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-xs sm:text-sm font-medium">- Downloads</span>
+              {/* Search Bar */}
+              <div className="relative w-full max-w-md">
+                <input
+                  type="text"
+                  placeholder="Cari Workflow"
+                  className="w-full pl-4 pr-12 py-3 border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/10 hover:bg-white/20 transition-colors text-lg text-white placeholder-white/60"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
+
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-8 sm:py-12">
-        {/* Filters and Search Section */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12">
-          {/* Search Bar */}
-          <div className="mb-6 sm:mb-8">
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
+{/* Mobile: Deskripsi dan Search */}
+          <div className="md:hidden flex flex-col items-start w-full mt-6">
+            <div
+              style={{
+                fontFamily: "Inter, Arial, sans-serif",
+                fontWeight: 400,
+                fontStyle: "normal",
+                fontSize: "16px",
+                lineHeight: "150%",
+                letterSpacing: "-0.01em",
+                color: "#FFFFFF",
+                marginBottom: "20px",
+                textAlign: "left",
+              }}
+            >
+              Temukan workflow automation yang powerful dan siap pakai.
+              Tingkatkan produktivitas dengan solusi yang sudah teruji.
+            </div>
+            {/* Search Bar Mobile */}
+            <div className="relative w-full">
               <input
                 type="text"
-                placeholder="Cari workflow berdasarkan nama, kategori, atau tag..."
-                className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-gray-50 hover:bg-white transition-colors text-sm sm:text-base md:text-lg"
+                placeholder="Cari Workflow"
+                className="w-full pl-4 pr-12 py-3 border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/10 hover:bg-white/20 transition-colors text-lg text-white placeholder-white/60"
+
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
             </div>
           </div>
+        </div>
 
-          {/* Category Filter */}
-          <div className="mb-4">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
-              <span className="text-sm sm:text-base text-gray-700 font-medium">
-                Filter by category:
-              </span>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
-              {categories.map((category, index) => (
-                <button
-                  key={category}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 rounded-full font-medium transition-all duration-200 text-xs sm:text-sm md:text-base ${
-                    categoryFilter === category
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
-                      : "bg-gray-100 text-gray-700 hover:bg-purple-50 hover:text-purple-700 hover:shadow-md"
-                  }`}
-                  onClick={() => setCategoryFilter(category)}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+        {/* Filter Section */}
+        <div className="flex flex-col items-center justify-center mt-8 md:mt-12 mb-6 md:mb-8 gap-3 md:gap-4">
+          <div className="flex flex-row items-center gap-2 md:gap-4">
+            <Filter className="w-4 h-4 text-white/60" />
+            <span className="text-white/80 font-medium text-sm md:text-base">
+              Filter by category:
+            </span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12 px-2">
+            {["All", ...workflowCategories].map((category) => (
+              <button
+                key={category}
+                className={`px-3 md:px-6 py-2 md:py-3 rounded-full font-medium transition-all duration-200 text-xs md:text-sm ${
+                  categoryFilter === category
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
+                    : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white border border-white/20"
+                }`}
+                onClick={() => setCategoryFilter(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <div className="text-white/60 text-xs md:text-sm text-center">
+            {filteredWorkflows.length} workflow
+            {filteredWorkflows.length !== 1 ? "s" : ""} found
           </div>
         </div>
 
         {/* Workflows Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {loading ? (
-            <div className="col-span-full text-center py-8 sm:py-12 text-gray-400">
+<div className="col-span-full text-center py-12 text-white/60">
               Loading...
             </div>
-          ) : filteredWorkflows.length === 0 ? (
-            <div className="col-span-full text-center py-8 sm:py-12 text-gray-400">
-              No workflows found.
+          ) : paginatedWorkflows.length === 0 ? (
+            <div className="col-span-full text-center py-12 text-white/60">
+              Tidak ada workflow ditemukan.
             </div>
           ) : (
-            currentWorkflows.map((workflow) => (
-              <div
+            paginatedWorkflows.map((workflow) => (
+              <Link
                 key={workflow.id}
-                className="group bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-xl sm:hover:shadow-2xl hover:border-purple-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 sm:hover:-translate-y-2 relative overflow-hidden"
+                href={`/workflows/${workflow.id}`}
+                className="group relative rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 overflow-hidden block"
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-50/0 to-pink-50/0 group-hover:from-purple-50/50 group-hover:to-pink-50/30 transition-all duration-300 rounded-xl sm:rounded-2xl"></div>
-
-                <div className="relative z-10">
+                {/* Content */}
+                <div className="p-4 md:p-6">
                   {/* Category Badge */}
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <span className="inline-flex items-center px-2 sm:px-3 py-1 text-xs font-semibold bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 rounded-full">
-                      {workflow.category || "-"}
+                  <div className="flex justify-end mb-4">
+                    <span className="inline-flex items-center px-3 py-1 text-xs font-semibold bg-gradient-to-r from-purple-600 to-black text-white rounded-full">
+                      {workflow.category || "General"}
                     </span>
-                    <div className="flex items-center gap-1 text-yellow-500">
-                      <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
-                      <span className="text-xs font-medium text-gray-600">
-                        4.8
-                      </span>
-                    </div>
                   </div>
-
-                  {/* Icon */}
-                  <div className="mb-3 sm:mb-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Workflow className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                    </div>
-                  </div>
-
                   {/* Title */}
-                  <h3 className="text-responsive-lg sm:text-lg md:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2 group-hover:text-purple-700 transition-colors">
+                  <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors">
+
                     {workflow.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-3 leading-relaxed">
-                    {workflow.description}
+                  <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-3 leading-relaxed">
+                    {workflow.description ||
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."}
                   </p>
 
-                  {/* Stats */}
-                  <div className="flex items-center justify-between text-responsive-xs sm:text-xs md:text-sm text-gray-500 mb-3 sm:mb-4 bg-gray-50 rounded-lg p-2 sm:p-3">
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="font-medium">
-                        {workflow.nodes || "-"} nodes
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="font-medium">
-                        {workflow.downloads || "-"}
-                      </span>
-                    </div>
-                  </div>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 md:mb-4">
                     {(workflow.tags || []).slice(0, 2).map((tag: string) => (
                       <span
                         key={tag}
-                        className="px-2 sm:px-3 py-1 text-responsive-xs sm:text-xs bg-white border border-gray-200 text-gray-700 rounded-full hover:border-purple-300 hover:text-purple-700 transition-colors"
+                        className="px-2 md:px-3 py-1 text-xs bg-gray-200 text-purple-700 rounded-full font-medium"
                       >
                         {tag}
                       </span>
                     ))}
+                    {(workflow.tags || []).length > 3 && (
+                      <span className="px-2 md:px-3 py-1 text-xs bg-gray-200 text-purple-700 rounded-full font-medium">
+                        +{(workflow.tags || []).length - 3}
+                      </span>
+                    )}
                   </div>
 
-                  {/* Author and Action */}
-                  <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                        {workflow.author?.charAt?.(0) || "C"}
-                      </div>
-                      <span className="text-xs sm:text-sm text-gray-600 font-medium">
-                        {workflow.author || "Creator"}
-                      </span>
+{/* Author */}
+                  <div className="flex items-center gap-2 md:gap-3 pt-3 md:pt-4 border-t border-gray-100">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full overflow-hidden">
+                      {workflow.profile_image ? (
+                        <img
+                          src={workflow.profile_image}
+                          alt={workflow.profile_name || "Creator"}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white text-sm font-bold">
+                          {workflow.profile_name?.charAt?.(0) || "C"}
+                        </div>
+                      )}
                     </div>
-                    <Link
-                      href={`/workflows/${workflow.id}`}
-                      className="flex items-center gap-1 text-xs sm:text-sm text-purple-600 hover:text-purple-800 font-semibold group-hover:gap-2 transition-all"
-                    >
-                      <span>View</span>
-                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                    </Link>
+                    <span className="text-xs md:text-sm text-purple-900 font-medium">
+                      {workflow.profile_name || "Creator"}
+                    </span>
+
                   </div>
                 </div>
-              </div>
+              </Link>
             ))
           )}
         </div>
 
         {/* Pagination */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12 sm:mt-16">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="p-2 sm:p-3 rounded-full hover:bg-gray-100 transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
-            
-            {/* Page Numbers */}
-            <div className="flex items-center gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <Button
-                  key={page}
-                  variant={currentPage === page ? "default" : "outline"}
-                  onClick={() => handlePageChange(page)}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 p-0 rounded-full text-sm sm:text-base font-medium ${
-                    currentPage === page 
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0" 
-                      : "hover:bg-gray-100"
-                  }`}
-                >
-                  {page}
-                </Button>
-              ))}
-            </div>
-            
-            <Button
-              variant="outline"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="p-2 sm:p-3 rounded-full hover:bg-gray-100 transition-colors"
-            >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
-          </div>
-          
-          {/* Info */}
-          <div className="text-center sm:text-left">
-            <p className="text-gray-500 text-xs sm:text-sm">
-              Showing {startIndex + 1}-{Math.min(endIndex, filteredWorkflows.length)} of {filteredWorkflows.length} workflows
-            </p>
-          </div>
-        </div>
+{totalPages > 1 && <Pagination />}
+        <p className="text-white/60 text-xs md:text-sm mt-4 text-center">
+          Showing page {currentPage} of {totalPages}
+        </p>
       </div>
+    </div>
 
-      {/* Main Footer */}
-      <div className="mb-32 sm:mb-20">
-        <MainFooter />
-      </div>
-    </>
   );
 }
+

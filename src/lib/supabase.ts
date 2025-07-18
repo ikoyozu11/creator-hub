@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+﻿import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -45,6 +45,7 @@ export type Database = {
           user_id: string;
           name: string;
           bio: string | null;
+          about_markdown: string | null;
           location: string | null;
           website: string | null;
           linkedin: string | null;
@@ -74,6 +75,7 @@ export type Database = {
           user_id: string;
           name: string;
           bio?: string | null;
+          about_markdown?: string | null;
           location?: string | null;
           website?: string | null;
           linkedin?: string | null;
@@ -103,6 +105,7 @@ export type Database = {
           user_id?: string;
           name?: string;
           bio?: string | null;
+          about_markdown?: string | null;
           location?: string | null;
           website?: string | null;
           linkedin?: string | null;
@@ -189,6 +192,33 @@ export type Database = {
           created_at?: string;
         };
       };
+      creator_applications: {
+        Row: {
+          id: string;
+          user_id: string;
+          status: "pending" | "approved" | "rejected";
+          tanggal_pengajuan: string;
+          tanggal_approval: string | null;
+          alasan_penolakan: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          status?: "pending" | "approved" | "rejected";
+          tanggal_pengajuan?: string;
+          tanggal_approval?: string | null;
+          alasan_penolakan?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          status?: "pending" | "approved" | "rejected";
+          tanggal_pengajuan?: string;
+          tanggal_approval?: string | null;
+          alasan_penolakan?: string | null;
+        };
+      };
     };
   };
 };
+

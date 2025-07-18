@@ -1,293 +1,497 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
-import CreatorCard from "@/components/creator-card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useAuth } from "@/lib/auth-context";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Pencil,
+  Globe,
+  Linkedin,
+  Github,
+  Instagram,
+  MapPin,
+  Workflow,
+  Star,
+  User,
+  TrendingUp,
+  Calendar,
+  Clock,
+  Heart,
+  MessageSquare,
+  Download,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, Users, TrendingUp, Star } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
-interface Creator {
-  id: string;
-  name: string;
-  bio: string | null;
-  location: string | null;
-  skills: string[] | null;
-  experience_level: "beginner" | "intermediate" | "advanced" | "expert" | null;
-  profile_image: string | null;
-  hourly_rate: number | null;
-  availability: "available" | "busy" | "unavailable" | null;
-  status: "draft" | "pending" | "approved" | "rejected";
-}
+export default function DashboardProfilePage() {
+  const { user } = useAuth();
+  const supabase = createClientComponentClient();
+  const [profile, setProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState<string>("");
+  const [stats, setStats] = useState({
+    totalWorkflows: 0,
+    publishedWorkflows: 0,
+    totalLikes: 0,
+    followers: 0,
+    following: 0,
+  });
+  const [recentActivities, setRecentActivities] = useState<
+    Array<{
+      id: string;
+      type: string;
+      title: string;
+      description: string;
+      timestamp: string;
+      icon: any;
+      color: string;
+    }>
+  >([]);
 
-export default function DashboardPage() {
-  // const [creators, setCreators] = useState<Creator[]>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [filterExperience, setFilterExperience] = useState<string>("all");
-  // const [filterAvailability, setFilterAvailability] = useState<string>("all");
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
 
-  // useEffect(() => {
-  //   fetchCreators();
-  // }, []);
+      try {
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
 
-  // const fetchCreators = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data, error } = await supabase
-  //       .from("profiles")
-  //       .select("*")
-  //       .eq("status", "approved")
-  //       .order("created_at", { ascending: false });
+        setProfile(data);
+        if (data) {
+          setProfileImage(data.profile_image || "");
+        }
 
-  //     if (error) {
-  //       console.error("Error fetching creators:", error);
-  //       return;
-  //     }
+        // Fetch stats
+        if (data) {
+          const { count: totalWorkflows } = await supabase
+            .from("workflows")
+            .select("*", { count: "exact", head: true })
+            .eq("profile_id", data.id);
 
-  //     setCreators(data || []);
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+          const { count: publishedWorkflows } = await supabase
+            .from("workflows")
+            .select("*", { count: "exact", head: true })
+            .eq("profile_id", data.id)
+            .eq("status", "approved");
 
-  const filteredCreators = []; // No filtering applied, always empty for dummy data
+          const { data: workflows } = await supabase
+            .from("workflows")
+            .select("id")
+            .eq("profile_id", data.id);
 
-  const stats = {
-    totalCreators: 0, // No data fetched, so 0
-    availableCreators: 0, // No data fetched, so 0
-    expertCreators: 0, // No data fetched, so 0
-    averageRating: 4.6 // Dummy data
-  };
+          let totalLikes = 0;
+          if (workflows && workflows.length > 0) {
+            const workflowIds = workflows.map((w) => w.id);
+            const { count: likesCount } = await supabase
+              .from("workflow_interactions")
+              .select("*", { count: "exact", head: true })
+              .in("workflow_id", workflowIds)
+              .eq("type", "star");
+            totalLikes = likesCount || 0;
+          }
 
-  if (true) { // Always loading for dummy data
+          // Get followers count (placeholder for future implementation)
+          const { count: followersCount } = await supabase
+            .from("creator_followers")
+            .select("*", { count: "exact", head: true })
+            .eq("creator_id", data.id);
+
+          // Get following count (placeholder for future implementation)
+          const { count: followingCount } = await supabase
+            .from("creator_followers")
+            .select("*", { count: "exact", head: true })
+            .eq("follower_id", data.id);
+
+          setStats({
+            totalWorkflows: totalWorkflows || 0,
+            publishedWorkflows: publishedWorkflows || 0,
+            totalLikes,
+            followers: followersCount || 0,
+            following: followingCount || 0,
+          });
+
+          // Fetch recent activities
+          const activities: Array<{
+            id: string;
+            type: string;
+            title: string;
+            description: string;
+            timestamp: string;
+            icon: any;
+            color: string;
+          }> = [];
+
+          // Get recent workflows
+          const { data: recentWorkflows } = await supabase
+            .from("workflows")
+            .select("id, title, created_at, status")
+            .eq("profile_id", data.id)
+            .order("created_at", { ascending: false })
+            .limit(3);
+
+          if (recentWorkflows) {
+            recentWorkflows.forEach((workflow) => {
+              activities.push({
+                id: workflow.id,
+                type: "workflow_created",
+                title: `Membuat workflow "${workflow.title}"`,
+                description:
+                  workflow.status === "approved"
+                    ? "Workflow dipublikasikan"
+                    : "Workflow dalam review",
+                timestamp: workflow.created_at,
+                icon: Workflow,
+                color:
+                  workflow.status === "approved"
+                    ? "text-green-600"
+                    : "text-yellow-600",
+              });
+            });
+          }
+
+          // Get recent likes/stars
+          if (workflows && workflows.length > 0) {
+            const workflowIds = workflows.map((w) => w.id);
+            const { data: recentLikes } = await supabase
+              .from("workflow_interactions")
+              .select("id, workflow_id, created_at")
+              .in("workflow_id", workflowIds)
+              .eq("type", "star")
+              .order("created_at", { ascending: false })
+              .limit(2);
+
+            if (recentLikes) {
+              // Get workflow titles for likes
+              const likeWorkflowIds = recentLikes.map(
+                (like) => like.workflow_id
+              );
+              const { data: likeWorkflows } = await supabase
+                .from("workflows")
+                .select("id, title")
+                .in("id", likeWorkflowIds);
+
+              recentLikes.forEach((like) => {
+                const workflow = likeWorkflows?.find(
+                  (w) => w.id === like.workflow_id
+                );
+                activities.push({
+                  id: like.id,
+                  type: "workflow_liked",
+                  title: `Workflow "${
+                    workflow?.title || "Unknown"
+                  }" mendapat like`,
+                  description: "Seseorang menyukai workflow Anda",
+                  timestamp: like.created_at,
+                  icon: Heart,
+                  color: "text-red-600",
+                });
+              });
+            }
+          }
+
+          // Sort activities by timestamp
+          activities.sort(
+            (a, b) =>
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          );
+          setRecentActivities(activities.slice(0, 5));
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [user, supabase]);
+
+  if (!user) {
     return (
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
-                  <div className="flex-1">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      <div className="text-center py-16">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Not Logged In</h1>
+        <p className="text-gray-600 mb-6">
+          Silakan login untuk melihat dashboard Anda.
+        </p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="text-center py-16">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+        <p className="text-gray-600 mt-4">Loading...</p>
+
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="heading-mobile sm:heading-mobile-lg md:text-2xl sm:text-3xl font-bold mb-2">Dashboard Creator</h1>
-        <p className="body-text-mobile sm:body-text-mobile-lg md:text-base text-gray-600">Temukan dan hubungi creator automation terbaik</p>
+<div className="space-y-8 mt-4">
+      {/* Main Content Grid - GitHub Style */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Left Column - Profile Info */}
+        <div className="lg:col-span-1">
+          <Card className="p-6 min-w-[300px] max-w-[350px]">
+            <div className="text-center mb-6">
+              <Avatar className="h-40 w-40 mx-auto mb-4">
+                <AvatarImage
+                  src={
+                    profileImage ? `${profileImage}?t=${Date.now()}` : undefined
+                  }
+                />
+                <AvatarFallback className="text-3xl">
+                  {profile?.name
+                    ?.split(" ")
+                    .map((n: string) => n[0])
+                    .join("")}
+                </AvatarFallback>
+              </Avatar>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                {profile?.name}
+              </h2>
+
+              {/* Experience Level */}
+              {profile?.experience_level && (
+                <div className="mb-3">
+                  <Badge variant="secondary">{profile.experience_level}</Badge>
+                </div>
+              )}
+
+              <p className="text-gray-600 mb-4">
+                {profile?.bio || "Belum ada bio yang ditambahkan"}
+              </p>
+
+              {/* Edit Profile Button */}
+              <Button
+                asChild
+                className="bg-purple-900 hover:bg-purple-800 text-white mb-6"
+              >
+                <Link href="/dashboard-profile/profile/edit">
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit Profile
+                </Link>
+              </Button>
+            </div>
+
+            {/* Profile Info - Left Aligned */}
+            <div className="text-left space-y-4">
+              {/* Follower/Following Stats */}
+              <div className="flex gap-6">
+                <div className="flex items-center gap-1">
+                  <User className="h-4 w-4 text-gray-600" />
+                  <span className="font-semibold">{stats.followers}</span>
+                  <span className="text-gray-600">followers</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="font-semibold">{stats.following}</span>
+                  <span className="text-gray-600">following</span>
+                </div>
+              </div>
+
+              {/* Location */}
+              {profile?.location && (
+                <div className="flex items-center text-gray-600">
+                  <MapPin className="h-4 w-4 mr-1" />
+                  {profile.location}
+                </div>
+              )}
+
+              {/* Social Links */}
+              <div className="flex gap-4">
+                {profile?.website && (
+                  <a
+                    href={profile.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Website"
+                  >
+                    <Globe className="h-5 w-5 text-gray-600 hover:text-gray-900 transition-colors" />
+                  </a>
+                )}
+                {profile?.linkedin && (
+                  <a
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="LinkedIn"
+                  >
+                    <Linkedin className="h-5 w-5 text-gray-600 hover:text-gray-900 transition-colors" />
+                  </a>
+                )}
+                {profile?.github && (
+                  <a
+                    href={profile.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="GitHub"
+                  >
+                    <Github className="h-5 w-5 text-gray-600 hover:text-gray-900 transition-colors" />
+                  </a>
+                )}
+                {profile?.instagram && (
+                  <a
+                    href={profile.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Instagram"
+                  >
+                    <Instagram className="h-5 w-5 text-gray-600 hover:text-gray-900 transition-colors" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Right Column - Content */}
+        <div className="lg:col-span-3 space-y-6">
+          {/* About Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Tentang Creator</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {profile?.about_markdown ? (
+                <div className="prose prose-sm max-w-none">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw]}
+                  >
+                    {profile.about_markdown}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <p>Belum ada deskripsi yang ditambahkan</p>
+                  <p className="text-sm">
+                    Edit profil untuk menambahkan deskripsi tentang diri Anda
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Stats Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Statistik Kontribusi</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <Workflow className="h-6 w-6 text-gray-700 mr-2" />
+                    <span className="text-2xl font-bold">
+                      {stats.totalWorkflows}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">Total Workflows</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <TrendingUp className="h-6 w-6 text-gray-700 mr-2" />
+                    <span className="text-2xl font-bold">
+                      {stats.publishedWorkflows}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">Published</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <Star className="h-6 w-6 text-gray-700 mr-2" />
+                    <span className="text-2xl font-bold">
+                      {stats.totalLikes}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">Total Likes</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <Calendar className="h-6 w-6 text-gray-700 mr-2" />
+                    <span className="text-2xl font-bold">
+                      {profile?.created_at
+                        ? new Date(profile.created_at).getFullYear()
+                        : "-"}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">Member Since</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent Activities */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Aktivitas Terbaru</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {recentActivities.length > 0 ? (
+                <div className="space-y-4">
+                  {recentActivities.map((activity) => {
+                    const Icon = activity.icon;
+                    return (
+                      <div
+                        key={activity.id}
+                        className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors"
+                      >
+                        <div
+                          className={`p-2 rounded-full bg-gray-100 ${activity.color}`}
+                        >
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {activity.title}
+                          </p>
+                          <p className="text-xs text-gray-600 mt-1">
+                            {activity.description}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {new Date(activity.timestamp).toLocaleDateString(
+                              "id-ID",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <Clock className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                  <p>Belum ada aktivitas terbaru</p>
+                  <p className="text-sm">Aktivitas Anda akan muncul di sini</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
-      {/* Meet the Creators Section (Dummy) */}
-      <div className="mb-12">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-10 gap-4">
-          <h2 className="heading-mobile-xl sm:heading-mobile-lg md:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin text-white">Meet the Creators</h2>
-          <a href="/directory" className="btn-jelajah flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full text-white button-text-mobile sm:button-text-mobile-lg font-medium bg-gradient-to-r from-fuchsia-500 to-violet-600 hover:from-fuchsia-600 hover:to-violet-700 transition-all whitespace-nowrap flex-shrink-0" style={{ height: 'auto', minHeight: '60px' }}>
-            Temukan Creator
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
-          {/* Hanya render data dummy, jangan render data asli */}
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-center sm:text-left">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gray-500 rounded-full flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="font-bold text-white text-responsive-base sm:text-base md:text-lg mb-1">John Hopkins</div>
-                <div className="text-gray-300 text-responsive-sm sm:text-sm md:text-base">Lead Developer,<br/>CEO</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Users className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Total Creator</p>
-                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.totalCreators}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-              </div>
-              <div>
-                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Tersedia</p>
-                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.availableCreators}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Star className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Expert Level</p>
-                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.expertCreators}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 fill-current" />
-              </div>
-              <div>
-                <p className="text-responsive-xs sm:text-xs md:text-sm text-gray-600">Rating Rata-rata</p>
-                <p className="text-responsive-xl sm:text-xl md:text-2xl font-bold">{stats.averageRating}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filters */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-responsive-base sm:text-base md:text-lg">
-            <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
-            Filter & Pencarian
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                placeholder="Cari creator..."
-                value={""} // No search term state, so empty
-                onChange={(e) => {}} // No search term state, so empty
-                className="pl-10"
-              />
-            </div>
-
-            <Select value={"all"} onValueChange={() => {}}>
-              <SelectTrigger>
-                <SelectValue placeholder="Level Pengalaman" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Level</SelectItem>
-                <SelectItem value="beginner">Beginner</SelectItem>
-                <SelectItem value="intermediate">Intermediate</SelectItem>
-                <SelectItem value="advanced">Advanced</SelectItem>
-                <SelectItem value="expert">Expert</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={"all"} onValueChange={() => {}}>
-              <SelectTrigger>
-                <SelectValue placeholder="Status Ketersediaan" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Status</SelectItem>
-                <SelectItem value="available">Tersedia</SelectItem>
-                <SelectItem value="busy">Sibuk</SelectItem>
-                <SelectItem value="unavailable">Tidak Tersedia</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button 
-              variant="outline" 
-              onClick={() => {
-                // No search term state, so empty
-                // No filter experience state, so "all"
-                // No filter availability state, so "all"
-              }}
-              className="w-full sm:w-auto"
-            >
-              Reset Filter
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Results */}
-      <div className="mb-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <p className="text-responsive-sm sm:text-sm md:text-base text-gray-600">
-            Menampilkan {filteredCreators.length} dari {stats.totalCreators} creator
-          </p>
-          <Badge variant="secondary">
-            {filteredCreators.length} hasil
-          </Badge>
-        </div>
-      </div>
-
-      {/* Creators Grid */}
-      {filteredCreators.length === 0 ? (
-        <Card>
-          <CardContent className="p-6 sm:p-8 text-center">
-            <Users className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-responsive-base sm:text-base md:text-lg font-semibold mb-2">Tidak ada creator ditemukan</h3>
-            <p className="text-responsive-sm sm:text-sm md:text-base text-gray-600 mb-4">
-              Coba ubah filter atau kata kunci pencarian Anda
-            </p>
-            <Button 
-              variant="outline"
-              onClick={() => {
-                // No search term state, so empty
-                // No filter experience state, so "all"
-                // No filter availability state, so "all"
-              }}
-            >
-              Reset Filter
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCreators.map((creator) => (
-            <CreatorCard
-              key={`dummy-${creator.id}`} // Use a dummy ID
-              creator={creator}
-              variant="default"
-              showStats={true}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
+
