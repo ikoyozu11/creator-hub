@@ -1,870 +1,573 @@
-/* ========================================
-   TYPOGRAPHY SYSTEM - n8n Creator Hub
-   ======================================== */
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-/* ========================================
-   FONT FAMILY DEFINITIONS
-   ======================================== */
-:root {
-  /* Primary Font Stack (Inter) */
-  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
-
-  /* Secondary Font Stack (Albert Sans - for H1 & H2 only) */
-  --font-secondary: "Albert Sans", "Inter", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
-
-  /* Monospace Font Stack */
-  --font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono",
-    "Source Code Pro", "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
-}
-
-/* ========================================
-   BASE TYPOGRAPHY SETTINGS
-   ======================================== */
-body {
-  font-family: var(--font-primary);
-  font-size: 1rem; /* 16px on desktop, 12px on mobile */
-  line-height: 1.6;
-  font-weight: 400;
-  color: hsl(var(--foreground));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* ========================================
-   HEADING STYLES
-   ======================================== */
-
-/* H1 - Main Page Titles, Hero Headings (Albert Sans) */
 h1 {
-  font-family: var(--font-secondary);
-  font-size: 6.25rem; /* 100px on desktop, 75px on mobile */
+  font-family: "Albert Sans", sans-serif;
+  font-size: 6.25rem !important;
   font-weight: 400;
-  font-style: normal;
-  line-height: 134.4px;
-  letter-spacing: -0.05em;
-  color: hsl(var(--foreground));
-  margin-bottom: 1rem;
+  font-style: Regular;
+  line-height: 6.25rem;
+  letter-spacing: -5%;
 }
 
-/* H2 - Section Headings (Albert Sans) */
-h2 {
-  font-family: var(--font-secondary);
-  font-size: 4rem; /* 64px on desktop, 48px on mobile */
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.75rem;
-}
-
-/* H3 - Subsection Headings, Card Titles (Inter) */
-h3 {
-  font-family: var(--font-primary);
-  font-size: 2.5rem; /* 40px on desktop, 30px on mobile */
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.5rem;
-}
-
-/* H4 - Small Headings (Inter) */
-h4 {
-  font-family: var(--font-primary);
-  font-size: 2rem; /* 32px on desktop, 24px on mobile */
-  font-weight: 600;
-  line-height: 1.3;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.5rem;
-}
-
-/* H5 - Very Small Headings (Inter) */
-h5 {
-  font-family: var(--font-primary);
-  font-size: 1.5rem; /* 24px on desktop, 18px on mobile */
-  font-weight: 600;
-  line-height: 1.4;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.25rem;
-}
-
-/* H6 - Smallest Headings (Inter) */
-h6 {
-  font-family: var(--font-primary);
-  font-size: 1.25rem; /* 20px on desktop, 15px on mobile */
-  font-weight: 600;
-  line-height: 1.4;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.25rem;
-}
-
-/* ========================================
-   BODY TEXT STYLES
-   ======================================== */
-
-/* Paragraph - Main Body Text (Inter) */
-p {
-  font-family: var(--font-primary);
-  font-size: 1.25rem; /* 20px on desktop, 15px on mobile */
-  font-weight: 400;
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-  color: hsl(var(--foreground));
-  margin-bottom: 1rem;
-}
-
-/* Large Paragraph */
-p.large {
-  font-size: 1.125rem; /* 18px on desktop, 13.5px on mobile */
-  line-height: 1.7;
-}
-
-/* Hero Description Paragraph (Albert Sans) */
-p.hero-description {
-  font-family: var(--font-secondary);
-  font-size: 2.1875rem; /* 35px on desktop, 26.25px on mobile */
-  font-weight: 400;
-  line-height: 1.07; /* 107% */
-  letter-spacing: -0.01em; /* -1% */
-  margin-bottom: 1rem;
-}
-
-/* Insight Text (Albert Sans) */
-h2.insight-text {
-  font-family: var(--font-secondary);
-  font-size: 5rem; /* 80px on desktop, 60px on mobile */
-  font-weight: 250; /* Thin */
-  line-height: 1.175; /* 94px / 80px */
-  letter-spacing: -0.05em; /* -5% */
-  margin-bottom: 1rem;
-}
-
-/* Explore Workflow Title (Albert Sans) */
-h2.explore-workflow-title {
-  font-family: var(--font-secondary);
-  font-size: 5rem; /* 80px on desktop, 60px on mobile */
-  font-weight: 300; /* Light */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  text-align: left;
-  margin-bottom: 1rem;
-}
-
-/* Small Paragraph */
-p.small {
-  font-size: 0.875rem; /* 14px on desktop, 10.5px on mobile */
-  line-height: 1.5;
-}
-
-/* ========================================
-   INLINE TEXT STYLES
-   ======================================== */
-
-/* Span - Inline Text (Inter) */
-span {
-  font-family: var(--font-primary);
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  color: inherit;
-}
-
-/* Small Text */
-.text-small {
-  font-size: 0.875rem; /* 14px on desktop, 10.5px on mobile */
-  line-height: 1.5;
-}
-
-/* Large Text */
-.text-large {
-  font-size: 1.125rem; /* 18px on desktop, 13.5px on mobile */
-  line-height: 1.6;
-}
-
-/* ========================================
-   FORM ELEMENT STYLES
-   ======================================== */
-
-/* Label - Form Labels (Inter) */
-label {
-  font-family: var(--font-primary);
-  font-size: 1rem; /* 16px on desktop, 12px on mobile */
-  font-weight: 500;
-  line-height: 1.4;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-/* Input Text (Inter) */
-input,
-textarea,
-select {
-  font-family: var(--font-primary);
-  font-size: 1rem; /* 16px on desktop, 12px on mobile */
-  font-weight: 400;
-  line-height: 1.5;
-  color: hsl(var(--foreground));
-}
-
-/* Placeholder Text */
-input::placeholder,
-textarea::placeholder {
-  color: hsl(var(--muted-foreground));
-  font-weight: 400;
-}
-
-/* ========================================
-   INTERACTIVE ELEMENT STYLES
-   ======================================== */
-
-/* Button Text (Inter) */
-button {
-  font-family: var(--font-primary);
-  font-size: 1rem; /* 16px on desktop, 12px on mobile */
-  font-weight: 500;
-  line-height: 1.4;
-  color: inherit;
-}
-
-/* Link Text (Inter) */
-a {
-  font-family: var(--font-primary);
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  color: hsl(var(--primary));
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: hsl(var(--primary) / 0.8);
-}
-
-/* ========================================
-   UTILITY CLASSES
-   ======================================== */
-
-/* Button Text Styles */
-button.button-text,
-a.button-text {
-  font-family: var(--font-primary);
-  font-size: 1.0625rem; /* 17px on desktop, 12.75px on mobile */
-  font-weight: 600; /* Semi Bold */
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-}
-
-/* ========================================
-   WORKFLOW CARD TEXT STYLES
-   ======================================== */
-
-/* Workflow Category Text (Gambar 2) */
-.workflow-category-text {
-  font-family: var(--font-primary);
-  font-size: 1rem; /* 16px on desktop, 12px on mobile */
-  font-weight: 250; /* Thin */
-  line-height: 1.4; /* 140% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #ffffff;
-}
-
-/* Workflow Title Text (Gambar 3) */
-.workflow-title-text {
-  font-family: var(--font-primary);
-  font-size: 1.125rem; /* 18px on desktop, 13.5px on mobile */
-  font-weight: 700; /* Bold */
-  line-height: 1.4; /* 140% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #622a9a;
-}
-
-/* Workflow Description Text (Gambar 4) */
-.workflow-description-text {
-  font-family: var(--font-primary);
-  font-size: 0.875rem; /* 14px on desktop, 10.5px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.6; /* 160% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #5c6063;
-}
-
-/* Workflow Tag Text (Gambar 5) */
-.workflow-tag-text {
-  font-family: var(--font-primary);
-  font-size: 0.875rem; /* 14px on desktop, 10.5px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.6; /* 160% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #622a9a;
-}
-
-/* Workflow Creator Text (Gambar 6) */
-.workflow-creator-text {
-  font-family: var(--font-primary);
-  font-size: 0.875rem; /* 14px on desktop, 10.5px on mobile */
-  font-weight: 600; /* Semi Bold */
-  line-height: 1.6; /* 160% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #622a9a;
-}
-
-/* Workflow Author Avatar Text */
-.workflow-author-avatar {
-  font-family: var(--font-primary);
-  font-size: 0.75rem; /* 12px on desktop, 9px on mobile */
-  font-weight: 600; /* Semi Bold */
-  line-height: 1;
-  letter-spacing: 0em;
-  color: #ffffff;
-}
-
-/* Creator Name Text (Gambar 3) */
-.creator-name-text {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 1.375rem; /* 22px on desktop, 16.5px on mobile */
-  font-weight: 700; /* Bold */
-  line-height: 0.96; /* 96% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Creator Description Text (Gambar 4) */
-.creator-description-text {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 1.125rem; /* 18px on desktop, 13.5px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.19; /* 119% */
-  letter-spacing: 0em; /* 0% */
-  color: #9ca3af; /* gray-400 */
-}
-
-/* Platform Title Text (Gambar 1) */
-.platform-title-text {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 5rem; /* 80px on desktop, 60px on mobile */
-  font-weight: 250; /* Thin */
-  line-height: 1.175; /* 94px / 80px */
-  letter-spacing: -0.05em; /* -5% */
-  color: #ffffff;
-}
-
-/* Platform Description Text (Gambar 2) */
-.platform-description-text {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.25rem; /* 20px on desktop, 15px on mobile */
-  font-weight: 300; /* Light */
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #ffffff;
-}
-
-/* Key Benefits Title Text (Gambar 2) */
-.key-benefits-title-text {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 2.8125rem; /* 45px on desktop, 33.75px on mobile */
-  font-weight: 250; /* Thin */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Key Benefits Intro Text (Gambar 3) */
-.key-benefits-intro-text {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.25rem; /* 20px on desktop, 15px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #ffffff;
-}
-
-/* Key Benefits Point Title Text (Gambar 4) */
-.key-benefits-point-title-text {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.25rem; /* 20px on desktop, 15px on mobile */
-  font-weight: 700; /* Bold */
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #ffffff;
-}
-
-/* Key Benefits Point Description Text (Gambar 5) */
-.key-benefits-point-description-text {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.25rem; /* 20px on desktop, 15px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #ffffff;
-}
-
-/* Call to Action Text (Gambar 3) */
-.cta-text {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: clamp(1.25rem, 4vw, 1.75rem); /* 20px-28px responsive */
-  font-weight: 200; /* Thin */
-  line-height: 1.2; /* 120% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #cfc6e2;
-  max-width: 500px;
-  text-align: center;
-}
-
-/* Call to Action Button Text */
-.cta-button-text {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.0625rem; /* 17px on desktop, 15.9375px on mobile */
-  font-weight: 600; /* Semi Bold */
-  line-height: 1.5; /* 150% */
-  letter-spacing: -0.01em; /* -1% */
-  color: #ffffff;
-}
-
-/* Footer Brand Title */
-.footer-brand-title {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 2.8125rem; /* 45px on desktop, 33.75px on mobile */
-  font-weight: 600; /* Semi Bold for "N8N Indonesia" */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Footer Brand Title - N8N Part */
-.footer-brand-title-n8n {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 2.8125rem; /* 45px on desktop, 33.75px on mobile */
-  font-weight: 700; /* Bold */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Footer Brand Title - Indonesia Part */
-.footer-brand-title-indonesia {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 2.8125rem; /* 45px on desktop, 33.75px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Footer Brand Subtitle */
-.footer-brand-subtitle {
-  font-family: var(--font-secondary); /* Albert Sans */
-  font-size: 2.8125rem; /* 45px on desktop, 33.75px on mobile */
-  font-weight: 200; /* Thin - lebih tipis dari sebelumnya */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Footer Description */
-.footer-description {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.125rem; /* 18px on desktop, 13.5px on mobile */
-  font-weight: 200; /* Thin - lebih tipis lagi */
-  line-height: 1.5; /* 150% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Footer Section Title */
-.footer-section-title {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1rem; /* 16px on desktop, 12px on mobile */
-  font-weight: 600; /* Semi Bold */
-  line-height: 1.2; /* 120% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Footer Link */
-.footer-link {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 1.125rem; /* 18px on desktop, 13.5px on mobile */
-  font-weight: 200; /* Thin - lebih tipis dari sebelumnya */
-  line-height: 1.5; /* 150% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.footer-link:hover {
-  opacity: 0.8;
-}
-
-/* Footer Copyright */
-.footer-copyright {
-  font-family: var(--font-primary); /* Inter */
-  font-size: 0.75rem; /* 12px on desktop, 9px on mobile */
-  font-weight: 400; /* Regular */
-  line-height: 1.5; /* 150% */
-  letter-spacing: 0em; /* 0% */
-  color: #ffffff;
-}
-
-/* Font Weights */
-.font-thin {
+.h1-large {
+  font-family: "Albert Sans", sans-serif;
   font-weight: 250;
+  font-style: Thin;
+  font-size: 6.25rem !important;
+  line-height: 6.25rem;
+  letter-spacing: -5%;
 }
-.font-light {
-  font-weight: 300;
-}
-.font-normal {
-  font-weight: 400;
-}
-.font-medium {
-  font-weight: 500;
-}
-.font-semibold {
+
+.h3 {
+  font-family: "Albert Sans", sans-serif;
   font-weight: 600;
-}
-.font-bold {
-  font-weight: 700;
-}
-.font-extrabold {
-  font-weight: 800;
+  font-style: Thin;
+  font-size: 2.188rem !important;
+  line-height: 120%;
+  letter-spacing: -1%;
 }
 
-/* Text Colors */
-.text-primary {
-  color: hsl(var(--foreground));
-}
-.text-secondary {
-  color: hsl(var(--muted-foreground));
-}
-.text-muted {
-  color: hsl(var(--muted-foreground));
-}
-.text-accent {
-  color: hsl(var(--accent-foreground));
-}
-
-/* Text Alignment */
-.text-left {
-  text-align: left;
-}
-.text-center {
-  text-align: center;
-}
-.text-right {
-  text-align: right;
-}
-.text-justify {
-  text-align: justify;
+.hero-title-main {
+  font-family: "Albert Sans", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: Regular !important;
+  font-size: 86px !important;
+  line-height: 134.4px !important;
+  letter-spacing: -5% !important;
+  color: #ffffff !important;
+  margin-bottom: 0 !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+  gap: 0.5rem !important;
+  white-space: nowrap !important;
 }
 
-/* Text Transform */
-.uppercase {
-  text-transform: uppercase;
-}
-.lowercase {
-  text-transform: lowercase;
-}
-.capitalize {
-  text-transform: capitalize;
-}
-
-/* Text Decoration */
-.underline {
-  text-decoration: underline;
-}
-.line-through {
-  text-decoration: line-through;
-}
-.no-underline {
-  text-decoration: none;
+.hero-title-sub {
+  font-family: "Albert Sans", sans-serif !important;
+  font-weight: 100 !important;
+  font-style: Thin !important;
+  font-size: 86px !important;
+  line-height: 134.4px !important;
+  letter-spacing: -5% !important;
+  color: #ffffff !important;
+  margin-bottom: 0 !important;
+  margin-top: -50px !important;
+  text-align: left !important;
 }
 
-/* Letter Spacing */
-.tracking-tight {
-  letter-spacing: -0.025em;
-}
-.tracking-normal {
-  letter-spacing: 0em;
-}
-.tracking-wide {
-  letter-spacing: 0.025em;
-}
-
-/* Line Height */
-.leading-none {
-  line-height: 1;
-}
-.leading-tight {
-  line-height: 1.25;
-}
-.leading-normal {
-  line-height: 1.5;
-}
-.leading-relaxed {
-  line-height: 1.75;
-}
-.leading-loose {
-  line-height: 2;
+/* Hero Description based on Figma specifications */
+.hero-description {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: Regular !important;
+  font-size: 20px !important;
+  line-height: 150% !important;
+  letter-spacing: -1% !important;
+  color: #ffffff !important;
+  text-align: left !important;
 }
 
-/* ========================================
-   RESPONSIVE TYPOGRAPHY
-   ======================================== */
+/* Hero Subtitle based on Figma specifications */
+.hero-subtitle {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: Regular !important;
+  font-size: 18px !important;
+  line-height: 150% !important;
+  letter-spacing: -1% !important;
+  color: #ffffff !important;
+  text-align: left !important;
+  opacity: 0.9 !important;
+}
 
-/* Mobile Responsive (max-width: 768px) */
+/* Creator Name based on Figma specifications */
+.creator-name {
+  font-family: "Albert Sans", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: Bold !important;
+  font-size: 25px !important;
+  line-height: 96% !important;
+  letter-spacing: 0% !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  text-align: left !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+}
+
+/* Creator Experience Level based on Figma specifications */
+.creator-experience {
+  font-family: "Albert Sans", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: Regular !important;
+  font-size: 20px !important;
+  line-height: 119% !important;
+  letter-spacing: 0% !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* Responsive hero title sizing */
+@media (max-width: 1024px) {
+  .hero-title-main,
+  .hero-title-sub {
+    font-size: 64px !important;
+    line-height: 100px !important;
+  }
+  .hero-title-main {
+    gap: 0.4rem !important;
+  }
+  .hero-title-sub {
+    margin-top: -35px !important;
+  }
+  .hero-description {
+    font-size: 18px !important;
+  }
+  .hero-subtitle {
+    font-size: 16px !important;
+  }
+  .creator-name {
+    font-size: 22px !important;
+  }
+  .creator-experience {
+    font-size: 18px !important;
+  }
+}
+
 @media (max-width: 768px) {
-  /* H1 adjustments for mobile */
-  h1 {
-    font-size: 4.5rem; /* 54px (12px * 4.5) */
-    line-height: 134.4px;
-    letter-spacing: -0.05em;
+  .hero-title-main,
+  .hero-title-sub {
+    font-size: 48px !important;
+    line-height: 75px !important;
   }
-
-  /* H2 adjustments for mobile */
-  h2 {
-    font-size: 3rem; /* 36px (12px * 3) */
-    line-height: 1;
-    letter-spacing: -0.01em;
+  .hero-title-main {
+    gap: 0.3rem !important;
   }
-
-  /* H3 adjustments for mobile */
-  h3 {
-    font-size: 2.5rem; /* 30px (12px * 2.5) */
-    line-height: 1.1;
+  .hero-title-sub {
+    margin-top: -30px !important;
   }
-
-  /* H4 adjustments for mobile */
-  h4 {
-    font-size: 2rem; /* 24px (12px * 2) */
-    line-height: 1.2;
+  .hero-description {
+    font-size: 16px !important;
   }
-
-  /* H5 adjustments for mobile */
-  h5 {
-    font-size: 1.5rem; /* 18px (12px * 1.5) */
-    line-height: 1.3;
+  .hero-subtitle {
+    font-size: 14px !important;
   }
-
-  /* H6 adjustments for mobile */
-  h6 {
-    font-size: 1.25rem; /* 15px (12px * 1.25) */
-    line-height: 1.3;
+  .creator-name {
+    font-size: 20px !important;
   }
-
-  /* Body text adjustments for mobile */
-  p {
-    font-size: 1.25rem; /* 15px (12px * 1.25) */
-    line-height: 1.5;
-    letter-spacing: -0.01em;
-  }
-
-  p.large {
-    font-size: 1.125rem; /* 13.5px (12px * 1.125) */
-    line-height: 1.6;
-  }
-
-  p.hero-description {
-    font-size: 2.1875rem; /* 26.25px (12px * 2.1875) */
-    line-height: 1.07;
-    letter-spacing: -0.01em;
-  }
-
-  h2.insight-text {
-    font-size: 5rem; /* 60px (12px * 5) */
-    line-height: 1.175;
-    letter-spacing: -0.05em;
-  }
-
-  h2.explore-workflow-title {
-    font-size: 5rem; /* 60px (12px * 5) */
-    line-height: 1.2;
-    letter-spacing: 0em;
-  }
-
-  button.button-text,
-  a.button-text {
-    font-size: 1.0625rem; /* 12.75px (12px * 1.0625) */
-    line-height: 1.5;
-    letter-spacing: -0.01em;
-  }
-
-  .workflow-category-text {
-    font-size: 0.75rem; /* 12px (12px * 0.75) */
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-  }
-
-  .workflow-title-text {
-    font-size: 1.125rem; /* 13.5px (12px * 1.125) */
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-  }
-
-  .workflow-description-text,
-  .workflow-tag-text,
-  .workflow-creator-text {
-    font-size: 0.875rem; /* 10.5px (12px * 0.875) */
-    line-height: 1.6;
-    letter-spacing: -0.01em;
-  }
-
-  .workflow-author-avatar {
-    font-size: 0.5625rem; /* 9px (12px * 0.5625) */
-    line-height: 1;
-    letter-spacing: 0em;
-  }
-
-  .creator-name-text {
-    font-size: 1.03125rem; /* 16.5px (12px * 1.03125) */
-    line-height: 0.96;
-    letter-spacing: 0em;
-  }
-
-  .creator-description-text {
-    font-size: 0.84375rem; /* 13.5px (12px * 0.84375) */
-    line-height: 1.19;
-    letter-spacing: 0em;
-  }
-
-  .platform-title-text {
-    font-size: 3.75rem; /* 60px (12px * 3.75) */
-    line-height: 1.175;
-    letter-spacing: -0.05em;
-  }
-
-  .platform-description-text {
-    font-size: 0.9375rem; /* 15px (12px * 0.9375) */
-    line-height: 1.5;
-    letter-spacing: -0.01em;
-  }
-
-  .key-benefits-title-text {
-    font-size: 2.109375rem; /* 33.75px (12px * 2.109375) */
-    line-height: 1.2;
-    letter-spacing: 0em;
-  }
-
-  .key-benefits-intro-text,
-  .key-benefits-point-title-text,
-  .key-benefits-point-description-text {
-    font-size: 0.9375rem; /* 15px (12px * 0.9375) */
-    line-height: 1.5;
-    letter-spacing: -0.01em;
-  }
-
-  .cta-button-text {
-    font-size: 0.99609375rem; /* 15.9375px (12px * 0.99609375) */
-    line-height: 1.5;
-    letter-spacing: -0.01em;
-  }
-
-  .footer-brand-title,
-  .footer-brand-title-n8n,
-  .footer-brand-title-indonesia {
-    font-size: 2.109375rem; /* 33.75px (12px * 2.109375) */
-    line-height: 1.2;
-    letter-spacing: 0em;
-  }
-
-  .footer-brand-subtitle {
-    font-size: 2.109375rem; /* 33.75px (12px * 2.109375) */
-    line-height: 1.2;
-    letter-spacing: 0em;
-  }
-
-  .footer-description,
-  .footer-link {
-    font-size: 0.84375rem; /* 13.5px (12px * 0.84375) */
-    line-height: 1.5;
-    letter-spacing: 0em;
-  }
-
-  .footer-section-title {
-    font-size: 0.75rem; /* 12px (12px * 0.75) */
-    line-height: 1.2;
-    letter-spacing: 0em;
-  }
-
-  .footer-copyright {
-    font-size: 0.5625rem; /* 9px (12px * 0.5625) */
-    line-height: 1.5;
-    letter-spacing: 0em;
-  }
-
-  p.small {
-    font-size: 0.875rem; /* 10.5px (12px * 0.875) */
-    line-height: 1.4;
-  }
-
-  /* Form elements adjustments for mobile */
-  label,
-  input,
-  textarea,
-  select,
-  button {
-    font-size: 1rem; /* 12px (12px * 1) */
-  }
-
-  /* Utility text adjustments for mobile */
-  .text-small {
-    font-size: 0.875rem; /* 10.5px (12px * 0.875) */
-  }
-
-  .text-large {
-    font-size: 1.125rem; /* 13.5px (12px * 1.125) */
+  .creator-experience {
+    font-size: 16px !important;
   }
 }
 
-/* ========================================
-   DARK MODE SUPPORT
-   ======================================== */
-@media (prefers-color-scheme: dark) {
-  /* Dark mode specific adjustments if needed */
-  body {
-    color: hsl(var(--foreground));
+@media (max-width: 640px) {
+  .hero-title-main,
+  .hero-title-sub {
+    font-size: 36px !important;
+    line-height: 56px !important;
+  }
+  .hero-title-main {
+    gap: 0.2rem !important;
+  }
+  .hero-title-sub {
+    margin-top: -25px !important;
+  }
+  .hero-description {
+    font-size: 14px !important;
+  }
+  .hero-subtitle {
+    font-size: 12px !important;
+  }
+  .creator-name {
+    font-size: 18px !important;
+  }
+  .creator-experience {
+    font-size: 14px !important;
   }
 }
 
-/* ========================================
-   ACCESSIBILITY IMPROVEMENTS
-   ======================================== */
-
-/* Focus styles for better accessibility */
-a:focus,
-button:focus,
-input:focus,
-textarea:focus,
-select:focus {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+@media (max-width: 480px) {
+  .hero-title-main,
+  .hero-title-sub {
+    font-size: 28px !important;
+    line-height: 44px !important;
+  }
+  .hero-title-main {
+    gap: 0.1rem !important;
+  }
+  .hero-title-sub {
+    margin-top: -20px !important;
+  }
+  .hero-description {
+    font-size: 12px !important;
+  }
+  .hero-subtitle {
+    font-size: 10px !important;
   }
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --foreground: 0 0% 0%;
-    --muted-foreground: 0 0% 20%;
+.paragraph-17-reguler {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 1.25rem !important;
+  line-height: 150% !important;
+  letter-spacing: -1% !important;
+}
+
+.paragraph-17-regulertext-white\/80 {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 1.25rem !important;
+  line-height: 150% !important;
+  letter-spacing: -1% !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.desc-hero-screen {
+  font-family: "Albert Sans", sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 2.188rem !important;
+  line-height: 120%;
+  letter-spacing: -1%;
+  font-family: "Albert Sans", sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 2.188rem !important;
+  line-height: 120%;
+  letter-spacing: -1%;
+}
+
+.h2-title {
+  font-family: "Albert Sans", sans-serif;
+  font-weight: 300;
+  font-style: light;
+  font-size: 6.25rem;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #ffffff;
+}
+
+@media (max-width: 1500px) {
+  .h2-title {
+    font-size: 3.75rem;
+  }
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* html {
+    font-size: 16px;
   }
 
-  .dark {
-    --foreground: 0 0% 100%;
-    --muted-foreground: 0 0% 80%;
+  @screen lg {
+    html {
+      font-size: 16px;
+/* } */
+
+/* Creator Detail Typography */
+.creator-detail-name {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 36px !important;
+  line-height: 120% !important;
+  letter-spacing: 0% !important;
+  color: white !important;
+  margin: 0 !important;
+}
+
+.creator-detail-experience {
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -1%;
+  color: white;
+  margin: 0;
+}
+
+/* Responsive font sizing for creator detail */
+@media (max-width: 768px) {
+  .h2-title {
+    font-size: 2.75rem;
+  }
+  .creator-detail-name {
+    font-size: 28px !important;
+  }
+
+  .creator-detail-experience {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .creator-detail-name {
+    font-size: 24px !important;
+  }
+
+  .creator-detail-experience {
+    font-size: 20px;
+  }
+}
+
+/* Override any conflicting styles */
+h1.creator-detail-name {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 36px !important;
+  line-height: 120% !important;
+  letter-spacing: 0% !important;
+  color: white !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+/* Connect With Us Page Typography */
+.connect-with-us-title {
+  font-family: "Albert Sans", Arial, sans-serif !important;
+  font-weight: 250 !important;
+  font-style: thin !important;
+  font-size: 55px !important;
+  line-height: 94px !important;
+  letter-spacing: -5% !important;
+  margin: 0 0 30px 0 !important;
+  text-align: left !important;
+}
+
+/* Hero Insight Section Typography */
+.hero-insight-text {
+  font-family: "Albert Sans", sans-serif !important;
+  font-weight: 100 !important;
+  font-style: thin !important;
+  line-height: 5.875rem !important;
+  letter-spacing: -5% !important;
+}
+
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .hero-insight-text {
+    font-size: 5rem !important;
+    text-align: left !important;
+  }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-insight-text {
+    font-size: 3.5rem !important;
+    text-align: center !important;
+    line-height: 4.5rem !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Mobile (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .hero-insight-text {
+    font-size: 3rem !important;
+    text-align: center !important;
+    line-height: 4rem !important;
+  }
+}
+
+/* Small Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .hero-insight-text {
+    font-size: 2.5rem !important;
+    text-align: center !important;
+    line-height: 3.5rem !important;
+  }
+}
+
+.connect-with-us-description {
+  font-family: "Inter", Arial, sans-serif !important;
+  font-weight: 300 !important;
+  font-style: light !important;
+  font-size: 18px !important;
+  line-height: 150% !important;
+  letter-spacing: -1% !important;
+  background: transparent !important;
+  margin-bottom: 32px !important;
+}
+
+.connect-with-us-button {
+  font-size: clamp(14px, 3.5vw, 18px) !important;
+}
+
+.connect-with-us-cta-text {
+  font-family: "Albert Sans", Arial, sans-serif !important;
+  font-weight: 200 !important;
+  font-size: clamp(1.1rem, 4vw, 22px) !important;
+  line-height: 130% !important;
+  letter-spacing: -0.01em !important;
+  text-align: left !important;
+}
+
+.connect-with-us-cta-line-1 {
+  font-family: "Albert Sans", Arial, sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 24px !important;
+  line-height: 120% !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 4px !important;
+}
+
+.connect-with-us-cta-line-2 {
+  font-family: "Albert Sans", Arial, sans-serif !important;
+  font-weight: 200 !important;
+  font-size: 20px !important;
+  line-height: 120% !important;
+  letter-spacing: -0.01em !important;
+  opacity: 0.9 !important;
+}
+
+.connect-with-us-cta-button {
+  font-size: clamp(0.875rem, 3vw, 1rem) !important;
+  min-height: 40px !important;
+}
+
+.connect-with-us-benefit-title {
+  font-size: clamp(0.95rem, 3.5vw, 1.15rem) !important;
+  word-break: break-word !important;
+}
+
+/* Responsive adjustments for connect-with-us */
+@media (max-width: 1024px) {
+  .connect-with-us-title {
+    font-size: 44px !important;
+    line-height: 52px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .connect-with-us-title {
+    font-size: 36px !important;
+    line-height: 42px !important;
+  }
+
+  .connect-with-us-description {
+    font-size: 16px !important;
+  }
+
+  .connect-with-us-button {
+    font-size: clamp(13px, 3vw, 16px) !important;
+  }
+
+  .connect-with-us-cta-text {
+    font-size: clamp(1rem, 3.5vw, 20px) !important;
+  }
+
+  .connect-with-us-cta-button {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem) !important;
+  }
+
+  .connect-with-us-benefit-title {
+    font-size: clamp(0.9rem, 3vw, 1.1rem) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .connect-with-us-title {
+    font-size: 28px !important;
+    line-height: 32px !important;
+  }
+
+  .connect-with-us-description {
+    font-size: 14px !important;
+  }
+
+  .connect-with-us-button {
+    font-size: clamp(12px, 2.5vw, 14px) !important;
+  }
+
+  .connect-with-us-cta-text {
+    font-size: clamp(0.9rem, 3vw, 18px) !important;
+  }
+
+  .connect-with-us-cta-button {
+    font-size: clamp(0.75rem, 2vw, 0.85rem) !important;
+  }
+
+  .connect-with-us-benefit-title {
+    font-size: clamp(0.85rem, 2.5vw, 1rem) !important;
+  }
+}
+
+/* Workflow Page Title Styling - Shared between Add and Edit pages */
+.workflow-page-title {
+  font-family: "Albert Sans", sans-serif !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.workflow-page-title-line-1 {
+  display: block !important;
+  font-size: 80px !important;
+  margin-bottom: 4px !important;
+  line-height: 1.05 !important;
+}
+
+.workflow-page-title-line-2 {
+  display: block !important;
+  font-size: 80px !important;
+  margin-bottom: 0 !important;
+  line-height: 1.05 !important;
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .workflow-page-title-line-1,
+  .workflow-page-title-line-2 {
+    font-size: 50px !important;
+  }
+}
+
+/* Small Mobile (max-width: 640px) */
+@media (max-width: 640px) {
+  .workflow-page-title-line-1,
+  .workflow-page-title-line-2 {
+    font-size: 40px !important;
+  }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .workflow-page-title-line-1,
+  .workflow-page-title-line-2 {
+    font-size: 70px !important;
+  }
+}
+
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .workflow-page-title-line-1,
+  .workflow-page-title-line-2 {
+    font-size: 80px !important;
   }
 }

@@ -7,13 +7,13 @@ import {
   Download,
   Users,
   Star,
-  Filter,
+  // Filter, // Category filter disabled
   ArrowRight,
   Workflow,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { workflowCategories } from "@/data/category-workflows";
+// import { workflowCategories } from "@/data/category-workflows"; // Category filter disabled
 import GradientCircle from "@/components/GradientCircle";
 
 type WorkflowWithProfileName = {
@@ -27,9 +27,10 @@ export default function WorkflowsPage() {
   const [workflows, setWorkflows] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All");
+  // Category filter disabled
+  // const [categoryFilter, setCategoryFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const workflowsPerPage = 12;
+  const workflowsPerPage = 8;
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -58,6 +59,15 @@ export default function WorkflowsPage() {
         );
 
         setWorkflows(workflowsWithName);
+        console.log("Workflows data:", workflowsWithName);
+        console.log(
+          "Workflows with json_n8n:",
+          workflowsWithName.filter((w) => w.json_n8n)
+        );
+        console.log(
+          "Sample workflow json_n8n:",
+          workflowsWithName[0]?.json_n8n
+        );
       } else {
         console.error("Failed to fetch workflows");
         setWorkflows([]);
@@ -77,8 +87,10 @@ export default function WorkflowsPage() {
       (w.tags || []).some((tag: string) =>
         tag.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    const matchesCategory =
-      categoryFilter === "All" || w.category === categoryFilter;
+    // Category filter disabled - always return true for category
+    // const matchesCategory =
+    //   categoryFilter === "All" || w.category === categoryFilter;
+    const matchesCategory = true; // Always show all categories
     return matchesSearch && matchesCategory;
   });
 
@@ -104,9 +116,9 @@ export default function WorkflowsPage() {
 
   // Pagination component
   const Pagination = () => (
-    <div className="flex justify-center items-center gap-1 sm:gap-2 mt-8 sm:mt-12 px-2">
+    <div className="flex justify-center items-center gap-1 sm:gap-2 mt-8 sm:mt-12">
       <button
-        className="px-3 sm:px-4 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-xs sm:text-sm"
+        className="btn-primary px-3 sm:px-4 py-2 text-xs sm:text-sm disabled:opacity-50 pagination-btn"
         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
         disabled={currentPage === 1}
       >
@@ -116,11 +128,11 @@ export default function WorkflowsPage() {
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
             key={page}
-            className={`px-3 sm:px-4 py-2 rounded-xl font-semibold transition-all duration-200 shadow text-xs sm:text-sm min-w-[32px] sm:min-w-[40px]
+            className={`px-3 sm:px-4 py-2 rounded-xl font-semibold transition-all duration-200 shadow text-xs sm:text-sm min-w-[32px] sm:min-w-[40px] pagination-btn
               ${
                 page === currentPage
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white scale-105"
-                  : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white border border-white/20"
+                  ? "btn-primary scale-105"
+                  : "btn-secondary"
               }
             `}
             onClick={() => setCurrentPage(page)}
@@ -130,7 +142,7 @@ export default function WorkflowsPage() {
         ))}
       </div>
       <button
-        className="px-3 sm:px-4 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-xs sm:text-sm"
+        className="btn-primary px-3 sm:px-4 py-2 text-xs sm:text-sm disabled:opacity-50 pagination-btn"
         onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
         disabled={currentPage === totalPages}
       >
@@ -145,25 +157,32 @@ export default function WorkflowsPage() {
       <GradientCircle
         type="hero"
         style={{
-          top: "20vh",
+          top: "10vh",
           left: "25vw",
           transform: "translateX(-50%)",
           zIndex: -1,
         }}
       />
 
-      <div className="w-full px-4 sm:px-8 md:px-16 relative z-10">
+      {/* Gradient circle kedua di area kanan */}
+      <GradientCircle
+        type="hero"
+        style={{
+          top: "75vh",
+          left: "80vw",
+          transform: "translateX(50%)",
+          zIndex: -1,
+        }}
+      />
+
+      <div className="w-full container-box relative z-10 mb-32">
         {/* HERO HEADING & SUBHEADING */}
-        <div className="w-full pt-8 md:pt-16 flex flex-col gap-6 md:gap-10">
+        <div className="w-full pt-32 md:pt-64 flex flex-col gap-6 md:gap-10">
           <div className="flex flex-col md:flex-row md:items-center w-full">
             {/* Kiri: Heading */}
-            <div className="flex flex-col items-start flex-1 min-w-0">
-              <h1 className="font-sans font-semibold text-[2.5rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-white mb-0 text-left">
-                Explore
-              </h1>
-              <h2 className="font-sans font-thin text-[2.2rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-white mb-0 text-left">
-                Workflows
-              </h2>
+            <div className="flex flex-col items-start flex-shrink-0">
+              <h1 className="hero-title-main">Explore</h1>
+              <h2 className="hero-title-sub">Workflows</h2>
             </div>
 
             {/* Garis Penyambung */}
@@ -173,21 +192,9 @@ export default function WorkflowsPage() {
 
             {/* Kanan: Deskripsi dan Search */}
             <div className="hidden md:flex flex-col items-start flex-1 min-w-0">
-              <div
-                style={{
-                  fontFamily: "Inter, Arial, sans-serif",
-                  fontWeight: 400,
-                  fontStyle: "normal",
-                  fontSize: "18px",
-                  lineHeight: "150%",
-                  letterSpacing: "-0.01em",
-                  color: "#FFFFFF",
-                  marginBottom: "24px",
-                  textAlign: "left",
-                }}
-              >
-                Temukan workflow automation yang powerful dan siap pakai.
-                Tingkatkan produktivitas dengan solusi yang sudah teruji.
+              <div className="hero-description max-w-3xl mb-6">
+                Temukan beragam workflow N8N buatan kreator Indonesia, dari yang
+                simpel hingga kompleks, untuk mempermudah pekerjaan Anda.
               </div>
               {/* Search Bar */}
               <div className="relative w-full max-w-md">
@@ -205,74 +212,32 @@ export default function WorkflowsPage() {
 
           {/* Mobile: Deskripsi dan Search */}
           <div className="md:hidden flex flex-col items-start w-full mt-6">
-            <div
-              style={{
-                fontFamily: "Inter, Arial, sans-serif",
-                fontWeight: 400,
-                fontStyle: "normal",
-                fontSize: "16px",
-                lineHeight: "150%",
-                letterSpacing: "-0.01em",
-                color: "#FFFFFF",
-                marginBottom: "20px",
-                textAlign: "left",
-              }}
-              className="break-words"
-            >
-              Temukan workflow automation yang powerful dan siap pakai.
-              Tingkatkan produktivitas dengan solusi yang sudah teruji.
+            <div className="hero-description max-w-3xl mb-4">
+              Temukan beragam workflow N8N buatan kreator Indonesia, dari yang
+              simpel hingga kompleks, untuk mempermudah pekerjaan Anda.
             </div>
             {/* Search Bar Mobile */}
             <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Cari Workflow"
-                className="w-full pl-4 pr-12 py-3 border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/10 hover:bg-white/20 transition-colors text-base sm:text-lg text-white placeholder-white/60"
+                className="w-full pl-4 pr-12 py-3 border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/10 hover:bg-white/20 transition-colors text-lg text-white placeholder-white/60"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 w-4 h-4 sm:w-5 sm:h-5" />
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
             </div>
-          </div>
-        </div>
-
-        {/* Filter Section */}
-        <div className="flex flex-col items-center justify-center mt-8 sm:mt-12 mb-6 sm:mb-8 gap-2 px-2">
-          <div className="flex flex-row items-center gap-2 sm:gap-4">
-            <Filter className="w-4 h-4 text-white/60 flex-shrink-0" />
-            <span className="text-white/80 font-medium text-sm sm:text-base break-words">
-              Filter by category:
-            </span>
-          </div>
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 w-full">
-            {["All", ...workflowCategories].map((category) => (
-              <button
-                key={category}
-                className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
-                  categoryFilter === category
-                    ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
-                    : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white border border-white/20"
-                }`}
-                onClick={() => setCategoryFilter(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-          <div className="text-white/60 text-xs sm:text-sm text-center break-words">
-            {filteredWorkflows.length} workflow
-            {filteredWorkflows.length !== 1 ? "s" : ""} found
           </div>
         </div>
 
         {/* Workflows Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+        <div className="workflow-grid mt-32 mb-20 sm:mb-32 overflow-hidden">
           {loading ? (
-            <div className="col-span-full text-center py-8 sm:py-12 text-white/60 text-sm sm:text-base break-words px-2">
+            <div className="w-full text-center py-8 sm:py-12 text-white/60 text-sm sm:text-base break-words">
               Loading...
             </div>
           ) : paginatedWorkflows.length === 0 ? (
-            <div className="col-span-full text-center py-8 sm:py-12 text-white/60 text-sm sm:text-base break-words px-2">
+            <div className="w-full text-center py-8 sm:py-12 text-white/60 text-sm sm:text-base break-words">
               Tidak ada workflow ditemukan.
             </div>
           ) : (
@@ -280,23 +245,91 @@ export default function WorkflowsPage() {
               <Link
                 key={workflow.id}
                 href={`/workflows/${workflow.id}`}
-                className="group relative rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 overflow-hidden block"
+                className="group relative rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 block overflow-hidden h-full"
               >
-                {/* Content */}
-                <div className="p-4 sm:p-6">
+                {/* Div 1: Workflow Preview Diagram (Full Width) */}
+                <div className="w-full relative workflow-preview-section overflow-hidden">
                   {/* Category Badge */}
-                  <div className="flex justify-end mb-4">
-                    <span className="inline-flex items-center px-3 py-1 text-xs font-semibold bg-gradient-to-r from-purple-600 to-black text-white rounded-full">
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className="inline-flex items-center px-3 py-2 text-xs font-semibold bg-gradient-to-r from-purple-600 to-black text-white rounded-full">
                       {workflow.category || "General"}
                     </span>
                   </div>
+
+                  {/* Workflow Diagram Preview */}
+                  <div className="w-full -top-4 lg:top-0 absolute min-h-72">
+                    <div className="bg-gray-50 border-b border-gray-200 workflow-preview-header">
+                      {/* Div wrapper dengan posisi relative untuk workflow preview */}
+                      <div className="h-full workflow-preview-wrapper">
+                        <div className="workflow-preview-container workflow-preview-transform">
+                          {workflow.json_n8n ? (
+                            <div
+                              className="workflow-preview-content absolute -translate-x-48  min-w-[1000px] h-full"
+                              dangerouslySetInnerHTML={{
+                                __html: `<n8n-demo workflow='${workflow.json_n8n.replace(
+                                  /'/g,
+                                  "&#39;"
+                                )}' frame="true" style="width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; padding: 0; overflow: hidden; display: block;"></n8n-demo>`,
+                              }}
+                            />
+                          ) : (
+                            <div className="workflow-preview-content absolute w-full h-full flex items-center justify-center bg-gray-100">
+                              <div className="text-center text-gray-500">
+                                <div className="text-2xl mb-1">📋</div>
+                                <p className="text-xs">No workflow data</p>
+                                <p className="text-xs text-gray-400 mt-1">
+                                  json_n8n field empty
+                                </p>
+                                <p className="text-xs text-gray-400 mt-1">
+                                  Add workflow JSON to see preview
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="btn-jelajah-workflow  flex items-center justify-center gap-3 rounded-full mt-[23px] max-w-[200px]">
+                      Pelajari
+                      <svg
+                        width="19"
+                        height="20"
+                        viewBox="0 0 19 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11.3889 13.4538V8.11112M11.3889 8.11112H6.0463M11.3889 8.11112L3.48959 16.0105M7.84079 18.3374C10.5298 18.87 13.4265 18.0943 15.5104 16.0105C18.8299 12.6909 18.8299 7.30906 15.5104 3.9896C12.1909 0.670134 6.80904 0.670134 3.48959 3.9896C1.4057 6.07349 0.630042 8.97019 1.16259 11.6592"
+                          stroke="#622a9a"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M11.3889 13.4538V8.11112M11.3889 8.11112H6.0463M11.3889 8.11112L3.48959 16.0105M7.84079 18.3374C10.5298 18.87 13.4265 18.0943 15.5104 16.0105C18.8299 12.6909 18.8299 7.30906 15.5104 3.9896C12.1909 0.670134 6.80904 0.670134 3.48959 3.9896C1.4057 6.07349 0.630042 8.97019 1.16259 11.6592"
+                          stroke="black"
+                          strokeOpacity="0.05"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Div 2: Content (Judul, Deskripsi, Tag, Creator) */}
+                <div className="p-4 sm:p-6">
                   {/* Title */}
-                  <h3 className="text-base sm:text-lg font-bold text-purple-900 mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors break-words">
+                  <h3 className="workflow-card-title group-hover:text-purple-700 transition-colors">
                     {workflow.title}
+                    test
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed break-words">
+                  <p className="workflow-card-description line-clamp-3">
                     {workflow.description ||
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."}
                   </p>
@@ -345,8 +378,10 @@ export default function WorkflowsPage() {
 
         {/* Pagination */}
         {totalPages > 1 && <Pagination />}
-        <p className="text-white/60 text-xs sm:text-sm mt-4 text-center break-words px-2">
-          Showing page {currentPage} of {totalPages}
+        <p className="text-white/60 text-xs sm:text-sm mt-8 sm:mt-12 mb-8 sm:mb-12 text-center break-words">
+          {totalPages > 1
+            ? `Showing page ${currentPage} of ${totalPages}`
+            : `Showing all ${filteredWorkflows.length} workflows`}
         </p>
       </div>
     </div>

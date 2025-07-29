@@ -49,7 +49,6 @@ export function HeaderNav() {
   const { user, isAdmin, signOut } = useAuth();
   const [isUserAdmin, setIsUserAdmin] = useState<boolean>(false);
   const [profile, setProfile] = useState<any>(null);
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -69,18 +68,6 @@ export function HeaderNav() {
     fetchRoleAndProfile();
   }, [user, isAdmin]);
 
-  // Handle scroll untuk mengubah transparansi header
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const shouldBeBlurred = scrollTop > 50 || scrollTop > 1000;
-      setIsScrolled(shouldBeBlurred);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   // Tutup mobile menu ketika route berubah
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -97,26 +84,76 @@ export function HeaderNav() {
 
   return (
     <header
-      className={`${
-        isScrolled ? "header-transparent" : "header-completely-transparent"
-      } fixed top-0 left-0 right-0 z-40 transition-all duration-300`}
+      className="relative top-0 transition-all duration-300 ease-in-out z-50"
+      style={{
+        background: "transparent",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        borderBottom: "none",
+        isolation: "isolate",
+      }}
     >
       <div
-        className={`${
-          isScrolled
-            ? "w-full px-4 sm:px-8 md:px-16 py-4"
-            : "w-full px-4 sm:px-8 md:px-16 py-4 bg-transparent"
-        } flex items-center justify-between`}
+        className={`${"w-full container-box"} flex items-center justify-between pt-[4rem] md:pt-[4rem] sm:pt-[2rem] xs:pt-[1rem]`}
       >
         {/* Logo/Brand - Mobile */}
-        <div className="md:hidden">
-          <Link href="/" className="text-white font-bold text-xl">
-            N8N
-          </Link>
+        <div className="md:hidden flex items-center gap-2">
+          {/* N8N Logo - Node yang saling terhubung */}
+          <div className="w-8 h-8 flex items-center justify-center text-white">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full"
+            >
+              {/* Node 1 - Left */}
+              <circle cx="2" cy="12" r="1.8" fill="currentColor" opacity="1" />
+              {/* Node 2 - Left Center */}
+              <circle cx="7" cy="12" r="1.8" fill="currentColor" opacity="1" />
+              {/* Node 3 - Center */}
+              <circle cx="12" cy="12" r="1.8" fill="currentColor" opacity="1" />
+              {/* Node 4 - Right Top */}
+              <circle cx="17" cy="6" r="1.8" fill="currentColor" opacity="1" />
+              {/* Node 5 - Right Bottom */}
+              <circle cx="17" cy="18" r="1.8" fill="currentColor" opacity="1" />
+              {/* Connection Lines - Improved connections */}
+              <path
+                d="M3.8 12H6.2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M8.8 12H11.2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M13.8 12H15.2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M15.2 12L17 6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M15.2 12L17 18"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+          <span className="text-white font-bold text-lg">n8n ID</span>
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex border-2 border-white/40 rounded-full px-2 py-1 gap-2 shadow-sm">
+        <div className="hidden md:flex border-2 border-white/40 rounded-full px-2 py-1 gap-2">
           {navItems.map((item) => {
             let isActive = false;
             if (item.href === "/") {
@@ -141,10 +178,9 @@ export function HeaderNav() {
                 key={item.href}
                 href={item.href}
                 className={`flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all duration-200 text-base select-none
-                  ${
-                    isActive
-                      ? "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700"
-                      : "bg-transparent text-white hover:bg-white/10"
+                  ${isActive
+                    ? "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700"
+                    : "bg-transparent text-white hover:bg-white/10"
                   }
                 `}
                 style={{ minWidth: 0 }}
@@ -158,6 +194,18 @@ export function HeaderNav() {
 
         {/* Right side - Avatar/Join Community + Mobile Menu Button */}
         <div className="flex items-center gap-4">
+          {/* Mobile - Join Community Button */}
+          {!user && (
+            <div className="md:hidden">
+              <Link
+                href="/auth"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
+              >
+                Join Community
+              </Link>
+            </div>
+          )}
+
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
@@ -171,125 +219,120 @@ export function HeaderNav() {
             )}
           </button>
 
-          {/* Avatar / Join Community */}
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="h-10 w-10 md:h-12 md:w-12 cursor-pointer hover:opacity-80 transition-opacity">
-                  <AvatarImage
-                    src={profile?.profile_image || undefined}
-                    alt={profile?.name || user.email}
-                  />
-                  <AvatarFallback
-                    style={{
-                      fontSize: 16,
-                      fontWeight: "bold",
-                      backgroundColor: "#374151",
-                      color: "#F9FAFB",
-                    }}
-                  >
-                    {getInitials(profile?.name || user.email)}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="w-64 p-0 border border-white/10 shadow-2xl"
-                style={{
-                  background: "rgba(32, 26, 44, 0.4)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.3)",
-                }}
-              >
-                <div className="flex flex-col items-center p-4 pb-3">
-                  <Avatar className="h-16 w-16 mb-3">
-                    <AvatarImage
-                      src={profile?.profile_image || undefined}
-                      alt={profile?.name || user.email}
-                    />
-                    <AvatarFallback
-                      style={{
-                        fontSize: 28,
-                        fontWeight: "bold",
-                        backgroundColor: "rgba(55, 65, 81, 0.6)",
-                        color: "#F9FAFB",
-                      }}
+          {/* Desktop - User Avatar or Join Community */}
+          <div className="hidden md:flex items-center gap-4">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-2 p-2 rounded-full hover:bg-white/10 transition-colors">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage
+                        src={profile?.profile_image || ""}
+                        alt={profile?.name || user.email}
+                      />
+                      <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold">
+                        {getInitials(profile?.name || user.email || "")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-white text-sm font-medium">
+                      {profile?.name || user.email}
+                    </span>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-72 bg-gradient-to-br from-purple-900/95 to-pink-900/95 backdrop-blur-md border border-purple-500/30 shadow-2xl shadow-purple-500/20 rounded-xl overflow-hidden"
+                >
+                  {/* User Info Section */}
+                  <div className="p-4 border-b border-purple-500/20">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-12 h-12 ring-2 ring-purple-500/50">
+                        <AvatarImage
+                          src={profile?.profile_image || ""}
+                          alt={profile?.name || user.email}
+                        />
+                        <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg font-bold">
+                          {getInitials(profile?.name || user.email || "")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-white font-semibold text-sm truncate">
+                          {profile?.name || user.email}
+                        </div>
+                        <div className="text-purple-200 text-xs truncate">
+                          {user.email}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="p-2">
+                    <Link href="/dashboard-profile" passHref legacyBehavior>
+                      <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 text-white hover:bg-white/10 rounded-lg cursor-pointer transition-all duration-200 group">
+                        <div className="w-5 h-5 flex items-center justify-center">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                          </svg>
+                        </div>
+                        <span className="font-medium">Dashboard Profile</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuItem
+                      onClick={handleSignOut}
+                      className="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg cursor-pointer transition-all duration-200 group"
                     >
-                      {getInitials(profile?.name || user.email)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="font-semibold text-lg text-center w-full truncate text-white mb-1">
-                    {profile?.name || user.email}
+                      <div className="w-5 h-5 flex items-center justify-center">
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                          />
+                        </svg>
+                      </div>
+                      <span className="font-medium">Sign Out</span>
+                    </DropdownMenuItem>
                   </div>
-                  <div className="text-xs text-white/70 text-center w-full truncate">
-                    {user.email}
-                  </div>
-                </div>
-                <div className="border-t border-white/10 mx-3" />
-                <div className="p-1">
-                  <DropdownMenuItem
-                    onClick={() => router.push("/dashboard-profile")}
-                    className="text-white/90 hover:text-white hover:bg-white/5 focus:text-white focus:bg-white/5 rounded-lg mx-1 mb-1 px-3 py-2 transition-all duration-200 text-sm"
-                  >
-                    Dashboard Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={handleSignOut}
-                    className="text-red-300 hover:text-red-200 hover:bg-red-500/10 focus:text-red-200 focus:bg-red-500/10 rounded-lg mx-1 px-3 py-2 transition-all duration-200 text-sm"
-                  >
-                    Sign Out
-                  </DropdownMenuItem>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Link
-              href="/auth"
-              className="btn-login flex items-center gap-2 px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-xs tablet:text-sm lg:text-base"
-            >
-              <span className="hidden sm:inline tablet:hidden lg:inline">
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link href="/auth" className="btn-login">
                 Join Community
-              </span>
-              <span className="sm:hidden tablet:inline lg:hidden">Join</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-3 h-3 tablet:w-4 tablet:h-4 lg:w-5 lg:h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.5 3.75h2.25A2.25 2.25 0 0 1 21 6v12a2.25 2.25 0 0 1-2.25 2.25H16.5m-6-4.5 3-3m0 0-3-3m3 3H3"
-                />
-              </svg>
-            </Link>
-          )}
+              </Link>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
-          <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-purple-900/95 to-blue-900/95 backdrop-blur-xl border-b border-white/10 max-h-screen overflow-y-auto">
-            <div className="p-4 max-w-sm mx-auto">
-              <div className="flex items-center justify-between mb-6">
-                <Link href="/" className="text-white font-bold text-xl">
-                  N8N Indonesia
-                </Link>
-                <button
-                  onClick={toggleMobileMenu}
-                  className="p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Mobile Navigation Items */}
-              <nav className="space-y-2 mb-6">
+        <>
+          {/* Backdrop */}
+          <div
+            className="md:hidden fixed inset-0 bg-black/40 z-40"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          {/* Menu */}
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(32,26,44,0.98)] border-t border-white/20 z-50 shadow-lg">
+            <div className="container-box py-4">
+              <div className="flex flex-col gap-2">
                 {navItems.map((item) => {
                   let isActive = false;
                   if (item.href === "/") {
@@ -314,78 +357,107 @@ export function HeaderNav() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 text-base
-                        ${
-                          isActive
-                            ? "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700"
-                            : "text-white hover:bg-white/10"
-                        }
-                      `}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${isActive
+                        ? "bg-[rgba(147,51,234,0.2)] text-white"
+                        : "text-white hover:bg-white/10"
+                        }`}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      <Icon className="w-5 h-5 flex-shrink-0" />
-                      <span className="break-words overflow-hidden text-ellipsis">
-                        {item.label}
-                      </span>
+                      <Icon className="w-5 h-5" />
+                      <span>{item.label}</span>
                     </Link>
                   );
                 })}
-              </nav>
 
-              {/* Mobile User Section */}
-              {user && (
-                <div className="pt-6 border-t border-white/10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Avatar className="h-12 w-12 flex-shrink-0">
-                      <AvatarImage
-                        src={profile?.profile_image || undefined}
-                        alt={profile?.name || user.email}
-                      />
-                      <AvatarFallback
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "bold",
-                          backgroundColor: "#374151",
-                          color: "#F9FAFB",
-                        }}
-                      >
-                        {getInitials(profile?.name || user.email)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0 flex-1">
-                      <div className="font-semibold text-white text-sm break-words overflow-hidden text-ellipsis">
-                        {profile?.name || user.email}
+                {/* Mobile - User Avatar or Join Community */}
+                <div className="border-t border-white/20 pt-4 mt-2">
+                  {user ? (
+                    <div className="flex flex-col gap-3">
+                      {/* User Info */}
+                      <div className="flex items-center gap-3 px-4 py-3">
+                        <Avatar className="w-10 h-10 ring-2 ring-purple-500/50">
+                          <AvatarImage
+                            src={profile?.profile_image || ""}
+                            alt={profile?.name || user.email}
+                          />
+                          <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold">
+                            {getInitials(profile?.name || user.email || "")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-white">
+                            {profile?.name || user.email}
+                          </div>
+                          <div className="text-xs text-purple-200">
+                            {user.email}
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-xs text-white/70 break-words overflow-hidden text-ellipsis">
-                        {user.email}
+
+                      {/* Action Buttons */}
+                      <div className="flex flex-col gap-2 px-4">
+                        <Link href="/dashboard-profile" passHref legacyBehavior>
+                          <button
+                            className="flex items-center gap-3 w-full px-3 py-2.5 text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200 group"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <div className="w-5 h-5 flex items-center justify-center">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                              </svg>
+                            </div>
+                            <span>Dashboard Profile</span>
+                          </button>
+                        </Link>
+
+                        <button
+                          onClick={handleSignOut}
+                          className="flex items-center gap-3 w-full px-3 py-2.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg font-medium transition-all duration-200 group"
+                        >
+                          <div className="w-5 h-5 flex items-center justify-center">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                              />
+                            </svg>
+                          </div>
+                          <span>Sign Out</span>
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => {
-                        router.push("/dashboard-profile");
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-3 text-white/90 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 text-sm break-words"
+                  ) : (
+                    <Link
+                      href="/auth"
+                      className="flex items-center gap-3 px-4 py-3 text-purple-300 hover:bg-white/10 rounded-lg font-medium"
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Dashboard Profile
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleSignOut();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-3 text-red-300 hover:text-red-200 hover:bg-red-500/10 rounded-lg transition-all duration-200 text-sm break-words"
-                    >
-                      Sign Out
-                    </button>
-                  </div>
+                      <User className="w-5 h-5" />
+                      <span>Join Community</span>
+                    </Link>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

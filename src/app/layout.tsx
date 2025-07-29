@@ -3,7 +3,7 @@ import { AuthProvider } from "@/lib/auth-context";
 import { AuthLayout } from "@/components/auth/auth-layout";
 import "@/styles/globals.css";
 import "@/styles/typography.css";
-
+import "@/styles/container.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

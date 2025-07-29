@@ -79,64 +79,62 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen text-white overflow-visible content-above-gradient">
-      <div className="w-full px-4 sm:px-8 md:px-16 relative z-10">
+    <section className="relative text-white overflow-visible content-above-gradient">
+      <div className="w-full container-box relative z-10 mt-32 2xl:mt-36">
         {/* HERO HEADING & SUBHEADING */}
-        <div className="w-full pt-12 md:pt-20 flex flex-col gap-6 md:gap-10">
+        <div className="w-full pt-0 2xl:pt-20 flex flex-col gap-6 md:gap-10">
           <div className="flex flex-col md:flex-row md:items-center w-full">
-            {/* Kiri: Heading, Community, dan Deskripsi */}
-            <div className="flex flex-col items-start flex-1 min-w-0">
-              <h1 className="text-white mb-0 text-left">N8N Indonesia</h1>
-              <h1 className="text-white/80 mb-2 text-left font-thin">
-                Community
+            {/* Kiri: Title + Subtitle */}
+            <div className="flex flex-col items-start flex-shrink-0">
+              <h1 className="hero-title-main flex flex-wrap items-baseline gap-2">
+                <span>N8N</span>
+                <span>Indonesia</span>
               </h1>
-              <p className="text-white mt-2 mb-0 text-left">
+              <h2 className="hero-title-sub">Community</h2>
+              <p className="hero-subtitle">
                 Temukan dan bagikan workflow automation yang powerful.
               </p>
             </div>
+
             {/* Tengah: Garis Penghubung */}
-            <div className="hidden md:flex items-center justify-center px-8">
-              <div className="h-0.5 w-32 bg-white/40" />
+            <div className="hidden md:flex items-center flex-1 min-w-0 mx-8">
+              <div className="h-0.5 flex-1 bg-white/40" />
             </div>
-            {/* Kanan: Deskripsi */}
-            <div className="hidden md:flex flex-1 min-w-0">
-              <p className="hero-description text-white text-left">
+
+            {/* Kanan: Description */}
+            <div className="hidden md:flex flex-col items-start flex-1 min-w-0">
+              <div className="hero-description max-w-3xl">
                 Bergabunglah dengan komunitas N8N Indonesia dan tingkatkan
                 produktivitas Anda.
-              </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile: Description */}
+          <div className="md:hidden flex flex-col items-start w-full mt-6">
+            <div className="hero-description max-w-3xl">
+              Bergabunglah dengan komunitas N8N Indonesia dan tingkatkan
+              produktivitas Anda.
             </div>
           </div>
         </div>
         {/* INSIGHT & BUTTONS */}
-        <div className="w-full py-20 md:py-32 flex flex-col items-center">
-          <div className="insight-container-wrapper">
-            <div
-              className="insight-container"
-              onMouseMove={handleMouseMove}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
+        <div className="w-full pt-[10rem] 2xl:pt-[15.625rem] flex flex-col items-center">
+          <div className="hero-insight-wrapper">
+            <div className="hero-insight-container">
               {/* Gradient overlay yang mengikuti cursor */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.4) 0%, rgba(168, 85, 247, 0.3) 30%, rgba(236, 72, 153, 0.2) 60%, transparent 100%)`,
-                  opacity: isHovering ? 1 : 0,
-                  transition: "opacity 0.2s ease-in-out",
-                }}
-              />
+              <div />
               {/* Content */}
-              <div className="relative z-10">
-                <h2 className="insight-text text-white text-left mb-6">
-                  Dapatkan insight, workflow siap pakai, dan dukungan dari
-                  komunitas yang aktif dan solutif. Workflow hebat dimulai dari
-                  sini.
+              <div className="hero-insight-content">
+                <h2 className="hero-insight-heading">
+                  <span className="hero-insight-text">
+                    Dapatkan insight, workflow siap pakai, dan dukungan dari
+                    komunitas yang aktif dan solutif. Workflow Hebat Dimulai
+                    dari Sini.
+                  </span>
                 </h2>
-                <div className="flex flex-col sm:flex-row gap-3 md:gap-6">
-                  <a
-                    className="btn-jelajah button-text flex items-center justify-center gap-3 w-full sm:w-auto"
-                    href="/workflows"
-                  >
+                <div className="hero-insight-buttons">
+                  <a className="btn-primary" href="/workflows">
                     Jelajahi Workflow
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +142,6 @@ const HeroSection = () => {
                       viewBox="0 0 24 24"
                       strokeWidth={2}
                       stroke="currentColor"
-                      className="w-5 h-5"
                     >
                       <path
                         strokeLinecap="round"
@@ -153,10 +150,7 @@ const HeroSection = () => {
                       />
                     </svg>
                   </a>
-                  <a
-                    className="btn-creator button-text flex items-center justify-center gap-3 w-full sm:w-auto"
-                    href="/directory"
-                  >
+                  <a className="btn-secondary" href="/creators">
                     Temukan Creator
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +158,6 @@ const HeroSection = () => {
                       viewBox="0 0 24 24"
                       strokeWidth={2}
                       stroke="currentColor"
-                      className="w-5 h-5"
                     >
                       <path
                         strokeLinecap="round"
